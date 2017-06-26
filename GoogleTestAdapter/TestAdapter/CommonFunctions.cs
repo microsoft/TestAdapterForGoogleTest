@@ -1,4 +1,6 @@
-﻿using System;
+﻿// This file has been modified by Microsoft on 8/2017.
+
+using System;
 using System.Collections.Generic;
 using GoogleTestAdapter.Common;
 using GoogleTestAdapter.Helpers;
@@ -12,8 +14,9 @@ namespace GoogleTestAdapter.TestAdapter
 {
     public static class CommonFunctions
     {
-        public static void ReportErrors(ILogger logger, string phase, bool isDebugModeEnabled)
+        public static void ReportErrors(ILogger logger, TestPhase phase, bool isDebugModeEnabled)
         {
+            string phaseType = (phase == TestPhase.TestDiscovery) ? Resources.TestDiscovery: Resources.TestExecution;
             IList<string> errors = logger.GetMessages(Severity.Error, Severity.Warning);
             if (errors.Count == 0)
                 return;
@@ -21,11 +24,11 @@ namespace GoogleTestAdapter.TestAdapter
             bool hasErrors = logger.GetMessages(Severity.Error).Count > 0;
             string hint = isDebugModeEnabled
                 ? ""
-                : " (enable debug mode for more information)";
+                : Resources.EnableDebugMode;
             string jointErrors = string.Join(Environment.NewLine, errors);
 
-            string message = $"{Environment.NewLine}================{Environment.NewLine}" 
-                + $"The following errors and warnings occured during {phase}{hint}:{Environment.NewLine}" 
+            string message = $"{Environment.NewLine}================{Environment.NewLine}"
+                + String.Format(Resources.ErrorAndWarning, phaseType, hint, Environment.NewLine)
                 + jointErrors;
 
             if (hasErrors)
@@ -64,7 +67,7 @@ namespace GoogleTestAdapter.TestAdapter
                 case VsVersion.VS2012:
                     return;
                 default:
-                    logger.DebugInfo($"Visual Studio Version: {version}");
+                    logger.DebugInfo(String.Format(Resources.VSVersion, version));
                     break;
             }
         }
