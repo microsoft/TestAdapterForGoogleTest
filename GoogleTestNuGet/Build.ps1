@@ -192,6 +192,9 @@ function Build-Binaries {
         Add-Signing -Directory $Dir -ProjectName "gtest"
         Add-Signing -Directory $Dir -ProjectName "gtest_main"
 
+        # Get the googletest submodule from git
+        git submodule update --init
+        
         Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=Debug")
         Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=Debug")
         Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=RelWithDebInfo")
