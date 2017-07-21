@@ -334,10 +334,10 @@ function Main {
 
     # Ensure nuget is available.
     if ((Get-Command "nuget" -ErrorAction SilentlyContinue) -eq $null) {
-        if (!(Test-Path "$pwd\..\NuGetPackages\NuGet.CommandLine.3.5.0\tools\NuGet.exe")) {
+        if (!(Test-Path "$pwd\NuGetPackages\NuGet.CommandLine.3.5.0\tools\NuGet.exe")) {
             throw "nuget.exe is not available. Provide through PATH or restore NuGet packages for the solution."
         }
-        $env:Path += ";$pwd\..\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
+        $env:Path += ";$pwd\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
     }
     Invoke-Executable nuget
 
