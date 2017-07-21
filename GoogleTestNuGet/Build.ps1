@@ -337,7 +337,7 @@ function Main {
         if (!(Test-Path "..\NuGetPackages\NuGet.CommandLine.3.5.0\tools\NuGet.exe")) {
             throw "nuget.exe is not available. Provide through PATH or restore NuGet packages for the solution."
         }
-        $env:Path += "..\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
+        $env:Path += ";..\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
     }
     Invoke-Executable nuget
 
