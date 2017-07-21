@@ -128,8 +128,8 @@ function Add-Signing {
     $xml = [xml](Get-Content "$Directory\$ProjectName.vcxproj")
 
     $MicroBuildProps = $xml.CreateElement("Import", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $MicroBuildProps.SetAttribute("Project", "..\..\..\NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.props")
-    $MicroBuildProps.SetAttribute("Condition", "Exists('..\..\..\NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.props')")
+    $MicroBuildProps.SetAttribute("Project", "NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.props")
+    $MicroBuildProps.SetAttribute("Condition", "Exists('NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.props')")
 
     $RealSignGroup = $xml.CreateElement("PropertyGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $RealSignGroup.SetAttribute("Condition", "'`$(RealSign)' == 'True'")
@@ -153,8 +153,8 @@ function Add-Signing {
     $FileSignGroup.AppendChild($FilesToSign) | Out-Null
 
     $MicroBuildTargets = $xml.CreateElement("Import", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $MicroBuildTargets.SetAttribute("Project", "..\..\..\NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.targets")
-    $MicroBuildTargets.SetAttribute("Condition", "Exists('..\..\..\NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.targets')")
+    $MicroBuildTargets.SetAttribute("Project", "NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.targets")
+    $MicroBuildTargets.SetAttribute("Condition", "Exists('NuGetPackages\MicroBuild.Core.0.2.0\build\MicroBuild.Core.targets')")
 
     $xml.Project.AppendChild($MicroBuildProps) | Out-Null
     $xml.Project.AppendChild($RealSignGroup) | Out-Null
@@ -176,7 +176,7 @@ function Build-Binaries {
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
         -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage
 
-    $CMakeDir = "$pwd\..\ThirdParty\googletest\googletest"
+    $CMakeDir = "$pwd\ThirdParty\googletest\googletest"
 
     Push-Location $Dir
     try {
@@ -247,7 +247,7 @@ function Build-NuGet {
     $PropertiesUITTArgs += "googletest.propertiesui.xml.tt.proj"
     Invoke-Executable msbuild $PropertiesUITTArgs
 
-    Copy-Item -Recurse -Path "..\ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
+    Copy-Item -Recurse -Path "ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
     $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
@@ -334,14 +334,14 @@ function Main {
 
     # Ensure nuget is available.
     if ((Get-Command "nuget" -ErrorAction SilentlyContinue) -eq $null) {
-        if (!(Test-Path "$pwd\..\NuGetPackages\NuGet.CommandLine.3.5.0\tools\NuGet.exe")) {
+        if (!(Test-Path "$pwd\NuGetPackages\NuGet.CommandLine.3.5.0\tools\NuGet.exe")) {
             throw "nuget.exe is not available. Provide through PATH or restore NuGet packages for the solution."
         }
-        $env:Path += ";$pwd\..\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
+        $env:Path += ";$pwd\NuGetPackages\NuGet.CommandLine.3.5.0\tools"
     }
     Invoke-Executable nuget
 
-    $OutputDir = "..\GoogleTestAdapter\Packages"
+    $OutputDir = "GoogleTestAdapter\Packages"
 
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
