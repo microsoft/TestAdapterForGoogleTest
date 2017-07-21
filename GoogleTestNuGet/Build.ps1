@@ -176,7 +176,7 @@ function Build-Binaries {
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
         -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage
 
-    $CMakeDir = "$pwd\ThirdParty\googletest\googletest"
+    $CMakeDir = "..\ThirdParty\googletest\googletest"
 
     Push-Location $Dir
     try {
@@ -247,7 +247,7 @@ function Build-NuGet {
     $PropertiesUITTArgs += "googletest.propertiesui.xml.tt.proj"
     Invoke-Executable msbuild $PropertiesUITTArgs
 
-    Copy-Item -Recurse -Path "ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
+    Copy-Item -Recurse -Path "..\ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
     $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
@@ -283,8 +283,8 @@ function Build-NuGet {
         }
     }
 
-    Copy-CreateItem -Recurse -Path "license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
-    Copy-CreateItem -Recurse -Path "ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
+    Copy-CreateItem -Recurse -Path "..\license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
+    Copy-CreateItem -Recurse -Path "..\ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
 
     $NuspecTTArgs = @()
     $NuspecTTArgs += "/p:PackageName=`"$PackageName`""
