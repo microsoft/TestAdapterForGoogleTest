@@ -176,7 +176,7 @@ function Build-Binaries {
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
         -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage
 
-    $CMakeDir = "..\ThirdParty\googletest\googletest"
+    $CMakeDir = "$pwd\..\ThirdParty\googletest\googletest"
 
     Push-Location $Dir
     try {
