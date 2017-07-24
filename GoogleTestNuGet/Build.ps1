@@ -188,9 +188,6 @@ function Build-Binaries {
         $CMakeArgs += "-D", "gtest_force_shared_crt=$(Convert-BooleanToOnOff $DynamicCRTLinkage)"
         $CMakeArgs += $CMakeDir
         
-        # Get the googletest submodule from git
-        Invoke-Executable git @("submodule", "update", "--init", "--quiet")
-        
         Invoke-Executable cmake $CMakeArgs
 
         Add-Signing -Directory $Dir -ProjectName "gtest"
