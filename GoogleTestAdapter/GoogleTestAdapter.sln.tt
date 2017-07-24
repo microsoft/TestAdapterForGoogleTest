@@ -64,7 +64,11 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.Tests", "VsPackage.Tests\VsPackage.Tests.csproj", "{B9C827B5-DC90-4A78-B477-852EAE1196AF}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12952B24-C70B-4A26-839A-EE4183BE8CC0} = {12952B24-C70B-4A26-839A-EE4183BE8CC0}
+<# if (TestAdapterFlavor == "GTA") { #>
 		{E6276CAD-E4C3-4B25-876A-65B265EBFF1A} = {E6276CAD-E4C3-4B25-876A-65B265EBFF1A}
+<# } else if (TestAdapterFlavor == "TAfGT") { #>
+    {55294B5F-A075-43F2-B0E9-2B11925E8B91} = {55294B5F-A075-43F2-B0E9-2B11925E8B91}
+<# } #>
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.Tests.Generated", "VsPackage.Tests.Generated\VsPackage.Tests.Generated.csproj", "{032BEBF7-2D2B-4CFD-B53D-E3D21B3AC9D6}"
