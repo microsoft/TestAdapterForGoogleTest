@@ -283,8 +283,8 @@ function Build-NuGet {
         }
     }
 
-    Copy-CreateItem -Recurse -Path "..\license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
-    Copy-CreateItem -Recurse -Path "..\ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
+    Copy-CreateItem -Recurse -Path "license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
+    Copy-CreateItem -Recurse -Path "ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
 
     $NuspecTTArgs = @()
     $NuspecTTArgs += "/p:PackageName=`"$PackageName`""
