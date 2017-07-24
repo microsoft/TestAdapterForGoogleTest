@@ -1,4 +1,6 @@
-﻿
+﻿<#@ template language="c#" hostspecific="true" #>
+<#@ output extension=".cs" #>
+<#@ parameter type="System.String" name="TestAdapterFlavor" #>
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26606.0
@@ -25,11 +27,14 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SampleTests Solution Items"
 		..\SampleTests\SampleTests.gta.runsettings = ..\SampleTests\SampleTests.gta.runsettings
 	EndProjectSection
 EndProject
+<# if (TestAdapterFlavor == "GTA") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.GTA", "VsPackage.GTA\VsPackage.GTA.csproj", "{E6276CAD-E4C3-4B25-876A-65B265EBFF1A}"
 EndProject
-Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VsPackage.Shared", "VsPackage.Shared\VsPackage.Shared.shproj", "{AC75F34E-190B-402A-8C46-91B0FA02450F}"
-EndProject
+<# } else if (TestAdapterFlavor == "TAfGT") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.TAfGT", "VsPackage.TAfGT\VsPackage.TAfGT.csproj", "{55294B5F-A075-43F2-B0E9-2B11925E8B91}"
+EndProject
+<# } #>
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "VsPackage.Shared", "VsPackage.Shared\VsPackage.Shared.shproj", "{AC75F34E-190B-402A-8C46-91B0FA02450F}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TestAdapter", "TestAdapter\TestAdapter.csproj", "{44C04E51-D543-4155-A57E-BBEB73D3F8E5}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -72,10 +77,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.Tests.Generated",
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{BC05D210-68CD-47D0-AE8C-0F3168D1BE73}"
 EndProject
+<# if (TestAdapterFlavor == "GTA") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Dynamic.GTA", "Common.Dynamic.GTA\Common.Dynamic.GTA.csproj", "{17F4B73F-E4D3-4E40-98FC-788B1D0F8225}"
 EndProject
+<# } else if (TestAdapterFlavor == "TAfGT") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Dynamic.TAfGT", "Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj", "{9041BDED-FA1B-4C17-B7EA-7B750C470C23}"
 EndProject
+<# } #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.GTA.Tests.Unit", "VsPackage.GTA.Tests.Unit\VsPackage.GTA.Tests.Unit.csproj", "{87F26371-0005-4301-9C49-A6DF4F06B81C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12952B24-C70B-4A26-839A-EE4183BE8CC0} = {12952B24-C70B-4A26-839A-EE4183BE8CC0}
@@ -124,10 +132,13 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "DllTests", "..\SampleTests\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "NewProjectWizard", "NewProjectWizard\NewProjectWizard.csproj", "{483FE0C7-4E8D-4591-BE45-EAC6B2EA5F4F}"
 EndProject
+<# if (TestAdapterFlavor == "GTA") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packaging.GTA", "Packaging.GTA\Packaging.GTA.csproj", "{4735D8CC-FA30-432D-854C-2984A7DA5DD2}"
 EndProject
+<# } else if (TestAdapterFlavor == "TAfGT") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Packaging.TAfGT", "Packaging.TAfGT\Packaging.TAfGT.csproj", "{B3AEAD11-8EA3-4AB0-9DB0-643BFAAEB9B2}"
 EndProject
+<# } #>
 Global
 	GlobalSection(SharedMSBuildProjectFiles) = preSolution
 		VsPackage.Shared\VsPackage.Shared.projitems*{55294b5f-a075-43f2-b0e9-2b11925e8b91}*SharedItemsImports = 4
