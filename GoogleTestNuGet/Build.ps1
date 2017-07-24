@@ -189,8 +189,7 @@ function Build-Binaries {
         $CMakeArgs += $CMakeDir
         
         # Get the googletest submodule from git
-        Invoke-Executable git @("rm", "--cached", "..\ThirdParty\googletest")
-        Invoke-Executable git @("submodule",  "update", "--init")
+        Invoke-Executable git @("submodule", "update", "--init", "--quiet")
         
         Invoke-Executable cmake $CMakeArgs
 
