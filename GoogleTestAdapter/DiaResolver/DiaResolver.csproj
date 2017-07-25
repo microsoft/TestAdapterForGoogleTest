@@ -108,7 +108,7 @@
   -->
   <!-- run the dia build script from a developer command prompt -->
   <Target Name="BeforeBuild" Condition="'$(TestAdapterFlavor)' == 'TAfGT'">
-    <Exec Command="Powershell -command dia2\compile_typelib.ps1 | $(MSBuildToolsPath)\..\..\..\Common7\Tools\vsdevcmd" />
+    <Exec Command="Powershell -command &quot; &amp; {dia2\compile_typelib.ps1 | $(MSBuildToolsPath)\..\..\..\Common7\Tools\vsdevcmd &quot;" />
     <Copy SourceFiles="$(MSBuildToolsPath)\..\..\..\DIA SDK\bin\msdia140.dll" DestinationFolder="x86" />
     <Copy SourceFiles="$(MSBuildToolsPath)\..\..\..\DIA SDK\bin\amd64\msdia140.dll" DestinationFolder="x64" />
   </Target>
