@@ -88,11 +88,13 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common.Dynamic.TAfGT", "Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj", "{9041BDED-FA1B-4C17-B7EA-7B750C470C23}"
 EndProject
 <# } #>
+<# if (TestAdapterFlavor == "GTA") { #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.GTA.Tests.Unit", "VsPackage.GTA.Tests.Unit\VsPackage.GTA.Tests.Unit.csproj", "{87F26371-0005-4301-9C49-A6DF4F06B81C}"
 	ProjectSection(ProjectDependencies) = postProject
 		{12952B24-C70B-4A26-839A-EE4183BE8CC0} = {12952B24-C70B-4A26-839A-EE4183BE8CC0}
 	EndProjectSection
 EndProject
+<# } #>
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleTestsBuilder", "SampleTestsBuilder\SampleTestsBuilder.csproj", "{12952B24-C70B-4A26-839A-EE4183BE8CC0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Tests.Common", "Tests.Common\Tests.Common.csproj", "{2F0E4458-6C1C-461F-A60A-B731AD97E839}"
