@@ -338,7 +338,7 @@ function Main {
     }
     Invoke-Executable nuget
 
-    $OutputDir = "GoogleTestAdapter\Packages"
+    $OutputDir = "Packages"
 
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
