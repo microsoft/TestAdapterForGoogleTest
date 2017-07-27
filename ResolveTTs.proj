@@ -47,10 +47,6 @@
       <Generator>TextTemplatingFileGenerator</Generator>
       <OutputFileName>app.config</OutputFileName>
     </Content>
-    <Content Include="GoogleTestAdapter\GoogleTestAdapter.sln.tt">
-      <Generator>TextTemplatingFileGenerator</Generator>
-      <OutputFileName>GoogleTestAdapter.sln</OutputFileName>
-    </Content>
     <!-- Pass-through parameters for T4. -->
     <T4ParameterValues Include="TestAdapterFlavor"><Value>$(TestAdapterFlavor)</Value></T4ParameterValues>
   </ItemGroup>
