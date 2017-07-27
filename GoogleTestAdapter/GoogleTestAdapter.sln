@@ -67,7 +67,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.Tests", "VsPackag
 # GTA END
 # TAfGT START
     {55294B5F-A075-43F2-B0E9-2B11925E8B91} = {55294B5F-A075-43F2-B0E9-2B11925E8B91}
-# TAfGT START
+# TAfGT END
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "VsPackage.Tests.Generated", "VsPackage.Tests.Generated\VsPackage.Tests.Generated.csproj", "{032BEBF7-2D2B-4CFD-B53D-E3D21B3AC9D6}"
