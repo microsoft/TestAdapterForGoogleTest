@@ -106,5 +106,4 @@
   <Target Name="AfterBuild">
   </Target>
   -->
-  <!-- run the dia build script from a developer command prompt -->
 </Project>
