@@ -7,13 +7,14 @@ $gta_guids = @(
 
 $sln = Get-Content .\GoogleTestAdapter\GoogleTestAdapter.sln
 $is_gta_project = $false
+$gta_guids_regex = [string]::Join('|', $gta_guids)
 
 $sln | ForEach-Object {
   if ($is_gta_project) {
     if ($_ -like "EndProject") {
       $is_gta_project = $false
     }
-  } elseif ($_ -match [string]::Join('|', $gta_guids)) {
+  } elseif ($_ -match $gta_guids_regex) {
     if ($_ -like "Project*") {
       $is_gta_project = $true
     }
