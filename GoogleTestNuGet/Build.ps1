@@ -186,15 +186,12 @@ function Build-Binaries {
         $CMakeArgs += "-A", $Platform
         $CMakeArgs += "-D", "BUILD_SHARED_LIBS=$(Convert-BooleanToOnOff $DynamicLibraryLinkage)"
         $CMakeArgs += "-D", "gtest_force_shared_crt=$(Convert-BooleanToOnOff $DynamicCRTLinkage)"
-        $CMakeArgs += $CMakeDir
-        
+        $CMakeArgs += $CMakeDir        
         Invoke-Executable cmake $CMakeArgs
 
         Add-Signing -Directory $Dir -ProjectName "gtest"
         Add-Signing -Directory $Dir -ProjectName "gtest_main"
 
-        
-        
         Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=Debug")
         Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=Debug")
         Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=RelWithDebInfo")
