@@ -152,8 +152,8 @@
     <comment>this is used in ErrorAndWarning string</comment>
   </data>
   <data name="ErrorAndWarning" xml:space="preserve">
-    <value>The following errors and warnings have occured during {0},{1}:{2}</value>
-    <comment>{0} represents localized phase of test (e.g. "test discovery"), {1} represents unlocalized hint (e.g. "enable debug mode for more information"), {2} represents a unlocalized new line string (e.g "\n")</comment>
+    <value>The following errors and warnings have occured during {0} {1}:{2}</value>
+    <comment>{0} represents localized phase of test (e.g. TestDiscovery or TestExecution), {1} represents unlocalized hint (e.g. "enable debug mode for more information"), {2} represents a unlocalized new line string (e.g "\n")</comment>
   </data>
   <data name="DontMatch" xml:space="preserve">
     <value>{0} does not match {1}</value>
@@ -180,7 +180,7 @@
     <value>test discovery</value>
   </data>
   <data name="TestExecution" xml:space="preserve">
-    <value>Test execution</value>
+    <value>test execution</value>
   </data>
   <data name="ErrorMessage" xml:space="preserve">
     <value>ERROR: {0}</value>

@@ -115,7 +115,16 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file: Did not find file: {2}.
+        ///   Looks up a localized string similar to batch file.
+        /// </summary>
+        internal static string BatchFile {
+            get {
+                return ResourceManager.GetString("BatchFile", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} {1} {2}: Did not find file: {3}.
         /// </summary>
         internal static string BatchFileMissing {
             get {
@@ -124,7 +133,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file returned exit code {2}, executed command: &apos;{3}&apos;.
+        ///   Looks up a localized string similar to {0} {1} {2} returned exit code {3}, executed command: &apos;{4}&apos;.
         /// </summary>
         internal static string BatchReturnedExitCode {
             get {
@@ -304,7 +313,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Execution has been canceled: {1}.
+        ///   Looks up a localized string similar to {0} Execution has been cancelled: {1}.
         /// </summary>
         internal static string ExecutionCancelled {
             get {
@@ -637,7 +646,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file caused exception, message: &apos;{2}&apos;, executed command: &apos;{3}&apos;.
+        ///   Looks up a localized string similar to {0} {1} {2} caused exception, message: &apos;{3}&apos;, executed command: &apos;{4}&apos;.
         /// </summary>
         internal static string RunBatchException {
             get {
@@ -709,7 +718,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file: Successfully ran &apos;{2}&apos;.
+        ///   Looks up a localized string similar to {0} {1} {2}: Successfully ran &apos;{3}&apos;.
         /// </summary>
         internal static string SuccessfullyRun {
             get {

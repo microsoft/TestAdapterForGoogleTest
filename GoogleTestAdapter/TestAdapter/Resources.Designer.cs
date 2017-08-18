@@ -124,7 +124,7 @@ namespace GoogleTestAdapter.TestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to The following errors and warnings have occured during {0},{1}:{2}.
+        ///   Looks up a localized string similar to The following errors and warnings have occured during {0} {1}:{2}.
         /// </summary>
         internal static string ErrorAndWarning {
             get {
@@ -250,7 +250,7 @@ namespace GoogleTestAdapter.TestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test execution.
+        ///   Looks up a localized string similar to test execution.
         /// </summary>
         internal static string TestExecution {
             get {
