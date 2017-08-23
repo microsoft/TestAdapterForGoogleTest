@@ -354,7 +354,7 @@
   </data>
   <data name="Results" xml:space="preserve">
     <value>Test {0}: Expected {1} ms, actual {2} ms</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
+    <comment>{0} represents an unlocalized name of a test (e.g. foo), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
   </data>
   <data name="RunBatchException" xml:space="preserve">
     <value>{0} {1} batch file caused exception, message: '{2}', executed command: '{3}'</value>
@@ -439,6 +439,6 @@
   </data>
   <data name="XmlNodeParse" xml:space="preserve">
     <value>XmlNode could not be parsed: '{0}'. Exception message: {1}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents localized exception message (e.g. "Cannot load file")</comment>
+    <comment>{0} represents an unlocalized name of an XML node, {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
 </root>
