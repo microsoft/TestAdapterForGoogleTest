@@ -565,15 +565,6 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Regex &apos;{0}&apos;.
-        /// </summary>
-        internal static string Regex {
-            get {
-                return ResourceManager.GetString("Regex", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Regex &apos;{0}&apos; cannot be parsed: {1}.
         /// </summary>
         internal static string RegexParseError {
@@ -642,15 +633,6 @@ namespace GoogleTestAdapter {
         internal static string SchedulingStats {
             get {
                 return ResourceManager.GetString("SchedulingStats", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Settings for test executable &apos;{0}&apos;: {1}.
-        /// </summary>
-        internal static string Settings {
-            get {
-                return ResourceManager.GetString("Settings", resourceCulture);
             }
         }
         

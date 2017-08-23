@@ -332,10 +332,6 @@
     <value>Could not read test durations: {0}</value>
     <comment>{0} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
-  <data name="Regex" xml:space="preserve">
-    <value>Regex '{0}'</value>
-    <comment>{0} represents unlocalized regex pattern used (e.g. ab*d+)</comment>
-  </data>
   <data name="RegexParseError" xml:space="preserve">
     <value>Regex '{0}' cannot be parsed: {1}</value>
     <comment>{0} represents unlocalized regex pattern used (e.g. ab*d+), {1} represents localized exception message (e.g. "Cannot load file")</comment>
@@ -366,10 +362,6 @@
   </data>
   <data name="SchedulingStats" xml:space="preserve">
     <value>&gt;&gt;&gt; Scheduling statistics &lt;&lt;&lt;</value>
-  </data>
-  <data name="Settings" xml:space="preserve">
-    <value>Settings for test executable '{0}': {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="SettingsMessage" xml:space="preserve">
     <value>Settings for test executable '{0}': {1}</value>
