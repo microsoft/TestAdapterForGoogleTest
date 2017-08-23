@@ -141,16 +141,13 @@
     <value>Restoring solution settings: {0}</value>
     <comment>{0} represents a comma-separated list of setting properties</comment>
   </data>
-  <data name="BatchFile" xml:space="preserve">
-    <value>batch file</value>
-  </data>
   <data name="BatchFileMissing" xml:space="preserve">
-    <value>{0} {1} {2}: Did not find file: {3}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents localized string for BatchFile, {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0} {1} batch file: Did not find file: {2}</value>
+    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="BatchReturnedExitCode" xml:space="preserve">
-    <value>{0} {1} {2} returned exit code {3}, executed command: '{4}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents localized string for BatchFile, {3} represents a number (e.g. 5), {4} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0} {1} batch file returned exit code {2}, executed command: '{3}'</value>
+    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents a number (e.g. 5), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="CollectedResults" xml:space="preserve">
     <value>{0} Collected {1} test result(s) from result XML file {2}</value>
@@ -360,8 +357,8 @@
     <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
   </data>
   <data name="RunBatchException" xml:space="preserve">
-    <value>{0} {1} {2} caused exception, message: '{3}', executed command: '{4}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown) , {2} represents localized string for BatchFile, {3} represents localized exception message (e.g. "Cannot load file"), {4} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0} {1} batch file caused exception, message: '{2}', executed command: '{3}'</value>
+    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown) , {2} represents localized exception message (e.g. "Cannot load file"), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="RunExecutableError" xml:space="preserve">
     <value>{0} Failed to run test executable '{1}': {2}</value>
@@ -391,8 +388,8 @@
     <comment>{0} represents the standardDeviation for statistics to debug output</comment>
   </data>
   <data name="SuccessfullyRun" xml:space="preserve">
-    <value>{0} {1} {2}: Successfully ran '{3}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents localized string for BatchFile, {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0} {1} batch file: Successfully ran '{2}'</value>
+    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="TestCaseInAnalyzer" xml:space="preserve">
     <value>Test case already in analyzer: {0}</value>
