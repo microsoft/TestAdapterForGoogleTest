@@ -178,15 +178,6 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Collected {1} test results from console output.
-        /// </summary>
-        internal static string ConsoleOutput {
-            get {
-                return ResourceManager.GetString("ConsoleOutput", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Could not terminate process {0} started at {1}: {2}.
         /// </summary>
         internal static string CouldNotKill {
@@ -201,15 +192,6 @@ namespace GoogleTestAdapter {
         internal static string CrashTest {
             get {
                 return ResourceManager.GetString("CrashTest", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Created {1} test results for tests which were found neither in result XML file nor in console output.
-        /// </summary>
-        internal static string CreatedResults {
-            get {
-                return ResourceManager.GetString("CreatedResults", resourceCulture);
             }
         }
         
@@ -736,7 +718,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}.
+        ///   Looks up a localized string similar to {0} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}.
         /// </summary>
         internal static string TestCaseNotRun {
             get {
@@ -795,15 +777,6 @@ namespace GoogleTestAdapter {
         internal static string ThreadExecutionMessage {
             get {
                 return ResourceManager.GetString("ThreadExecutionMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Check out Test Adapter for Google Test&apos;s trouble shooting section at https://go.microsoft.com/fwlink/?linkid=848168.
-        /// </summary>
-        internal static string TroubleShooting {
-            get {
-                return ResourceManager.GetString("TroubleShooting", resourceCulture);
             }
         }
         

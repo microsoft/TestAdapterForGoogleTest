@@ -139,7 +139,7 @@
   </data>
   <data name="BacktoSolution" xml:space="preserve">
     <value>Restoring solution settings: {0}</value>
-    <comment>{0} represents unlocalized properties of current object</comment>
+    <comment>{0} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="BatchFile" xml:space="preserve">
     <value>batch file</value>
@@ -168,10 +168,6 @@
     <value>Exceeded maximum allowed command line length ({0}) after including {1} tests (next string length is {2})</value>
     <comment>{0} represents a number (e.g. 5), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
   </data>
-  <data name="ConsoleOutput" xml:space="preserve">
-    <value>{0} Collected {1} test results from console output</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5)</comment>
-  </data>
   <data name="CouldNotKill" xml:space="preserve">
     <value>Could not terminate process {0} started at {1}: {2}</value>
     <comment>{0} represents an unlocalized process name (e.g notepad.exe), {1} represents unlocalized string for time (e.g. "3/1/2008 7:00:00 AM"), {2} represents localized exception message (e.g. "Cannot load file")</comment>
@@ -179,10 +175,6 @@
   <data name="CrashTest" xml:space="preserve">
     <value>reason is probably a crash of test {0}</value>
     <comment>{0} represents a unlocalized name of test (e.g. foo)</comment>
-  </data>
-  <data name="CreatedResults" xml:space="preserve">
-    <value>{0} Created {1} test results for tests which were found neither in result XML file nor in console output</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5)</comment>
   </data>
   <data name="CreatedTestResults" xml:space="preserve">
     <value>Created {0} test results for tests which were neither found in result XML file nor in console output</value>
@@ -290,7 +282,7 @@
   </data>
   <data name="NoSettingConfigured" xml:space="preserve">
     <value>No settings configured for test executable '{0}'; running with solution settings: {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents unlocalized current object</comment>
+    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="NoTestOutputShown" xml:space="preserve">
     <value>Note that no test output will be shown on the test console when executing tests concurrently!</value>
@@ -380,7 +372,7 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings for test executable '{0}': {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} means current object</comment>
+    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="SettingsMessage" xml:space="preserve">
     <value>Settings for test executable '{0}': {1}</value>
@@ -407,7 +399,7 @@
     <comment>{0} represents an unlocalized string for test name (e.g. "TestSuite1.Test2")</comment>
   </data>
   <data name="TestCaseNotRun" xml:space="preserve">
-    <value>{0} Test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}</value>
+    <value>{0} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}</value>
     <comment>{0} represents a number (e.g. 5), {1} represents a unlocalized new line string (e.g "\n")</comment>
   </data>
   <data name="TestCommandCanBeRun" xml:space="preserve">
@@ -430,10 +422,6 @@
   <data name="ThreadExecutionMessage" xml:space="preserve">
     <value>Executing tests on {0} threads</value>
     <comment>{0} represents a number (e.g. 5)</comment>
-  </data>
-  <data name="TroubleShooting" xml:space="preserve">
-    <value>{0} Check out Test Adapter for Google Test's trouble shooting section at https://go.microsoft.com/fwlink/?linkid=848168</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519")</comment>
   </data>
   <data name="UnknownLiteral" xml:space="preserve">
     <value>Unknown literal</value>
