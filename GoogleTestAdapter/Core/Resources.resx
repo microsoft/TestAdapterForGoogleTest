@@ -126,8 +126,8 @@
     <comment>{0} represents an unlocalized test name (e.g. "TestSuite1.Test2")</comment>
   </data>
   <data name="AlreadyInAnalyzer" xml:space="preserve">
-    <value>Test case already in analyzer: {0}</value>
-    <comment>{0} represents an unlocalized test name (e.g. "TestSuite1.Test2")</comment>
+    <value>{0}Test case already in analyzer: {1}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents an unlocalized test name (e.g. "TestSuite1.Test2")</comment>
   </data>
   <data name="AttachDebuggerMessage" xml:space="preserve">
     <value>Attaching debugger to {0}</value>
@@ -137,25 +137,21 @@
     <value>Average difference between expected and actual duration: {0} ms</value>
     <comment>{0} represents a number (e.g. 5)</comment>
   </data>
-  <data name="BacktoSolution" xml:space="preserve">
-    <value>Restoring solution settings: {0}</value>
-    <comment>{0} represents a comma-separated list of setting properties</comment>
-  </data>
   <data name="BatchFileMissing" xml:space="preserve">
-    <value>{0} {1} batch file: Did not find file: {2}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0}{1}: Did not find file: {2}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} is TestSetupBatchFile or TestTeardownBatchFile string, {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="BatchReturnedExitCode" xml:space="preserve">
-    <value>{0} {1} batch file returned exit code {2}, executed command: '{3}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents a number (e.g. 5), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0}{1}: Exited with code {2}, executed command: '{3}'</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} is TestSetupBatchFile or TestTeardownBatchFile string, {2} represents a number (e.g. 5), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="CollectedResults" xml:space="preserve">
-    <value>{0} Collected {1} test result(s) from result XML file {2}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5), {2} represents unlocalized file path (e.g c:\test\results.xml)</comment>
+    <value>{0}Collected {1} test result(s) from result XML file {2}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5), {2} represents unlocalized file path (e.g c:\test\results.xml)</comment>
   </data>
   <data name="CollectedResultsFromConsole" xml:space="preserve">
-    <value>Collected {0} test results from console output</value>
-    <comment>{0} represents a number (e.g. 5)</comment>
+    <value>{0}Collected {1} test results from console output</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5)</comment>
   </data>
   <data name="CommandExecuted" xml:space="preserve">
     <value>Command executed: '{0} {1}', working directory: '{2}'</value>
@@ -165,66 +161,65 @@
     <value>Exceeded maximum allowed command line length ({0}) after including {1} tests (next string length is {2})</value>
     <comment>{0} represents a number (e.g. 5), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
   </data>
-  <data name="CouldNotKill" xml:space="preserve">
+  <data name="CouldNotListTestCases" xml:space="preserve">
+    <value>Could not list test cases for executable '{0}': process execution failed with exit code {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} is a number</comment>
+  </data>
+  <data name="CouldNotTerminate" xml:space="preserve">
     <value>Could not terminate process {0} started at {1}: {2}</value>
     <comment>{0} represents an unlocalized process name (e.g notepad.exe), {1} represents unlocalized string for time (e.g. "3/1/2008 7:00:00 AM"), {2} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="CrashTest" xml:space="preserve">
     <value>reason is probably a crash of test {0}</value>
-    <comment>{0} represents a unlocalized name of test (e.g. foo)</comment>
+    <comment>{0} represents an unlocalized name of test (e.g. foo)</comment>
   </data>
   <data name="CreatedTestResults" xml:space="preserve">
-    <value>Created {0} test results for tests which were neither found in result XML file nor in console output</value>
-    <comment>{0} represents a number (e.g. 5)</comment>
-  </data>
-  <data name="Custom" xml:space="preserve">
-    <value>custom</value>
-  </data>
-  <data name="Default" xml:space="preserve">
-    <value>default</value>
+    <value>{0}Created {1} test results for tests which were neither found in result XML file nor in console output</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5)</comment>
   </data>
   <data name="DeleteTestDir" xml:space="preserve">
-    <value>{0} Could not delete test directory '{1}': {2}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents unlocalized directory path (e.g c:\test\dir), {2} represents localized exception message (e.g. "Cannot load file")</comment>
+    <value>{0}Could not delete test directory '{1}': {2}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents unlocalized directory path (e.g c:\test\dir), {2} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
-  <data name="DontMatch" xml:space="preserve">
-    <value>{0} does not match {1} regex {2}</value>
-    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents localized string for regex source (e.g Custom or Default), {2} represents unlocalized string for regular expression (e.g "*a.exe")</comment>
+  <data name="DoesntMatchCustom" xml:space="preserve">
+    <value>{0} does not match custom regex {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents unlocalized string for regular expression (e.g ".*a.exe")</comment>
+  </data>
+  <data name="DoesntMatchDefault" xml:space="preserve">
+    <value>{0} does not match default regex {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents unlocalized string for regular expression (e.g ".*a.exe")</comment>
   </data>
   <data name="EndOfOutputMessage" xml:space="preserve">
-    <value>&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output</value>
-  </data>
-  <data name="EndOfOutputWithThreadInfo" xml:space="preserve">
-    <value>{0} &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519")</comment>
+    <value>{0}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] ")</comment>
   </data>
   <data name="ExceptionMessage" xml:space="preserve">
-    <value>{0} Exception while running tests: {1}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents localized exception message (e.g. "Cannot load file")</comment>
+    <value>{0}Exception while running tests: {1}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="ExceptionResolving" xml:space="preserve">
     <value>Exception while resolving test locations and traits in {0}\n{1}</value>
     <comment>{0} represents an unlocalized binary name (e.g notepad.exe), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="ExecutableError" xml:space="preserve">
-    <value>{0}: Executable came from another computer and was blocked to help protect this computer.</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <value>Executable {0} came from another computer and was blocked to help protect this computer.</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="ExecuteSteps" xml:space="preserve">
-    <value>{0} In particular: launch command prompt, change into directory '{1}', and execute the following command to make sure your tests can be run in general.{2}</value>
-    <comment>This sentence is continuation of TroubleShooting string. {0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents unlocalized directory path (e.g c:\test\dir), {2} represents a unlocalized new line string (e.g "\n")</comment>
+    <value>{0}In particular: launch command prompt, change into directory '{1}', and execute the following command to make sure your tests can be run in general.{2}{3} {4}</value>
+    <comment>This sentence is continuation of TroubleShootingLink string from Common.Dynamic.TAfGT resources file. {0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents unlocalized directory path (e.g c:\test\dir), {2} represents an unlocalized new line string (e.g "\n"), {3} is a name of an executable (e.g. foo.exe), {4} are parameters passed to the executable (e.g. /bar)</comment>
   </data>
   <data name="ExecutionCancelled" xml:space="preserve">
-    <value>{0} Execution has been cancelled: {1}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents localized exception message (e.g. "Cannot load file")</comment>
+    <value>{0}Execution has been cancelled: {1}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="ExecutionString" xml:space="preserve">
-    <value>Execution is already running with settings for executable {0}, can not switch to settings for {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <value>Execution is already running with settings for executable {0}, cannot switch to settings for {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="ExecutionTime" xml:space="preserve">
-    <value>{0} Execution took {1}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents unlocalized string for time it took (e.g. "0:00:02.0504161")</comment>
+    <value>{0}Execution took {1}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents unlocalized string for time it took (e.g. "0:00:02.0504161")</comment>
   </data>
   <data name="ExpectedDurations" xml:space="preserve">
     <value>{0} expected durations have been found in actual durations</value>
@@ -236,11 +231,11 @@
   </data>
   <data name="FileFound" xml:space="preserve">
     <value>Google Test indicator file found for executable {0}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="FileNotFound" xml:space="preserve">
     <value>No Google Test indicator file found for executable {0}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="FoundTestMethod" xml:space="preserve">
     <value>Found {0} test method symbols and {1} trait symbols in binary {2}</value>
@@ -248,23 +243,23 @@
   </data>
   <data name="InvalidFile" xml:space="preserve">
     <value>Invalid file {0}. {1}</value>
-    <comment>{0} represents an unlocalized file name (e.g. c:\foo.exe.gta.testdurations), {1} represents unlocalized string for exception message</comment>
+    <comment>{0} represents an unlocalized file name (e.g. c:\foo.exe.gta.testdurations), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="InvalidRegularExpression" xml:space="preserve">
-    <value>Invalid regular expression '{0}', exception message: {1}</value>
+    <value>Invalid regular expression "{0}", exception message: {1}</value>
     <comment>{0} represents an unlocalized regex (e.g. "abc*d+e*"), {1} represents localized exception message (e.g. "Cannot load file")</comment>
-  </data>
-  <data name="KilledProcess" xml:space="preserve">
-    <value>Terminated process {0} started at {1}</value>
-    <comment>{0} represents an unlocalized process name (e.g notepad.exe), {1} represents unlocalized string for time (e.g. "3/1/2008 7:00:00 AM")</comment>
   </data>
   <data name="LocationNotFoundError" xml:space="preserve">
     <value>Could not find source location for test {0}</value>
     <comment>{0} represents an unlocalized test name (e.g. "TestSuite1.Test2")</comment>
   </data>
-  <data name="Matches" xml:space="preserve">
-    <value>{0} matches {1} regex {2}</value>
-    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents localized string for regex source (e.g Custom or Default), {2} represents unlocalized string for regular expression (e.g "*a.exe")</comment>
+  <data name="MatchesCustom" xml:space="preserve">
+    <value>{0} matches custom regex {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents unlocalized string for regular expression (e.g ".*a.exe")</comment>
+  </data>
+  <data name="MatchesDefault" xml:space="preserve">
+    <value>{0} matches default regex {1}</value>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents unlocalized string for regular expression (e.g ".*a.exe")</comment>
   </data>
   <data name="NeverBeZero" xml:space="preserve">
     <value>{0} must never be &lt; 0</value>
@@ -279,7 +274,7 @@
   </data>
   <data name="NoSettingConfigured" xml:space="preserve">
     <value>No settings configured for test executable '{0}'; running with solution settings: {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents a comma-separated list of setting properties</comment>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="NoTestOutputShown" xml:space="preserve">
     <value>Note that no test output will be shown on the test console when executing tests concurrently!</value>
@@ -298,23 +293,20 @@
   <data name="OutputFileMissing" xml:space="preserve">
     <value>Output file does not exist, did your tests crash?</value>
   </data>
-  <data name="OutputOfCmdWithThreadInfo" xml:space="preserve">
-    <value>{0}&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command '{1} {2}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents an unlocalized binary name (e.g notepad.exe), {2} represents unlocalized paramaters to binary (e.g. "--param")</comment>
-  </data>
   <data name="OutputOfCommand" xml:space="preserve">
-    <value>Output of command</value>
+    <value>Output of command:</value>
+    <comment>Followed by standard output from the command ran</comment>
   </data>
   <data name="OutputOfCommandMessage" xml:space="preserve">
-    <value>&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command '{0} {1}'</value>
-    <comment>{0} represents unlocalized command (e.g. cmd.exe), {1} represents unlocalized paramaters to executable (e.g. "/C exit 2")</comment>
+    <value>{0}&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command '{1} {2}'</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents unlocalized command (e.g. cmd.exe), {2} represents unlocalized paramaters to executable (e.g. "/C exit 2")</comment>
   </data>
   <data name="ParallelExecution" xml:space="preserve">
     <value>Parallel execution is selected in options, but tests are executed sequentially because debugger is attached.</value>
   </data>
   <data name="ParseDurationMessage" xml:space="preserve">
     <value>Could not parse duration in line '{0}'</value>
-    <comment>{0} represents line</comment>
+    <comment>{0} represents the line text</comment>
   </data>
   <data name="ParsePair" xml:space="preserve">
     <value>Could not parse pair '{0}', exception message: {1}</value>
@@ -323,10 +315,6 @@
   <data name="ProcessExitCode" xml:space="preserve">
     <value>Process has exited with code {0}</value>
     <comment>{0} represents a number (e.g. 5)</comment>
-  </data>
-  <data name="ProcessFailed" xml:space="preserve">
-    <value>Could not list test cases for executable '{0}': process execution failed with exit code {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} means process exit code</comment>
   </data>
   <data name="ReadTestDurationError" xml:space="preserve">
     <value>Could not read test durations: {0}</value>
@@ -341,79 +329,89 @@
     <comment>{0} represents unlocalized regex pattern used (e.g. ab*d+), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="ReportedResultsToVS" xml:space="preserve">
-    <value>{0} Reported {1} test results to Visual Studio during test execution, executable: '{2}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5), {2} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <value>{0}Reported {1} test results to Visual Studio during test execution, executable: '{2}'</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5), {2} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="ReportedTestResults" xml:space="preserve">
-    <value>{0} Reported {1} test results to Visual Studio, executable: '{2}', duration: {3}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a number (e.g. 5),{2} represents an unlocalized name of executable (e.g. cmd.exe) file, {3} means stopwatch time</comment>
+    <value>{0}Reported {1} test results to Visual Studio, executable: '{2}', duration: {3}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5), {2} represents an unlocalized name of executable (e.g. cmd.exe) file, {3} means stopwatch time</comment>
+  </data>
+  <data name="RestoringSolutionSettings" xml:space="preserve">
+    <value>Restoring solution settings: {0}</value>
+    <comment>{0} represents a comma-separated list of setting properties</comment>
   </data>
   <data name="Results" xml:space="preserve">
     <value>Test {0}: Expected {1} ms, actual {2} ms</value>
     <comment>{0} represents an unlocalized name of a test (e.g. foo), {1} represents a number (e.g. 5), {2} represents a number (e.g. 5)</comment>
   </data>
   <data name="RunBatchException" xml:space="preserve">
-    <value>{0} {1} batch file caused exception, message: '{2}', executed command: '{3}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown) , {2} represents localized exception message (e.g. "Cannot load file"), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0}{1}: Exception caught, message: '{2}', executed command: '{3}'</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} is TestSetupBatchFile or TestTeardownBatchFile string, {2} represents localized exception message (e.g. "Cannot load file"), {3} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
   </data>
   <data name="RunExecutableError" xml:space="preserve">
-    <value>{0} Failed to run test executable '{1}': {2}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a unlocalized name of executable (e.g. cmd.exe) file, {2} represents localized exception message (e.g. "Cannot load file")</comment>
+    <value>{0}Failed to run test executable '{1}': {2}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents an unlocalized name of executable (e.g. cmd.exe) file, {2} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
   <data name="SchedulingStats" xml:space="preserve">
     <value>&gt;&gt;&gt; Scheduling statistics &lt;&lt;&lt;</value>
   </data>
   <data name="SettingsMessage" xml:space="preserve">
     <value>Settings for test executable '{0}': {1}</value>
-    <comment>{0} represents a unlocalized name of executable (e.g. cmd.exe) file, {1} represents an unlocalized settings string</comment>
+    <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file, {1} represents an unlocalized settings string</comment>
   </data>
   <data name="SettingsWrapperString" xml:space="preserve">
-    <value>SettingsWrapper is already running with settings for an executable on thread '{0}', cannot also be used by thread {1}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents an unlocalized name for thread (e.g. "T001519")</comment>
+    <value>SettingsWrapper is already running with settings for an executable on thread '{0}', cannot also be used by thread '{1}'</value>
+    <comment>{0} is a name of a thread (e.g. "T0"), {1} is a name of a thread (e.g. "T0")</comment>
   </data>
   <data name="StackTrace" xml:space="preserve">
-    <value>{0} Stack trace: {1}{2}</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} means new line string, {2} represents unlocalized exception stack</comment>
+    <value>{0}Stack trace:{1}{2}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} means new line string, {2} represents unlocalized exception stack trace</comment>
   </data>
   <data name="StandardDeviation" xml:space="preserve">
-    <value>Standard deviation: {0}</value>
+    <value>Standard deviation: {0} ms</value>
     <comment>{0} represents the standardDeviation for statistics to debug output</comment>
   </data>
   <data name="SuccessfullyRun" xml:space="preserve">
-    <value>{0} {1} batch file: Successfully ran '{2}'</value>
-    <comment>{0} represents an unlocalized name for thread (e.g. "T001519"), {1} represents a localized name for test mode (e.g. TestSetup or TestTeardown), {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+    <value>{0}{1}: Successfully ran '{2}'</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} is TestSetupBatchFile or TestTeardownBatchFile string, {2} represents unlocalized file path (e.g c:\test\foo.bat)</comment>
+  </data>
+  <data name="TerminatedProcess" xml:space="preserve">
+    <value>Terminated process {0} started at {1}</value>
+    <comment>{0} represents an unlocalized process name (e.g notepad.exe), {1} represents unlocalized string for time (e.g. "3/1/2008 7:00:00 AM")</comment>
   </data>
   <data name="TestCaseInAnalyzer" xml:space="preserve">
     <value>Test case already in analyzer: {0}</value>
     <comment>{0} represents an unlocalized string for test name (e.g. "TestSuite1.Test2")</comment>
   </data>
   <data name="TestCaseNotRun" xml:space="preserve">
-    <value>{0} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}</value>
-    <comment>{0} represents a number (e.g. 5), {1} represents a unlocalized new line string (e.g "\n")</comment>
+    <value>{0}{1} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{2}{3}</value>
+    <comment>{0} is empty or a name of a thread followed by space (e.g. "[T0] "), {1} represents a number (e.g. 5), {2} represents an unlocalized new line string (e.g "\n"), {3} is a new-line separated list of unlocalized test case names</comment>
   </data>
   <data name="TestCommandCanBeRun" xml:space="preserve">
-    <value>Test whether the following commands can be executed sucessfully on the command line (make sure all required binaries are on the PATH):</value>
+    <value>Test whether the following commands can be executed sucessfully on the command line (make sure all required binaries are on the PATH):{0}{1}</value>
+    <comment>{0} represents an unlocalized new line string (e.g "\n"), {1} is a new-line separated sequence of commands</comment>
   </data>
   <data name="TestDiscoveryCancelled" xml:space="preserve">
     <value>Test discovery was cancelled after {0} s for executable {1}</value>
-    <comment>{0} represents a number (e.g. 5), {1} represents a unlocalized name of executable (e.g. cmd.exe) file</comment>
+    <comment>{0} represents a number (e.g. 5), {1} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="TestResultParse" xml:space="preserve">
     <value>Test result file {0} could not be parsed (completely) - your test executable has probably crashed. Exception message: {1}</value>
     <comment>{0} represents unlocalized file path (e.g c:\test\results.xml), {1} represents localized exception message (e.g. "Cannot load file")</comment>
   </data>
-  <data name="TestSetup" xml:space="preserve">
-    <value>Test setup</value>
+  <data name="TestSetupBatchFile" xml:space="preserve">
+    <value>Test setup batch file</value>
   </data>
-  <data name="TestTeardown" xml:space="preserve">
-    <value>Test teardown</value>
+  <data name="TestTeardownBatchFile" xml:space="preserve">
+    <value>Test teardown batch file</value>
   </data>
   <data name="ThreadExecutionMessage" xml:space="preserve">
     <value>Executing tests on {0} threads</value>
     <comment>{0} represents a number (e.g. 5)</comment>
   </data>
   <data name="UnknownLiteral" xml:space="preserve">
-    <value>Unknown literal</value>
+    <value>Unknown literal: {0}</value>
+    <comment>{0} is a name of enum literal</comment>
   </data>
   <data name="UnknownTestCase" xml:space="preserve">
     <value>Unknown test case status: {0}</value>

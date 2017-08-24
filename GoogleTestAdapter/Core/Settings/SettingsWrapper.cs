@@ -116,7 +116,7 @@ namespace GoogleTestAdapter.Settings
                         if (_currentSettings != _settingsContainer.SolutionSettings)
                         {
                             _currentSettings = _settingsContainer.SolutionSettings;
-                            logger.DebugInfo(String.Format(Resources.BacktoSolution, this));
+                            logger.DebugInfo(String.Format(Resources.RestoringSolutionSettings, this));
                         }
                     }
                 }

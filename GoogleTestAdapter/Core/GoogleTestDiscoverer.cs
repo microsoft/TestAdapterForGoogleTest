@@ -70,7 +70,7 @@ namespace GoogleTestAdapter
                 Action<TestCase> reportTestCases = tc =>
                 {
                     reporter.ReportTestsFound(tc.Yield());
-                    logger.DebugInfo(String.Format(Resources.AddedTestCase, tc.DisplayName)); 
+                    logger.DebugInfo(String.Format(Resources.AddedTestCase, tc.DisplayName));
                     nrOfTestCases++;
                 };
                 var factory = new TestCaseFactory(executable, logger, settings, diaResolverFactory);
@@ -104,20 +104,19 @@ namespace GoogleTestAdapter
             _logger.DebugInfo(String.Format(Resources.FileNotFound, executable));
 
             bool matches;
-            string regexSource, regex;
+            string regex;
             if (string.IsNullOrWhiteSpace(customRegex))
             {
-                regexSource = Resources.Default;
                 regex = SettingsWrapper.TestFinderRegex;
                 matches = CompiledTestFinderRegex.IsMatch(executable);
+                _logger.DebugInfo(String.Format(matches ? Resources.MatchesDefault : Resources.DoesntMatchDefault, executable, regex));
             }
             else
             {
-                regexSource = Resources.Custom;
                 regex = customRegex;
                 matches = SafeMatches(executable, customRegex);
+                _logger.DebugInfo(String.Format(matches ? Resources.MatchesCustom : Resources.DoesntMatchCustom, executable, regex));
             }
-            _logger.DebugInfo(String.Format(matches ? Resources.Matches : Resources.DontMatch, executable, regexSource, regex));
 
             return matches;
         }

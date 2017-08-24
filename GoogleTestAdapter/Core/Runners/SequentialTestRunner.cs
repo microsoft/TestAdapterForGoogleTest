@@ -139,8 +139,8 @@ namespace GoogleTestAdapter.Runners
         {
             logger.LogError(String.Format(Resources.RunExecutableError, threadName, executable, exception.Message));
             logger.DebugError(String.Format(Resources.StackTrace, threadName, Environment.NewLine, exception.StackTrace));
-            logger.LogError($"{threadName}{Strings.Instance.TroubleShootingLink}");
-            logger.LogError(String.Format(Resources.ExecuteSteps, threadName, workingDir, Environment.NewLine) + $"{executable} {arguments}");
+            logger.LogError(String.Format(Strings.Instance.TroubleShootingLink, threadName));
+            logger.LogError(String.Format(Resources.ExecuteSteps, threadName, workingDir, Environment.NewLine, executable, arguments));
         }
 
         private IEnumerable<TestResult> TryRunTests(string executable, string workingDir, bool isBeingDebugged,
@@ -179,7 +179,7 @@ namespace GoogleTestAdapter.Runners
                                    !_settings.ParallelTestExecution;
 
             if (printTestOutput)
-                _logger.LogInfo(String.Format(Resources.OutputOfCmdWithThreadInfo, _threadName, executable, arguments.CommandLine));
+                _logger.LogInfo(String.Format(Resources.OutputOfCommandMessage, _threadName, executable, arguments.CommandLine));
 
             Action<string> reportOutputAction = line =>
             {
@@ -204,7 +204,7 @@ namespace GoogleTestAdapter.Runners
             streamingParser.Flush();
 
             if (printTestOutput)
-                _logger.LogInfo(String.Format(Resources.EndOfOutputWithThreadInfo, _threadName));
+                _logger.LogInfo(String.Format(Resources.EndOfOutputMessage, _threadName));
 
             var consoleOutput = new List<string>();
             new TestDurationSerializer().UpdateTestDurations(streamingParser.TestResults);
@@ -213,7 +213,7 @@ namespace GoogleTestAdapter.Runners
             foreach (TestResult result in streamingParser.TestResults)
             {
                 if (!_schedulingAnalyzer.AddActualDuration(result.TestCase, (int) result.Duration.TotalMilliseconds))
-                    _logger.LogWarning($"{_threadName}{String.Format(Resources.AlreadyInAnalyzer, result.TestCase.FullyQualifiedName)}");
+                    _logger.LogWarning(String.Format(Resources.AlreadyInAnalyzer, _threadName, result.TestCase.FullyQualifiedName));
             }
             return consoleOutput;
         }

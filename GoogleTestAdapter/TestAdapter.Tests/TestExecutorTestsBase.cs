@@ -209,7 +209,7 @@ namespace GoogleTestAdapter.TestAdapter
             RunAndVerifyTests(TestResources.DllTests_ReleaseX86, 1, 1, 0);
 
             MockLogger.Verify(l => l.LogError(
-                It.Is<string>(s => s.Contains(TestSetup.ToLower()))),
+                It.Is<string>(s => s.Contains(TestSetup))),
                 Times.AtLeastOnce());
         }
 

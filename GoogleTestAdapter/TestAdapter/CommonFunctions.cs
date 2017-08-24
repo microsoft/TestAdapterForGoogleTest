@@ -12,23 +12,29 @@ using Microsoft.VisualStudio.TestPlatform.ObjectModel.Logging;
 
 namespace GoogleTestAdapter.TestAdapter
 {
+    public enum TestPhase
+    {
+        TestDiscovery,
+        TestExecution
+    }
+
     public static class CommonFunctions
     {
         public static void ReportErrors(ILogger logger, TestPhase phase, bool isDebugModeEnabled)
         {
-            string phaseType = (phase == TestPhase.TestDiscovery) ? Resources.TestDiscovery: Resources.TestExecution;
             IList<string> errors = logger.GetMessages(Severity.Error, Severity.Warning);
             if (errors.Count == 0)
                 return;
 
             bool hasErrors = logger.GetMessages(Severity.Error).Count > 0;
+            string phaseString = (phase == TestPhase.TestDiscovery) ? Resources.TestDiscovery : Resources.TestExecution;
             string hint = isDebugModeEnabled
                 ? ""
                 : Resources.EnableDebugMode;
             string jointErrors = string.Join(Environment.NewLine, errors);
 
             string message = $"{Environment.NewLine}================{Environment.NewLine}"
-                + String.Format(Resources.ErrorAndWarning, phaseType, hint, Environment.NewLine)
+                + String.Format(Resources.ErrorAndWarning, phaseString, hint, Environment.NewLine)
                 + jointErrors;
 
             if (hasErrors)

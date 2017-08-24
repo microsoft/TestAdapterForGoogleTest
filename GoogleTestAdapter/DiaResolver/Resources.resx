@@ -138,8 +138,8 @@
     <value>UnMapAndLoad failed!</value>
   </data>
   <data name="AttemptsToFind" xml:space="preserve">
-    <value>Attempts to find PDB {0}</value>
-    <comment>{0} represents unlocalized file path (e.g c:\test\foo.pdb)</comment>
+    <value>Attempts to find PDB: {0}</value>
+    <comment>{0} is a list of locations attempted</comment>
   </data>
   <data name="ParsingFile" xml:space="preserve">
     <value>Parsing PDB file {0}</value>

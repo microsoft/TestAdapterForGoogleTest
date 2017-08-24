@@ -79,7 +79,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test case already in analyzer: {0}.
+        ///   Looks up a localized string similar to {0}Test case already in analyzer: {1}.
         /// </summary>
         internal static string AlreadyInAnalyzer {
             get {
@@ -106,16 +106,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Restoring solution settings: {0}.
-        /// </summary>
-        internal static string BacktoSolution {
-            get {
-                return ResourceManager.GetString("BacktoSolution", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file: Did not find file: {2}.
+        ///   Looks up a localized string similar to {0}{1}: Did not find file: {2}.
         /// </summary>
         internal static string BatchFileMissing {
             get {
@@ -124,7 +115,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file returned exit code {2}, executed command: &apos;{3}&apos;.
+        ///   Looks up a localized string similar to {0}{1}: Exited with code {2}, executed command: &apos;{3}&apos;.
         /// </summary>
         internal static string BatchReturnedExitCode {
             get {
@@ -133,7 +124,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Collected {1} test result(s) from result XML file {2}.
+        ///   Looks up a localized string similar to {0}Collected {1} test result(s) from result XML file {2}.
         /// </summary>
         internal static string CollectedResults {
             get {
@@ -142,7 +133,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Collected {0} test results from console output.
+        ///   Looks up a localized string similar to {0}Collected {1} test results from console output.
         /// </summary>
         internal static string CollectedResultsFromConsole {
             get {
@@ -169,11 +160,20 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Could not list test cases for executable &apos;{0}&apos;: process execution failed with exit code {1}.
+        /// </summary>
+        internal static string CouldNotListTestCases {
+            get {
+                return ResourceManager.GetString("CouldNotListTestCases", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Could not terminate process {0} started at {1}: {2}.
         /// </summary>
-        internal static string CouldNotKill {
+        internal static string CouldNotTerminate {
             get {
-                return ResourceManager.GetString("CouldNotKill", resourceCulture);
+                return ResourceManager.GetString("CouldNotTerminate", resourceCulture);
             }
         }
         
@@ -187,7 +187,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Created {0} test results for tests which were neither found in result XML file nor in console output.
+        ///   Looks up a localized string similar to {0}Created {1} test results for tests which were neither found in result XML file nor in console output.
         /// </summary>
         internal static string CreatedTestResults {
             get {
@@ -196,25 +196,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to custom.
-        /// </summary>
-        internal static string Custom {
-            get {
-                return ResourceManager.GetString("Custom", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to default.
-        /// </summary>
-        internal static string Default {
-            get {
-                return ResourceManager.GetString("Default", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Could not delete test directory &apos;{1}&apos;: {2}.
+        ///   Looks up a localized string similar to {0}Could not delete test directory &apos;{1}&apos;: {2}.
         /// </summary>
         internal static string DeleteTestDir {
             get {
@@ -223,16 +205,25 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} does not match {1} regex {2}.
+        ///   Looks up a localized string similar to {0} does not match custom regex {1}.
         /// </summary>
-        internal static string DontMatch {
+        internal static string DoesntMatchCustom {
             get {
-                return ResourceManager.GetString("DontMatch", resourceCulture);
+                return ResourceManager.GetString("DoesntMatchCustom", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output.
+        ///   Looks up a localized string similar to {0} does not match default regex {1}.
+        /// </summary>
+        internal static string DoesntMatchDefault {
+            get {
+                return ResourceManager.GetString("DoesntMatchDefault", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0}&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output.
         /// </summary>
         internal static string EndOfOutputMessage {
             get {
@@ -241,16 +232,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} &lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt;&lt; End of Output.
-        /// </summary>
-        internal static string EndOfOutputWithThreadInfo {
-            get {
-                return ResourceManager.GetString("EndOfOutputWithThreadInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to {0} Exception while running tests: {1}.
+        ///   Looks up a localized string similar to {0}Exception while running tests: {1}.
         /// </summary>
         internal static string ExceptionMessage {
             get {
@@ -268,7 +250,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}: Executable came from another computer and was blocked to help protect this computer..
+        ///   Looks up a localized string similar to Executable {0} came from another computer and was blocked to help protect this computer..
         /// </summary>
         internal static string ExecutableError {
             get {
@@ -277,7 +259,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} In particular: launch command prompt, change into directory &apos;{1}&apos;, and execute the following command to make sure your tests can be run in general.{2}.
+        ///   Looks up a localized string similar to {0}In particular: launch command prompt, change into directory &apos;{1}&apos;, and execute the following command to make sure your tests can be run in general.{2}{3} {4}.
         /// </summary>
         internal static string ExecuteSteps {
             get {
@@ -286,7 +268,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Execution has been cancelled: {1}.
+        ///   Looks up a localized string similar to {0}Execution has been cancelled: {1}.
         /// </summary>
         internal static string ExecutionCancelled {
             get {
@@ -295,7 +277,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Execution is already running with settings for executable {0}, can not switch to settings for {1}.
+        ///   Looks up a localized string similar to Execution is already running with settings for executable {0}, cannot switch to settings for {1}.
         /// </summary>
         internal static string ExecutionString {
             get {
@@ -304,7 +286,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Execution took {1}.
+        ///   Looks up a localized string similar to {0}Execution took {1}.
         /// </summary>
         internal static string ExecutionTime {
             get {
@@ -367,20 +349,11 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Invalid regular expression &apos;{0}&apos;, exception message: {1}.
+        ///   Looks up a localized string similar to Invalid regular expression &quot;{0}&quot;, exception message: {1}.
         /// </summary>
         internal static string InvalidRegularExpression {
             get {
                 return ResourceManager.GetString("InvalidRegularExpression", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Terminated process {0} started at {1}.
-        /// </summary>
-        internal static string KilledProcess {
-            get {
-                return ResourceManager.GetString("KilledProcess", resourceCulture);
             }
         }
         
@@ -394,11 +367,20 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} matches {1} regex {2}.
+        ///   Looks up a localized string similar to {0} matches custom regex {1}.
         /// </summary>
-        internal static string Matches {
+        internal static string MatchesCustom {
             get {
-                return ResourceManager.GetString("Matches", resourceCulture);
+                return ResourceManager.GetString("MatchesCustom", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} matches default regex {1}.
+        /// </summary>
+        internal static string MatchesDefault {
+            get {
+                return ResourceManager.GetString("MatchesDefault", resourceCulture);
             }
         }
         
@@ -484,16 +466,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command &apos;{1} {2}&apos;.
-        /// </summary>
-        internal static string OutputOfCmdWithThreadInfo {
-            get {
-                return ResourceManager.GetString("OutputOfCmdWithThreadInfo", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Output of command.
+        ///   Looks up a localized string similar to Output of command:.
         /// </summary>
         internal static string OutputOfCommand {
             get {
@@ -502,7 +475,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to &gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command &apos;{0} {1}&apos;.
+        ///   Looks up a localized string similar to {0}&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt;&gt; Output of command &apos;{1} {2}&apos;.
         /// </summary>
         internal static string OutputOfCommandMessage {
             get {
@@ -547,15 +520,6 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Could not list test cases for executable &apos;{0}&apos;: process execution failed with exit code {1}.
-        /// </summary>
-        internal static string ProcessFailed {
-            get {
-                return ResourceManager.GetString("ProcessFailed", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Could not read test durations: {0}.
         /// </summary>
         internal static string ReadTestDurationError {
@@ -583,7 +547,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Reported {1} test results to Visual Studio during test execution, executable: &apos;{2}&apos;.
+        ///   Looks up a localized string similar to {0}Reported {1} test results to Visual Studio during test execution, executable: &apos;{2}&apos;.
         /// </summary>
         internal static string ReportedResultsToVS {
             get {
@@ -592,11 +556,20 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Reported {1} test results to Visual Studio, executable: &apos;{2}&apos;, duration: {3}.
+        ///   Looks up a localized string similar to {0}Reported {1} test results to Visual Studio, executable: &apos;{2}&apos;, duration: {3}.
         /// </summary>
         internal static string ReportedTestResults {
             get {
                 return ResourceManager.GetString("ReportedTestResults", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Restoring solution settings: {0}.
+        /// </summary>
+        internal static string RestoringSolutionSettings {
+            get {
+                return ResourceManager.GetString("RestoringSolutionSettings", resourceCulture);
             }
         }
         
@@ -610,7 +583,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file caused exception, message: &apos;{2}&apos;, executed command: &apos;{3}&apos;.
+        ///   Looks up a localized string similar to {0}{1}: Exception caught, message: &apos;{2}&apos;, executed command: &apos;{3}&apos;.
         /// </summary>
         internal static string RunBatchException {
             get {
@@ -619,7 +592,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Failed to run test executable &apos;{1}&apos;: {2}.
+        ///   Looks up a localized string similar to {0}Failed to run test executable &apos;{1}&apos;: {2}.
         /// </summary>
         internal static string RunExecutableError {
             get {
@@ -646,7 +619,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SettingsWrapper is already running with settings for an executable on thread &apos;{0}&apos;, cannot also be used by thread {1}.
+        ///   Looks up a localized string similar to SettingsWrapper is already running with settings for an executable on thread &apos;{0}&apos;, cannot also be used by thread &apos;{1}&apos;.
         /// </summary>
         internal static string SettingsWrapperString {
             get {
@@ -655,7 +628,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} Stack trace: {1}{2}.
+        ///   Looks up a localized string similar to {0}Stack trace:{1}{2}.
         /// </summary>
         internal static string StackTrace {
             get {
@@ -664,7 +637,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Standard deviation: {0}.
+        ///   Looks up a localized string similar to Standard deviation: {0} ms.
         /// </summary>
         internal static string StandardDeviation {
             get {
@@ -673,11 +646,20 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} {1} batch file: Successfully ran &apos;{2}&apos;.
+        ///   Looks up a localized string similar to {0}{1}: Successfully ran &apos;{2}&apos;.
         /// </summary>
         internal static string SuccessfullyRun {
             get {
                 return ResourceManager.GetString("SuccessfullyRun", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Terminated process {0} started at {1}.
+        /// </summary>
+        internal static string TerminatedProcess {
+            get {
+                return ResourceManager.GetString("TerminatedProcess", resourceCulture);
             }
         }
         
@@ -691,7 +673,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{1}.
+        ///   Looks up a localized string similar to {0}{1} test cases seem to not have been run - are you repeating a test run, but tests have changed in the meantime? Test cases:{2}{3}.
         /// </summary>
         internal static string TestCaseNotRun {
             get {
@@ -700,7 +682,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test whether the following commands can be executed sucessfully on the command line (make sure all required binaries are on the PATH):.
+        ///   Looks up a localized string similar to Test whether the following commands can be executed sucessfully on the command line (make sure all required binaries are on the PATH):{0}{1}.
         /// </summary>
         internal static string TestCommandCanBeRun {
             get {
@@ -727,20 +709,20 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test setup.
+        ///   Looks up a localized string similar to Test setup batch file.
         /// </summary>
-        internal static string TestSetup {
+        internal static string TestSetupBatchFile {
             get {
-                return ResourceManager.GetString("TestSetup", resourceCulture);
+                return ResourceManager.GetString("TestSetupBatchFile", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test teardown.
+        ///   Looks up a localized string similar to Test teardown batch file.
         /// </summary>
-        internal static string TestTeardown {
+        internal static string TestTeardownBatchFile {
             get {
-                return ResourceManager.GetString("TestTeardown", resourceCulture);
+                return ResourceManager.GetString("TestTeardownBatchFile", resourceCulture);
             }
         }
         
@@ -754,7 +736,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Unknown literal.
+        ///   Looks up a localized string similar to Unknown literal: {0}.
         /// </summary>
         internal static string UnknownLiteral {
             get {

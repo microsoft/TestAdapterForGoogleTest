@@ -21,7 +21,7 @@ namespace GoogleTestAdapter.TestCases
                 case TestCaseDescriptor.TestTypes.Simple:
                     return GetTestMethodSignature(descriptor.Suite, descriptor.Name).Yield();
                 default:
-                    throw new InvalidOperationException($"{Resources.UnknownLiteral} {descriptor.TestType}");
+                    throw new InvalidOperationException(String.Format(Resources.UnknownLiteral, descriptor.TestType));
             }
         }
 

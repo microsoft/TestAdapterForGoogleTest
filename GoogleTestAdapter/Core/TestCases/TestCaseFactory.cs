@@ -149,11 +149,10 @@ namespace GoogleTestAdapter.TestCases
 
                     string dir = Path.GetDirectoryName(_executable);
                     string file = Path.GetFileName(_executable);
-                    string cdToWorkingDir = $@"cd ""{dir}""";
-                    string listTestsCommand = $"{file} {GoogleTestConstants.ListTestsOption.Trim()}";
+                    string command = $@"cd ""{dir}""{Environment.NewLine}{file} {GoogleTestConstants.ListTestsOption.Trim()}";
 
                     _logger.LogError(String.Format(Resources.TestDiscoveryCancelled, _settings.TestDiscoveryTimeoutInSeconds, _executable));
-                    _logger.DebugError($"{Resources.TestCommandCanBeRun}{Environment.NewLine}{cdToWorkingDir}{Environment.NewLine}{listTestsCommand}");
+                    _logger.DebugError(String.Format(Resources.TestCommandCanBeRun, Environment.NewLine, command));
                     
                     return new List<TestCase>();
                 }
@@ -183,10 +182,10 @@ namespace GoogleTestAdapter.TestCases
         {
             if (processExitCode != 0)
             {
-                string messsage = String.Format(Resources.ProcessFailed, _executable, processExitCode);
+                string messsage = String.Format(Resources.CouldNotListTestCases, _executable, processExitCode);
                 messsage += Environment.NewLine + String.Format(Resources.CommandExecuted, _executable, GoogleTestConstants.ListTestsOption.Trim(), Path.GetDirectoryName(_executable));
                 if (standardOutput.Count(s => !string.IsNullOrEmpty(s)) > 0)
-                    messsage += Environment.NewLine + Resources.OutputOfCommand + ":" + Environment.NewLine + string.Join(Environment.NewLine, standardOutput);
+                    messsage += Environment.NewLine + Resources.OutputOfCommand + Environment.NewLine + string.Join(Environment.NewLine, standardOutput);
                 else
                     messsage += Environment.NewLine + Resources.NoOutput;
 

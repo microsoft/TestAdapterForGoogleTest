@@ -115,7 +115,7 @@ namespace GoogleTestAdapter.TestAdapter.Helpers
             }
             catch (TestPlatformFormatException e)
             {
-                _logger.LogError(String.Format(Resources.TestCaseFilter, e.Message));
+                _logger.LogError(String.Format(Resources.FilterInvalid, e.Message));
                 return null;
             }
         }
@@ -140,7 +140,7 @@ namespace GoogleTestAdapter.TestAdapter.Helpers
 
             string message = matches
                 ? String.Format(Resources.Matches, testCase.DisplayName, filterExpression.TestCaseFilterValue)
-                : String.Format(Resources.DontMatch, testCase.DisplayName, filterExpression.TestCaseFilterValue);
+                : String.Format(Resources.DoesntMatch, testCase.DisplayName, filterExpression.TestCaseFilterValue);
             _logger.DebugInfo(message);
 
             return matches;

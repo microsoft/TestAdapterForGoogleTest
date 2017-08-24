@@ -12,11 +12,6 @@ using GoogleTestAdapter.TestAdapter.Framework;
 
 namespace GoogleTestAdapter.TestAdapter
 {
-    public enum TestPhase
-    {
-        TestDiscovery,
-        TestExecution
-    }
     [DefaultExecutorUri(TestExecutor.ExecutorUriString)]
     [FileExtension(".exe")]
     public class TestDiscoverer : ITestDiscoverer

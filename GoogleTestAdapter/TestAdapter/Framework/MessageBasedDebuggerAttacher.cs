@@ -59,7 +59,7 @@ namespace GoogleTestAdapter.TestAdapter.Framework
             }
             catch (Exception e)
             {
-                _logger.LogError($"{Resources.CouldNotAttachMessage} {processId}:{Environment.NewLine}{e}");
+                _logger.LogError(String.Format(Resources.CouldNotAttachMessage, processId, Environment.NewLine, e));
             }
             return false;
         }

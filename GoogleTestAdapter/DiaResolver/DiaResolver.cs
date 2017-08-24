@@ -93,7 +93,7 @@ namespace GoogleTestAdapter.DiaResolver
             string pdb = PeParser.ExtractPdbPath(binary, _logger);
             if (pdb != null && File.Exists(pdb))
                 return pdb;
-            attempts.Add("parsing from executable");
+            attempts.Add($"\"{binary}\"");
 
             pdb = Path.ChangeExtension(binary, ".pdb");
             if (File.Exists(pdb))

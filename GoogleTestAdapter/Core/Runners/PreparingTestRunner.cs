@@ -13,13 +13,14 @@ using GoogleTestAdapter.Settings;
 
 namespace GoogleTestAdapter.Runners
 {
-    public enum TestStatus
-    {
-        TestSetup,
-        TestTeardown
-    }
     public class PreparingTestRunner : ITestRunner
     {
+        private enum BatchType
+        {
+            TestSetup,
+            TestTeardown
+        }
+
         private readonly ILogger _logger;
         private readonly SettingsWrapper _settings;
         private readonly ITestRunner _innerTestRunner;
@@ -61,13 +62,13 @@ namespace GoogleTestAdapter.Runners
 
                 string batch = _settings.GetBatchForTestSetup(_solutionDirectory, testDirectory, _threadId);
                 batch = batch == "" ? "" : _solutionDirectory + batch;
-                SafeRunBatch(TestStatus.TestSetup, _solutionDirectory, batch, isBeingDebugged);
+                SafeRunBatch(BatchType.TestSetup, _solutionDirectory, batch, isBeingDebugged);
 
                 _innerTestRunner.RunTests(testCasesToRun, baseDir, workingDir, userParameters, isBeingDebugged, debuggedLauncher, executor);
 
                 batch = _settings.GetBatchForTestTeardown(_solutionDirectory, testDirectory, _threadId);
                 batch = batch == "" ? "" : _solutionDirectory + batch;
-                SafeRunBatch(TestStatus.TestTeardown, _solutionDirectory, batch, isBeingDebugged);
+                SafeRunBatch(BatchType.TestTeardown, _solutionDirectory, batch, isBeingDebugged);
 
                 stopwatch.Stop();
                 _logger.DebugInfo(String.Format(Resources.ExecutionTime, _threadName, stopwatch.Elapsed));
@@ -90,31 +91,34 @@ namespace GoogleTestAdapter.Runners
         }
 
 
-        private void SafeRunBatch(TestStatus batchType, string workingDirectory, string batch, bool isBeingDebugged)
+        private void SafeRunBatch(BatchType batchType, string workingDirectory, string batch, bool isBeingDebugged)
         {
-            string locBatchType = (batchType == TestStatus.TestSetup) ? Resources.TestSetup : Resources.TestTeardown;
+            string batchTypeString = (batchType == BatchType.TestSetup) ? Resources.TestSetupBatchFile : Resources.TestTeardownBatchFile;
+
             if (string.IsNullOrEmpty(batch))
             {
                 return;
             }
             if (!File.Exists(batch))
             {
-                _logger.LogError(String.Format(Resources.BatchFileMissing, _threadName, locBatchType.ToLower(), batch));
+                _logger.LogError(String.Format(Resources.BatchFileMissing, _threadName, batchTypeString, batch));
                 return;
             }
 
             try
             {
-                RunBatch(locBatchType, workingDirectory, batch, isBeingDebugged);
+                RunBatch(batchType, workingDirectory, batch, isBeingDebugged);
             }
             catch (Exception e)
             {
-                _logger.LogError(String.Format(Resources.RunBatchException, _threadName, locBatchType, e.Message, batch));
+                _logger.LogError(String.Format(Resources.RunBatchException, _threadName, batchTypeString, e.Message, batch));
             }
         }
 
-        private void RunBatch(string batchType, string workingDirectory, string batch, bool isBeingDebugged)
+        private void RunBatch(BatchType batchType, string workingDirectory, string batch, bool isBeingDebugged)
         {
+            string batchTypeString = (batchType == BatchType.TestSetup) ? Resources.TestSetupBatchFile : Resources.TestTeardownBatchFile;
+
             int batchExitCode;
             if (_settings.UseNewTestExecutionFramework)
             {
@@ -129,11 +133,11 @@ namespace GoogleTestAdapter.Runners
 
             if (batchExitCode == 0)
             {
-                _logger.DebugInfo(String.Format(Resources.SuccessfullyRun, _threadName, batchType, batch));
+                _logger.DebugInfo(String.Format(Resources.SuccessfullyRun, _threadName, batchTypeString, batch));
             }
             else
             {
-                _logger.LogWarning(String.Format(Resources.BatchReturnedExitCode, _threadName, batchType, batchExitCode, batch));
+                _logger.LogWarning(String.Format(Resources.BatchReturnedExitCode, _threadName, batchTypeString, batchExitCode, batch));
             }
         }
 

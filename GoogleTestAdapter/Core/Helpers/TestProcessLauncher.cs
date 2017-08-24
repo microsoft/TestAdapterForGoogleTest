@@ -63,11 +63,11 @@ namespace GoogleTestAdapter.Helpers
                 try
                 {
                     process.Kill();
-                    logger.DebugInfo(String.Format(Resources.KilledProcess, process, startTime.ToShortTimeString()));
+                    logger.DebugInfo(String.Format(Resources.TerminatedProcess, process, startTime.ToShortTimeString()));
                 }
                 catch (Exception e)
                 {
-                    logger.DebugWarning(String.Format(Resources.CouldNotKill, process, startTime.ToShortTimeString(), e.Message));
+                    logger.DebugWarning(String.Format(Resources.CouldNotTerminate, process, startTime.ToShortTimeString(), e.Message));
                 }
             }
             catch (Exception)

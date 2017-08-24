@@ -61,7 +61,7 @@ namespace GoogleTestAdapter.DiaResolver {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Attempts to find PDB {0}.
+        ///   Looks up a localized string similar to Attempts to find PDB: {0}.
         /// </summary>
         internal static string AttemptsToFind {
             get {

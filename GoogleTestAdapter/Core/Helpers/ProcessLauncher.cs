@@ -72,12 +72,12 @@ namespace GoogleTestAdapter.Helpers
                 var waiter = new ProcessWaiter(process);
                 if (printTestOutput)
                 {
-                    _logger.LogInfo(String.Format(Resources.OutputOfCommandMessage, command, param));
+                    _logger.LogInfo(String.Format(Resources.OutputOfCommandMessage, "", command, param));
                 }
                 ReadTheStream(process, output, printTestOutput, throwIfError);
                 if (printTestOutput)
                 {
-                    _logger.LogInfo(Resources.EndOfOutputMessage);
+                    _logger.LogInfo(String.Format(Resources.EndOfOutputMessage, ""));
                 }
                 return waiter.WaitForExit();
             }

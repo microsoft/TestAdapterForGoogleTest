@@ -61,16 +61,7 @@ namespace GoogleTestAdapter.TestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Failed attaching debugger to process {0}: {1}.
-        /// </summary>
-        internal static string AttachDebuggerMessage {
-            get {
-                return ResourceManager.GetString("AttachDebuggerMessage", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Could not attach debugger to process.
+        ///   Looks up a localized string similar to Could not attach debugger to process {0}:{1}{2}.
         /// </summary>
         internal static string CouldNotAttachMessage {
             get {
@@ -108,9 +99,9 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to {0} does not match {1}.
         /// </summary>
-        internal static string DontMatch {
+        internal static string DoesntMatch {
             get {
-                return ResourceManager.GetString("DontMatch", resourceCulture);
+                return ResourceManager.GetString("DoesntMatch", resourceCulture);
             }
         }
         
@@ -205,7 +196,7 @@ namespace GoogleTestAdapter.TestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Solution settings:.
+        ///   Looks up a localized string similar to Solution settings: {0}.
         /// </summary>
         internal static string Settings {
             get {
@@ -214,7 +205,7 @@ namespace GoogleTestAdapter.TestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test case filter:.
+        ///   Looks up a localized string similar to Test case filter: {0}.
         /// </summary>
         internal static string TestCaseFilter {
             get {
@@ -327,15 +318,6 @@ namespace GoogleTestAdapter.TestAdapter {
         internal static string VS2012Error {
             get {
                 return ResourceManager.GetString("VS2012Error", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Could not find Visual Studio instance.
-        /// </summary>
-        internal static string VSInstanceNotFound {
-            get {
-                return ResourceManager.GetString("VSInstanceNotFound", resourceCulture);
             }
         }
         

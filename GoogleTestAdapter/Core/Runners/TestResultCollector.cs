@@ -77,7 +77,7 @@ namespace GoogleTestAdapter.Runners
                 nrOfCollectedTestResults++;
             }
             if (nrOfCollectedTestResults > 0)
-                _logger.DebugInfo($"{_threadName}{String.Format(Resources.CollectedResultsFromConsole, nrOfCollectedTestResults)}");
+                _logger.DebugInfo(String.Format(Resources.CollectedResultsFromConsole, _threadName, nrOfCollectedTestResults));
         }
 
         private void CreateMissingResults(TestCase[] testCases, TestCase crashedTestCase, List<TestResult> testResults)
@@ -97,14 +97,13 @@ namespace GoogleTestAdapter.Runners
                 });
             }
             if (testCases.Length > 0)
-                _logger.DebugInfo($"{_threadName}{String.Format(Resources.CreatedTestResults, testCases.Length)}");
+                _logger.DebugInfo(String.Format(Resources.CreatedTestResults, _threadName, testCases.Length));
         }
 
         private void ReportSuspiciousTestCases(TestCase[] testCases)
         {
             string testCasesAsString = string.Join(Environment.NewLine, testCases.Select(tc => tc.DisplayName));
-            _logger.DebugWarning(
-                $"{_threadName}{String.Format(Resources.TestCaseNotRun, testCases.Length, Environment.NewLine)}{testCasesAsString}");
+            _logger.DebugWarning(String.Format(Resources.TestCaseNotRun, _threadName, testCases.Length, Environment.NewLine, testCasesAsString));
         }
 
     }

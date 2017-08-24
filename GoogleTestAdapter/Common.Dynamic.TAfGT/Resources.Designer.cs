@@ -88,7 +88,7 @@ namespace GoogleTestAdapter.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Check out Test Adapter for Google Test&apos;s trouble shooting section at https://go.microsoft.com/fwlink/?linkid=848168.
+        ///   Looks up a localized string similar to {0}Check out Test Adapter for Google Test&apos;s trouble shooting section at https://go.microsoft.com/fwlink/?linkid=848168.
         /// </summary>
         internal static string TroubleShootingLink {
             get {
