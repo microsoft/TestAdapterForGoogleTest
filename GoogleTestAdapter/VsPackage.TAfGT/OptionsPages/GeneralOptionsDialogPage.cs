@@ -1,4 +1,5 @@
-﻿// This file has been modified by Microsoft on 11/2017.
+﻿// Copyright (c) Microsoft Corporation. All rights reserved.
+// Licensed under the MIT license.
 
 using GoogleTestAdapter.Settings;
 
