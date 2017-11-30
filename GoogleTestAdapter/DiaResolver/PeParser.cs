@@ -1,4 +1,4 @@
-﻿// This file has been modified by Microsoft on 9/2017.
+﻿// This file has been modified by Microsoft on 11/2017.
 
 using GoogleTestAdapter.Common;
 using Microsoft.Win32.SafeHandles;
@@ -253,7 +253,7 @@ namespace GoogleTestAdapter.DiaResolver
                 bool shouldContinue = true;
                 uint size = 0u;
                 var directoryEntry = (IMAGE_IMPORT_DESCRIPTOR*)NativeMethods.ImageDirectoryEntryToData(image.MappedAddress, 0, 1, &size);
-                while (shouldContinue && directoryEntry->OriginalFirstThunk != 0u)
+                while (shouldContinue && directoryEntry != null && directoryEntry->OriginalFirstThunk != 0u)
                 {
                     shouldContinue = predicate(GetString(image, directoryEntry->Name));
                     directoryEntry++;
