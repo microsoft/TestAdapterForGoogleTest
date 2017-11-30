@@ -253,7 +253,8 @@ namespace GoogleTestAdapter.DiaResolver
                 bool shouldContinue = true;
                 uint size = 0u;
                 var directoryEntry = (IMAGE_IMPORT_DESCRIPTOR*)NativeMethods.ImageDirectoryEntryToData(image.MappedAddress, 0, 1, &size);
-                while (shouldContinue && directoryEntry != null && directoryEntry->OriginalFirstThunk != 0u)
+                if (directoryEntry == null) return;
+                while (shouldContinue && directoryEntry->OriginalFirstThunk != 0u)
                 {
                     shouldContinue = predicate(GetString(image, directoryEntry->Name));
                     directoryEntry++;
