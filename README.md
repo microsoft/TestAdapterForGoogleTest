@@ -6,7 +6,7 @@
 
 ### Google Test Adapter / Test Adapter for Google Test
 
-This README details the ‘Google Test Adapter’ [GTA](https://github.com/csoltenborn/GoogleTestAdapter) and the ‘Test Adapter for Google Test’ [TAfGT](https://github.com/Microsoft/TestAdapterForGoogleTest), and . These test adapters are Visual Studio extensions that provide test discovery and execution of C++ tests written with the [Google Test](https://github.com/google/googletest) framework. 
+This README details the ‘Google Test Adapter’ [GTA](https://github.com/csoltenborn/GoogleTestAdapter) and the ‘Test Adapter for Google Test’ [TAfGT](https://github.com/Microsoft/TestAdapterForGoogleTest). These test adapters are Visual Studio extensions that provide test discovery and execution of C++ tests written with the [Google Test](https://github.com/google/googletest) framework. 
 
 Microsoft [collaborated with the creators of GTA](https://blogs.msdn.microsoft.com/vcblog/2017/05/10/unit-testing-and-the-future-announcing-the-test-adapter-for-google-test/) to fork their project and create ‘Test Adapter for Google Test’. These test adapters share many of the same features and any differences will be explicitly labeled with [TAfGT] or [GTA] in this document. GTA may contain more experimental features, whereas all updates to TAfGT must go through Microsoft’s software development cycle.
 
@@ -102,7 +102,7 @@ Note that traits are assigned in an additive manner within each phase, and in an
 
 The test adapters can be used to run tests from the command line, which can be done making use of VS's [VSTest.Console.exe](https://msdn.microsoft.com/en-us/library/jj155800.aspx). They support all the tool's command line options, including `/UseVsixExtensions` and `/TestAdapterPath`.
 
-Note, however, that VSTest.Console.exe will not make use of TAfGT/GTA solution settings (if the solution containing the tests happens to use such settings). All settings to be used by VSTest.Console.exe need to be passed using the `/Settings` command line option. Note also that the `$(SolutionDir)` placeholder is neither available in the *Test setup/teardown batch file* options nor in the *Additional test execution parameters* option.
+Note, however, that `VSTest.Console.exe` will not make use of TAfGT/GTA solution settings (if the solution containing the tests happens to use such settings). All settings to be used by `VSTest.Console.exe` need to be passed using the `/Settings` command line option. Note also that the `$(SolutionDir)` placeholder is neither available in the *Test setup/teardown batch file* options nor in the *Additional test execution parameters* option.
 
 <a name="test_case_filters"></a>The tests to be run can be selected via the `/TestCaseFilter` option. Filters need to follow the syntax as described in this [blog entry](http://blogs.msdn.com/b/vikramagrawal/archive/2012/07/23/running-selective-unit-tests-in-vs-2012-rc-using-testcasefilter.aspx). The adapters support the following test properties:
 
@@ -126,7 +126,7 @@ Tests are run sequentially by default. If parallel test execution is enabled, th
 
 This test adapter remembers the durations of the executed tests to improve test scheduling for later test runs. The durations are stored in files with endings `.gta.testdurations` - make sure your version control system ignores these files.
 
-Note that since VS 2015 update 1, VS allows for the parallel execution of tests (again); since update 2, Test Explorer has an own *Run tests in parallel* button, and VsTest.Console.exe suppports a new command line option */Parallel*. Neither button nor command line option has any effect on test execution with this test adapter.
+Note that since VS 2015 update 1, VS allows for the parallel execution of tests (again); since update 2, Test Explorer has an own *Run tests in parallel* button, and `VsTest.Console.exe suppports a new command line option */Parallel*. Neither button nor command line option has any effect on test execution with this test adapter.
 
 #### <a name="test_setup_and_teardown"></a>Test setup and teardown
 
