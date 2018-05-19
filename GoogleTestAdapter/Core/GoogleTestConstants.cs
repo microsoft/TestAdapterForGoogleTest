@@ -7,6 +7,7 @@ namespace GoogleTestAdapter
 
     public static class GoogleTestConstants
     {
+        public const string CTestPropertySettingsName = "CTestProperties";
         public const string SettingsName = "GoogleTestAdapterSettings";
         public const string SettingsExtension = ".gta.runsettings";
         public const string DurationsExtension = ".gta.testdurations";

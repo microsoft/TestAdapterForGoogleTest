@@ -55,14 +55,44 @@ namespace GoogleTestAdapter.Runners
 
                 _settings.ExecuteWithSettingsForExecutable(executable, () =>
                 {
-                    RunTestsFromExecutable(
-                        executable,
-                        finalWorkingDir,
-                        groupedTestCases[executable],
-                        finalParameters,
-                        isBeingDebugged,
-                        debuggedLauncher,
-                        executor);
+                    var testsWithNoCTestPropertySettings = new List<TestCase>();
+
+                    if (_settings.CTestPropertySettingsContainer != null)
+                    {
+                        foreach (var testCase in groupedTestCases[executable])
+                        {
+                            ICTestPropertySettings settings;
+                            if (_settings.CTestPropertySettingsContainer.TryGetSettings(testCase.FullyQualifiedName, out settings))
+                            {
+                                RunTestsFromExecutable(
+                                    executable,
+                                    settings.WorkingDirectory,
+                                    settings.Environment,
+                                    Enumerable.Repeat(testCase, 1),
+                                    finalParameters,
+                                    isBeingDebugged,
+                                    debuggedLauncher,
+                                    executor);
+                            }
+                            else
+                            {
+                                testsWithNoCTestPropertySettings.Add(testCase);
+                            }
+                        }
+                    }
+
+                    if (testsWithNoCTestPropertySettings.Count != 0)
+                    {
+                        RunTestsFromExecutable(
+                            executable,
+                            finalWorkingDir,
+                            null,
+                            testsWithNoCTestPropertySettings,
+                            finalParameters,
+                            isBeingDebugged,
+                            debuggedLauncher,
+                            executor);
+                    }
                 }, _logger);
 
             }
@@ -80,7 +110,7 @@ namespace GoogleTestAdapter.Runners
 
 
         // ReSharper disable once UnusedParameter.Local
-        private void RunTestsFromExecutable(string executable, string workingDir,
+        private void RunTestsFromExecutable(string executable, string workingDir, IDictionary<string, string> envVars,
             IEnumerable<TestCase> testCasesToRun, string userParameters,
             bool isBeingDebugged, IDebuggedProcessLauncher debuggedLauncher, IProcessExecutor executor)
         {
@@ -95,7 +125,7 @@ namespace GoogleTestAdapter.Runners
                     break;
                 }
                 var streamingParser = new StreamingStandardOutputTestResultParser(arguments.TestCases, _logger, _frameworkReporter);
-                var results = RunTests(executable, workingDir, isBeingDebugged, debuggedLauncher, arguments, resultXmlFile, executor, streamingParser).ToArray();
+                var results = RunTests(executable, workingDir, envVars, isBeingDebugged, debuggedLauncher, arguments, resultXmlFile, executor, streamingParser).ToArray();
 
                 try
                 {
@@ -121,12 +151,12 @@ namespace GoogleTestAdapter.Runners
             }
         }
 
-        private IEnumerable<TestResult> RunTests(string executable, string workingDir, bool isBeingDebugged,
+        private IEnumerable<TestResult> RunTests(string executable, string workingDir, IDictionary<string, string> envVars, bool isBeingDebugged,
             IDebuggedProcessLauncher debuggedLauncher, CommandLineGenerator.Args arguments, string resultXmlFile, IProcessExecutor executor, StreamingStandardOutputTestResultParser streamingParser)
         {
             try
             {
-                return TryRunTests(executable, workingDir, isBeingDebugged, debuggedLauncher, arguments, resultXmlFile, executor, streamingParser);
+                return TryRunTests(executable, workingDir, envVars, isBeingDebugged, debuggedLauncher, arguments, resultXmlFile, executor, streamingParser);
             }
             catch (Exception e)
             {
@@ -143,7 +173,7 @@ namespace GoogleTestAdapter.Runners
             logger.LogError(String.Format(Resources.ExecuteSteps, threadName, workingDir, Environment.NewLine, executable, arguments));
         }
 
-        private IEnumerable<TestResult> TryRunTests(string executable, string workingDir, bool isBeingDebugged,
+        private IEnumerable<TestResult> TryRunTests(string executable, string workingDir, IDictionary<string, string> envVars, bool isBeingDebugged,
             IDebuggedProcessLauncher debuggedLauncher, CommandLineGenerator.Args arguments, string resultXmlFile, IProcessExecutor executor,
             StreamingStandardOutputTestResultParser streamingParser)
         {
@@ -151,13 +181,13 @@ namespace GoogleTestAdapter.Runners
             if (_settings.UseNewTestExecutionFramework)
             {
                 DebugUtils.AssertIsNotNull(executor, nameof(executor));
-                consoleOutput = RunTestExecutableWithNewFramework(executable, workingDir, arguments, executor, streamingParser);
+                consoleOutput = RunTestExecutableWithNewFramework(executable, workingDir, envVars, arguments, executor, streamingParser);
             }
             else
             {
                 _processLauncher = new TestProcessLauncher(_logger, _settings, isBeingDebugged);
                 consoleOutput =
-                    _processLauncher.GetOutputOfCommand(workingDir, executable, arguments.CommandLine,
+                    _processLauncher.GetOutputOfCommand(workingDir, envVars, executable, arguments.CommandLine,
                             _settings.PrintTestOutput && !_settings.ParallelTestExecution, false,
                             debuggedLauncher);
             }
@@ -171,7 +201,8 @@ namespace GoogleTestAdapter.Runners
             return testResults;
         }
 
-        private List<string> RunTestExecutableWithNewFramework(string executable, string workingDir, CommandLineGenerator.Args arguments, IProcessExecutor executor,
+        private List<string> RunTestExecutableWithNewFramework(string executable, string workingDir, IDictionary<string, string> envVars, 
+            CommandLineGenerator.Args arguments, IProcessExecutor executor,
             StreamingStandardOutputTestResultParser streamingParser)
         {
             string pathExtension = _settings.GetPathExtension(executable);
@@ -199,7 +230,7 @@ namespace GoogleTestAdapter.Runners
             };
             _processExecutor = executor;
             _processExecutor.ExecuteCommandBlocking(
-                executable, arguments.CommandLine, workingDir, pathExtension,
+                executable, arguments.CommandLine, workingDir, envVars, pathExtension,
                 reportOutputAction);
             streamingParser.Flush();
 

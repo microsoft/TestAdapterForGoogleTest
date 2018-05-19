@@ -128,7 +128,7 @@ namespace GoogleTestAdapter.Runners
             else
             {
                 new TestProcessLauncher(_logger, _settings, isBeingDebugged).GetOutputOfCommand(
-                    workingDirectory, batch, "", false, false, null, out batchExitCode);
+                    workingDirectory, null, batch, "", false, false, null, out batchExitCode);
             }
 
             if (batchExitCode == 0)

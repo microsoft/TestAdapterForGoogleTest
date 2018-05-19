@@ -45,7 +45,7 @@ namespace GoogleTestAdapter.TestCases
             {
                 var launcher = new ProcessLauncher(_logger, _settings.GetPathExtension(_executable), null);
                 int processExitCode;
-                standardOutput = launcher.GetOutputOfCommand("", _executable, GoogleTestConstants.ListTestsOption,
+                standardOutput = launcher.GetOutputOfCommand("", null, _executable, GoogleTestConstants.ListTestsOption,
                     false, false, out processExitCode);
 
                 if (!CheckProcessExitCode(processExitCode, standardOutput))
@@ -138,6 +138,7 @@ namespace GoogleTestAdapter.TestCases
                         _executable,
                         GoogleTestConstants.ListTestsOption,
                         "",
+                        null,
                         _settings.GetPathExtension(_executable),
                         lineAction);
                 }, TaskCreationOptions.AttachedToParent);

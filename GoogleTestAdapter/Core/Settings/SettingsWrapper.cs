@@ -46,6 +46,7 @@ namespace GoogleTestAdapter.Settings
             .ToArray();
 
         private readonly IGoogleTestAdapterSettingsContainer _settingsContainer;
+        private readonly ICTestPropertySettingsContainer _cTestPropertySettingsContainer;
         public RegexTraitParser RegexTraitParser { private get; set; }
 
         private int _nrOfRunningExecutions;
@@ -54,14 +55,22 @@ namespace GoogleTestAdapter.Settings
         private IGoogleTestAdapterSettings _currentSettings;
 
         public SettingsWrapper(IGoogleTestAdapterSettingsContainer settingsContainer)
+            : this(settingsContainer, null)
+        {
+        }
+
+        public ICTestPropertySettingsContainer CTestPropertySettingsContainer => _cTestPropertySettingsContainer;
+
+        public SettingsWrapper(IGoogleTestAdapterSettingsContainer settingsContainer, ICTestPropertySettingsContainer cTestPropertySettingsContainer)
         {
             _settingsContainer = settingsContainer;
+            _cTestPropertySettingsContainer = cTestPropertySettingsContainer;
             _currentSettings = _settingsContainer.SolutionSettings;
         }
 
         public virtual SettingsWrapper Clone()
         {
-            return new SettingsWrapper(_settingsContainer) { RegexTraitParser = RegexTraitParser };
+            return new SettingsWrapper(_settingsContainer, _cTestPropertySettingsContainer) { RegexTraitParser = RegexTraitParser };
         }
 
         // needed for mocking
