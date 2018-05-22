@@ -1,16 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <xs:schema elementFormDefault="qualified" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-  <xs:element name="CTestProperties" nillable="true" type="CTestPropertySettingsContainer" />
-  <xs:complexType name="CTestPropertySettingsContainer">
-    <xs:complexContent mixed="false">
-      <xs:extension base="TestRunSettings">
-        <xs:sequence>
-          <xs:element minOccurs="0" maxOccurs="1" name="Tests" type="ArrayOfTestProperties" />
-        </xs:sequence>
-      </xs:extension>
-    </xs:complexContent>
+  <xs:element name="TestPropertySettingsForGoogleAdapter" nillable="true" type="TestPropertySettings" />
+  <xs:complexType name="TestPropertySettings">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="1" name="Tests" type="ArrayOfTestProperties" />
+    </xs:sequence>
   </xs:complexType>
-  <xs:complexType name="TestRunSettings" abstract="true" />
   <xs:complexType name="ArrayOfTestProperties">
     <xs:sequence>
       <xs:element minOccurs="0" maxOccurs="unbounded" name="TestProperties" nillable="true" type="TestProperties" />

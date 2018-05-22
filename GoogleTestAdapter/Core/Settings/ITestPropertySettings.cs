@@ -2,7 +2,7 @@
 
 namespace GoogleTestAdapter.Settings
 {
-    public interface ICTestPropertySettings
+    public interface ITestPropertySettings
     {
         IDictionary<string, string> Environment { get; }
         string WorkingDirectory { get; }

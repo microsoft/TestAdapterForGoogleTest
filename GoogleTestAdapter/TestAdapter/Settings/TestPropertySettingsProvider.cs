@@ -13,19 +13,19 @@ using System.Xml.Serialization;
 namespace GoogleTestAdapter.TestAdapter.Settings
 {
     [Export(typeof(ISettingsProvider))]
-    [SettingsName(GoogleTestConstants.CTestPropertySettingsName)]
-    public class CTestPropertySettingsProvider : ISettingsProvider
+    [SettingsName(GoogleTestConstants.TestPropertySettingsName)]
+    public class TestPropertySettingsProvider : ISettingsProvider
     {
-        public string Name => GoogleTestConstants.CTestPropertySettingsName;
+        public string Name => GoogleTestConstants.TestPropertySettingsName;
 
-        public CTestPropertySettingsContainer CTestProperySettings { get; set; }
+        public TestPropertySettingsContainer TestPropertySettings { get; set; }
 
         public void Load(XmlReader reader)
         {
             ValidateArg.NotNull(reader, nameof(reader));
 
             var schemaSet = new XmlSchemaSet();
-            var schemaStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("CTestPropertySettings.xsd");
+            var schemaStream = Assembly.GetExecutingAssembly().GetManifestResourceStream("TestPropertySettings.xsd");
             schemaSet.Add(null, XmlReader.Create(schemaStream));
 
             var settings = new XmlReaderSettings
@@ -43,14 +43,14 @@ namespace GoogleTestAdapter.TestAdapter.Settings
                 {
                     if (newReader.Read() && newReader.Name.Equals(this.Name))
                     {
-                        XmlSerializer deserializer = new XmlSerializer(typeof(CTestPropertySettingsContainer));
-                        this.CTestProperySettings = deserializer.Deserialize(newReader) as CTestPropertySettingsContainer;
+                        XmlSerializer deserializer = new XmlSerializer(typeof(TestPropertySettingsContainer));
+                        this.TestPropertySettings = deserializer.Deserialize(newReader) as TestPropertySettingsContainer;
                     }
                 }
                 catch (InvalidOperationException e) when (e.InnerException is XmlSchemaValidationException)
                 {
                     throw new InvalidRunSettingsException(
-                        String.Format(Resources.Invalid, GoogleTestConstants.CTestPropertySettingsName),
+                        String.Format(Resources.Invalid, GoogleTestConstants.TestPropertySettingsName),
                         e.InnerException);
                 }
             }

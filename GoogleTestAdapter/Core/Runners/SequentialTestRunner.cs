@@ -55,14 +55,16 @@ namespace GoogleTestAdapter.Runners
 
                 _settings.ExecuteWithSettingsForExecutable(executable, () =>
                 {
-                    var testsWithNoCTestPropertySettings = new List<TestCase>();
+                    var testsWithNoTestPropertySettings = groupedTestCases[executable];
 
-                    if (_settings.CTestPropertySettingsContainer != null)
+                    if (_settings.TestPropertySettingsContainer != null)
                     {
+                        testsWithNoTestPropertySettings = new List<TestCase>();
+
                         foreach (var testCase in groupedTestCases[executable])
                         {
-                            ICTestPropertySettings settings;
-                            if (_settings.CTestPropertySettingsContainer.TryGetSettings(testCase.FullyQualifiedName, out settings))
+                            ITestPropertySettings settings;
+                            if (_settings.TestPropertySettingsContainer.TryGetSettings(testCase.FullyQualifiedName, out settings))
                             {
                                 RunTestsFromExecutable(
                                     executable,
@@ -76,18 +78,18 @@ namespace GoogleTestAdapter.Runners
                             }
                             else
                             {
-                                testsWithNoCTestPropertySettings.Add(testCase);
+                                testsWithNoTestPropertySettings.Add(testCase);
                             }
                         }
                     }
 
-                    if (testsWithNoCTestPropertySettings.Count != 0)
+                    if (testsWithNoTestPropertySettings.Count != 0)
                     {
                         RunTestsFromExecutable(
                             executable,
                             finalWorkingDir,
                             null,
-                            testsWithNoCTestPropertySettings,
+                            testsWithNoTestPropertySettings,
                             finalParameters,
                             isBeingDebugged,
                             debuggedLauncher,

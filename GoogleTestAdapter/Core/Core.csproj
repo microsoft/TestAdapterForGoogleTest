@@ -84,9 +84,9 @@
     <Compile Include="Model\TestProperty.cs" />
     <Compile Include="Runners\TestResultCollector.cs" />
     <Compile Include="Scheduling\SchedulingAnalyzer.cs" />
-    <Compile Include="Settings\ICTestPropertySettings.cs" />
-    <Compile Include="Settings\ICTestPropertySettingsContainer.cs" />
     <Compile Include="Settings\IGoogleTestAdapterSettingsContainer.cs" />
+    <Compile Include="Settings\ITestPropertySettings.cs" />
+    <Compile Include="Settings\ITestPropertySettingsContainer.cs" />
     <Compile Include="Settings\RunSettings.cs" />
     <Compile Include="Settings\SettingsSerializationContainer.cs" />
     <Compile Include="TestCases\StreamingListTestsParser.cs" />

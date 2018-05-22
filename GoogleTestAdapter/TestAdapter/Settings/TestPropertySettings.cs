@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace GoogleTestAdapter.TestAdapter.Settings
 {
-    public class CTestPropertySettings : ICTestPropertySettings
+    public class TestPropertySettings : ITestPropertySettings
     {
         public IDictionary<string, string> Environment { get; private set; }
 
         public string WorkingDirectory { get; private set; }
 
-        public CTestPropertySettings(CTestPropertySettingsContainer.TestProperties test)
+        public TestPropertySettings(TestPropertySettingsContainer.TestProperties test)
         {
             var environment = new Dictionary<string, string>();
             foreach (var envVar in test.Environment)

@@ -3,19 +3,14 @@
 
 using GoogleTestAdapter.Settings;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel.Adapter;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel.Composition;
-using System.Reflection;
 using System.Xml;
-using System.Xml.Schema;
 using System.Xml.Serialization;
 
 namespace GoogleTestAdapter.TestAdapter.Settings
 {
-    [XmlRoot(GoogleTestConstants.CTestPropertySettingsName)]
-    public class CTestPropertySettingsContainer : TestRunSettings, ICTestPropertySettingsContainer
+    [XmlRoot(GoogleTestConstants.TestPropertySettingsName)]
+    public class TestPropertySettingsContainer : TestRunSettings, ITestPropertySettingsContainer
     {
         public class EnvVar
         {
@@ -31,10 +26,10 @@ namespace GoogleTestAdapter.TestAdapter.Settings
             public string WorkingDirectory { get; set; }
         }
 
-        private IDictionary<string, ICTestPropertySettings> _tests;
+        private IDictionary<string, ITestPropertySettings> _tests;
 
-        public CTestPropertySettingsContainer()
-            : base(GoogleTestConstants.CTestPropertySettingsName)
+        public TestPropertySettingsContainer()
+            : base(GoogleTestConstants.TestPropertySettingsName)
         {
         }
 
@@ -51,7 +46,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
             return document.DocumentElement;
         }
 
-        public bool TryGetSettings(string testName, out ICTestPropertySettings settings)
+        public bool TryGetSettings(string testName, out ITestPropertySettings settings)
         {
             EnsureTestPropertiesMap();
             return _tests.TryGetValue(testName, out settings);
@@ -64,12 +59,12 @@ namespace GoogleTestAdapter.TestAdapter.Settings
                 return;
             }
 
-            _tests = new Dictionary<string, ICTestPropertySettings>();
+            _tests = new Dictionary<string, ITestPropertySettings>();
             if (this.Tests != null)
             {
                 foreach (var t in this.Tests)
                 {
-                    var propertySettings = new CTestPropertySettings(t);
+                    var propertySettings = new TestPropertySettings(t);
                     _tests.Add(t.Name, propertySettings);
                 }
             }

@@ -207,15 +207,15 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
-    <Compile Include="Settings\CTestPropertySettings.cs" />
-    <Compile Include="Settings\CTestPropertySettingsContainer.cs" />
-    <Compile Include="Settings\CTestPropertySettingsProvider.cs" />
     <Compile Include="Settings\GlobalRunSettingsProvider.cs" />
     <Compile Include="Settings\IGlobalRunSettings.cs" />
     <Compile Include="Settings\IGlobalRunSettingsInternal.cs" />
     <Compile Include="Settings\RunSettingsContainer.cs" />
     <Compile Include="Settings\RunSettingsProvider.cs" />
     <Compile Include="Settings\RunSettingsService.cs" />
+    <Compile Include="Settings\TestPropertySettings.cs" />
+    <Compile Include="Settings\TestPropertySettingsContainer.cs" />
+    <Compile Include="Settings\TestPropertySettingsProvider.cs" />
     <Compile Include="TestDiscoverer.cs" />
     <Compile Include="TestExecutor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -232,9 +232,9 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
-    <EmbeddedResource Include="CTestPropertySettings.xsd">
+    <EmbeddedResource Include="TestPropertySettings.xsd">
       <SubType>Designer</SubType>
-      <LogicalName>CTestPropertySettings.xsd</LogicalName>
+      <LogicalName>TestPropertySettings.xsd</LogicalName>
     </EmbeddedResource>
     <None Include="Key.snk" />
     <None Include="packages.config">

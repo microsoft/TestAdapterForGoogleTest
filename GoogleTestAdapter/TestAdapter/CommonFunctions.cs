@@ -53,9 +53,9 @@ namespace GoogleTestAdapter.TestAdapter
                 projectSettings.GetUnsetValuesFrom(ourRunSettings.SolutionSettings);
             }
 
-            var ctestSettings = runSettings.GetSettings(GoogleTestConstants.CTestPropertySettingsName) as CTestPropertySettingsProvider;
+            var testSettings = runSettings.GetSettings(GoogleTestConstants.TestPropertySettingsName) as TestPropertySettingsProvider;
 
-            var settingsWrapper = new SettingsWrapper(ourRunSettings, ctestSettings?.CTestProperySettings);
+            var settingsWrapper = new SettingsWrapper(ourRunSettings, testSettings?.TestPropertySettings);
 
             var loggerAdapter = new VsTestFrameworkLogger(messageLogger, () => settingsWrapper.DebugMode, () => settingsWrapper.TimestampOutput);
             var regexParser = new RegexTraitParser(loggerAdapter);
