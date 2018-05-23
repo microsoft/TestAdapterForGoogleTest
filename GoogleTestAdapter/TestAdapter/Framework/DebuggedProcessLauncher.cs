@@ -14,6 +14,11 @@ namespace GoogleTestAdapter.TestAdapter.Framework
             _frameworkHandle = handle;
         }
 
+        public int LaunchProcessWithDebuggerAttached(string command, string workingDirectory, string param, string pathExtension)
+        {
+            return LaunchProcessWithDebuggerAttached(command, workingDirectory, null, param, pathExtension);
+        }
+
         public int LaunchProcessWithDebuggerAttached(string command, string workingDirectory, IDictionary<string, string> additionalEnvVars, string param, string pathExtension)
         {
             IDictionary<string, string> envVariables = new Dictionary<string, string>();

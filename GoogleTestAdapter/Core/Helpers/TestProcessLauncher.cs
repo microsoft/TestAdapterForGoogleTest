@@ -23,6 +23,11 @@ namespace GoogleTestAdapter.Helpers
             _isBeingDebugged = isBeingDebugged;
         }
 
+        public List<string> GetOutputOfCommand(string workingDirectory, string command, string param, bool printTestOutput,
+            bool throwIfError, IDebuggedProcessLauncher debuggedLauncher)
+        {
+            return GetOutputOfCommand(workingDirectory, null, command, param, printTestOutput, throwIfError, debuggedLauncher);
+        }
 
         public List<string> GetOutputOfCommand(string workingDirectory, IDictionary<string, string> envVars, string command, string param, bool printTestOutput,
             bool throwIfError, IDebuggedProcessLauncher debuggedLauncher)
