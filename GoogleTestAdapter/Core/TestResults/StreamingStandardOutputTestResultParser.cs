@@ -177,7 +177,8 @@ namespace GoogleTestAdapter.TestResults
             string errorMsg = "";
             while (
                 !(StandardOutputTestResultParser.IsFailedLine(line)
-                    || StandardOutputTestResultParser.IsPassedLine(line))
+                    || StandardOutputTestResultParser.IsPassedLine(line)
+                    || StandardOutputTestResultParser.IsSkippedLine(line))
                 && currentLineIndex <= _consoleOutput.Count)
             {
                 errorMsg += line + "\n";
@@ -226,6 +227,12 @@ namespace GoogleTestAdapter.TestResults
             if (StandardOutputTestResultParser.IsPassedLine(line))
             {
                 return StandardOutputTestResultParser.CreatePassedTestResult(
+                    testCase,
+                    StandardOutputTestResultParser.ParseDuration(line, _logger));
+            }
+            if (StandardOutputTestResultParser.IsSkippedLine(line))
+            {
+                return StandardOutputTestResultParser.CreateSkippedTestResult(
                     testCase,
                     StandardOutputTestResultParser.ParseDuration(line, _logger));
             }
