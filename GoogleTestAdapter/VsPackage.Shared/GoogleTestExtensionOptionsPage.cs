@@ -1,4 +1,4 @@
-﻿// This file has been modified by Microsoft on 5/2018.
+﻿// This file has been modified by Microsoft on 3/2019.
 
 using GoogleTestAdapter.Settings;
 using GoogleTestAdapter.TestAdapter.Settings;
@@ -7,7 +7,6 @@ using GoogleTestAdapter.VsPackage.Debugging;
 using GoogleTestAdapter.VsPackage.Helpers;
 using GoogleTestAdapter.VsPackage.OptionsPages;
 using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
@@ -15,8 +14,6 @@ using System.ComponentModel;
 using System.Diagnostics.CodeAnalysis;
 using System.Runtime.InteropServices;
 using System.ServiceModel;
-using System.Threading;
-using Task = System.Threading.Tasks.Task;
 
 namespace GoogleTestAdapter.VsPackage
 {

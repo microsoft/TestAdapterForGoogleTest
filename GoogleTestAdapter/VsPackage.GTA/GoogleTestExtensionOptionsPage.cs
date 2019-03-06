@@ -1,16 +1,15 @@
-﻿// This file has been modified by Microsoft on 9/2017.
+﻿// This file has been modified by Microsoft on 3/2019.
 
+using GoogleTestAdapter.TestAdapter.Settings;
 using GoogleTestAdapter.VsPackage.ReleaseNotes;
+using Microsoft.VisualStudio;
+using Microsoft.VisualStudio.AsyncPackageHelpers;
+using Microsoft.VisualStudio.ComponentModelHost;
 using Microsoft.VisualStudio.Shell;
 using Microsoft.VisualStudio.Shell.Interop;
 using System;
 using System.IO;
 using System.Threading;
-using EnvDTE;
-using Microsoft.VisualStudio.AsyncPackageHelpers;
-using Microsoft.VisualStudio;
-using Microsoft.VisualStudio.ComponentModelHost;
-using GoogleTestAdapter.TestAdapter.Settings;
 
 namespace GoogleTestAdapter.VsPackage
 {
