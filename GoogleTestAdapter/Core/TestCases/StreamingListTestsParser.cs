@@ -56,7 +56,7 @@ namespace GoogleTestAdapter.TestCases
             string name = nameMatch.Groups[1].Value;
             string param = nameMatch.Groups[2].Value;
 
-            string fullyQualifiedName = $"{suite}.{name}";
+            string fullyQualifiedName = $"{suite}_{name}";
 
             string displayName = GetDisplayName(fullyQualifiedName, typeParam, param);
             if (!string.IsNullOrEmpty(_testNameSeparator))
