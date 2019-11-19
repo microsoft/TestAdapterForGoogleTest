@@ -278,9 +278,9 @@ function Build-NuGet {
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.pdb" -Destination "$DestinationPath\Release\gtest_main.pdb"
         } else {
             Copy-CreateItem -Path "$BuildPath\Debug\gtestd.lib"                    -Destination "$DestinationPath\Debug\gtestd.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtestd.pdb"
+            Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"
             Copy-CreateItem -Path "$BuildPath\Debug\gtest_maind.lib"               -Destination "$DestinationPath\Debug\gtest_maind.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest_main.dir\Debug\gtest_main.pdb" -Destination "$DestinationPath\Debug\gtest_maind.pdb"
+            Copy-CreateItem -Path "$BuildPath\gtest_main.dir\Debug\gtest_main.pdb" -Destination "$DestinationPath\Debug\gtest_main.pdb"
 
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.lib"                     -Destination "$DestinationPath\Release\gtest.lib"
             Copy-CreateItem -Path "$BuildPath\gtest.dir\RelWithDebInfo\gtest.pdb"           -Destination "$DestinationPath\Release\gtest.pdb"
