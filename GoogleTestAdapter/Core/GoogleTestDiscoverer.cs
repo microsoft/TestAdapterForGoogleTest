@@ -1,4 +1,4 @@
-﻿// This file has been modified by Microsoft on 9/2017.
+﻿// This file has been modified by Microsoft on 4/2020.
 
 using GoogleTestAdapter.Common;
 using GoogleTestAdapter.DiaResolver;
@@ -104,7 +104,8 @@ namespace GoogleTestAdapter
 
             if (string.IsNullOrWhiteSpace(customRegex))
             {
-                if (PeParser.FindImport(executable, GoogleTestConstants.GoogleTestDllMarker, StringComparison.OrdinalIgnoreCase, logger)
+                if (PeParser.FindImport(executable, new List<string>(){ GoogleTestConstants.GoogleTestDllMarker, GoogleTestConstants.GoogleTestDllMarkerDebug },
+                                        StringComparison.OrdinalIgnoreCase, logger)
                     || Utils.BinaryFileContainsStrings(executable, Encoding.ASCII, GoogleTestConstants.GoogleTestExecutableMarkers))
                 {
                     return true;
