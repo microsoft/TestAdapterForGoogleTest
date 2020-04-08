@@ -33,6 +33,8 @@ namespace GoogleTestAdapter
 
         public const string GoogleTestDllMarker = "gtest.dll";
         public const string GoogleTestDllMarkerDebug = "gtestd.dll";
+        public const string GoogleTestMainDllMarker = "gtest_main.dll";
+        public const string GoogleTestMainDllMarkerDebug = "gtest_maind.dll";
 
         public static readonly string[] GoogleTestExecutableMarkers =
         {

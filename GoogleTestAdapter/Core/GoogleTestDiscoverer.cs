@@ -104,8 +104,10 @@ namespace GoogleTestAdapter
 
             if (string.IsNullOrWhiteSpace(customRegex))
             {
-                if (PeParser.FindImport(executable, new List<string>(){ GoogleTestConstants.GoogleTestDllMarker, GoogleTestConstants.GoogleTestDllMarkerDebug },
-                                        StringComparison.OrdinalIgnoreCase, logger)
+                List<string> gtestImports = new List<string>() { GoogleTestConstants.GoogleTestDllMarker, GoogleTestConstants.GoogleTestDllMarkerDebug,
+                                                                 GoogleTestConstants.GoogleTestMainDllMarker, GoogleTestConstants.GoogleTestMainDllMarkerDebug };
+
+                if (PeParser.FindImport(executable, gtestImports, StringComparison.OrdinalIgnoreCase, logger)
                     || Utils.BinaryFileContainsStrings(executable, Encoding.ASCII, GoogleTestConstants.GoogleTestExecutableMarkers))
                 {
                     return true;
