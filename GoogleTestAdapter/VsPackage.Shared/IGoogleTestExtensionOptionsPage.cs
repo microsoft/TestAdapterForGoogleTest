@@ -1,4 +1,7 @@
-﻿using System;
+﻿// This file has been modified by Microsoft on 6/2020.
+
+using Microsoft.VisualStudio.Shell.Interop;
+using System;
 
 namespace GoogleTestAdapter.VsPackage
 {
@@ -8,5 +11,6 @@ namespace GoogleTestAdapter.VsPackage
         bool BreakOnFailure { get; set; }
         bool ParallelTestExecution { get; set; }
         bool PrintTestOutput { get; set; }
+        IVsActivityLog GetActivityLog();
     }
 }

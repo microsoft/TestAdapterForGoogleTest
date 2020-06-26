@@ -9,9 +9,9 @@ namespace GoogleTestAdapter.VsPackage.Helpers
 {
     public class ActivityLogLogger : LoggerBase
     {
-        private readonly GoogleTestExtensionOptionsPage _package;
+        private readonly IGoogleTestExtensionOptionsPage _package;
 
-        public ActivityLogLogger(GoogleTestExtensionOptionsPage package, Func<bool> inDebugMode) : base(inDebugMode)
+        public ActivityLogLogger(IGoogleTestExtensionOptionsPage package, Func<bool> inDebugMode) : base(inDebugMode)
         {
             _package = package;
         }
