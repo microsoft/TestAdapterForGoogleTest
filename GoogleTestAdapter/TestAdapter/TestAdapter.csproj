@@ -209,7 +209,6 @@
     </Compile>
     <Compile Include="Settings\RunSettingsContainer.cs" />
     <Compile Include="Settings\RunSettingsProvider.cs" />
-    <Compile Include="Settings\RunSettingsService.cs" />
     <Compile Include="Settings\TestPropertySettings.cs" />
     <Compile Include="Settings\TestPropertySettingsContainer.cs" />
     <Compile Include="Settings\TestPropertySettingsProvider.cs" />
@@ -225,7 +224,7 @@
       <LogicalName>GoogleTestAdapterSettings.xsd</LogicalName>
     </EmbeddedResource>
     <EmbeddedResource Include="Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
+      <Generator>PublicResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </EmbeddedResource>
