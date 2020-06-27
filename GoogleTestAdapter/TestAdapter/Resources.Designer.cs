@@ -19,10 +19,10 @@ namespace GoogleTestAdapter.TestAdapter {
     // class via a tool like ResGen or Visual Studio.
     // To add or remove a member, edit your .ResX file then rerun ResGen
     // with the /str option, or rebuild your VS project.
-    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
+    [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "16.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    internal class Resources {
+    public class Resources {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
@@ -36,7 +36,7 @@ namespace GoogleTestAdapter.TestAdapter {
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Resources.ResourceManager ResourceManager {
+        public static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
                     global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GoogleTestAdapter.TestAdapter.Resources", typeof(Resources).Assembly);
@@ -51,7 +51,7 @@ namespace GoogleTestAdapter.TestAdapter {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        internal static global::System.Globalization.CultureInfo Culture {
+        public static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -64,7 +64,7 @@ namespace GoogleTestAdapter.TestAdapter {
         ///   Looks up a localized string similar to Solution test settings file could not be parsed, check file: {0}
         ///Exception: {1}.
         /// </summary>
-        internal static string CantParseSettings {
+        public static string CantParseSettings {
             get {
                 return ResourceManager.GetString("CantParseSettings", resourceCulture);
             }
@@ -73,7 +73,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Could not attach debugger to process {0}:{1}{2}.
         /// </summary>
-        internal static string CouldNotAttachMessage {
+        public static string CouldNotAttachMessage {
             get {
                 return ResourceManager.GetString("CouldNotAttachMessage", resourceCulture);
             }
@@ -82,7 +82,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Could not attach debugger to process {0}, no error message available.
         /// </summary>
-        internal static string DebuggerAttachMessage {
+        public static string DebuggerAttachMessage {
             get {
                 return ResourceManager.GetString("DebuggerAttachMessage", resourceCulture);
             }
@@ -91,7 +91,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Debugger attached to process {0}, took {1} ms.
         /// </summary>
-        internal static string DebuggerAttachTime {
+        public static string DebuggerAttachTime {
             get {
                 return ResourceManager.GetString("DebuggerAttachTime", resourceCulture);
             }
@@ -100,7 +100,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Debugging is only possible if GoogleTestAdapter has been installed into Visual Studio - NuGet installation does not support this (and other features such as Visual Studio Options, toolbar, and solution settings)..
         /// </summary>
-        internal static string DebuggingMessage {
+        public static string DebuggingMessage {
             get {
                 return ResourceManager.GetString("DebuggingMessage", resourceCulture);
             }
@@ -109,7 +109,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to {0} does not match {1}.
         /// </summary>
-        internal static string DoesntMatch {
+        public static string DoesntMatch {
             get {
                 return ResourceManager.GetString("DoesntMatch", resourceCulture);
             }
@@ -118,7 +118,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to  (enable debug mode for more information).
         /// </summary>
-        internal static string EnableDebugMode {
+        public static string EnableDebugMode {
             get {
                 return ResourceManager.GetString("EnableDebugMode", resourceCulture);
             }
@@ -127,7 +127,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to The following errors and warnings have occured during {0} {1}:{2}.
         /// </summary>
-        internal static string ErrorAndWarning {
+        public static string ErrorAndWarning {
             get {
                 return ResourceManager.GetString("ErrorAndWarning", resourceCulture);
             }
@@ -136,7 +136,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to ERROR: {0}.
         /// </summary>
-        internal static string ErrorMessage {
+        public static string ErrorMessage {
             get {
                 return ResourceManager.GetString("ErrorMessage", resourceCulture);
             }
@@ -145,7 +145,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Test case filter is invalid: {0}.
         /// </summary>
-        internal static string FilterInvalid {
+        public static string FilterInvalid {
             get {
                 return ResourceManager.GetString("FilterInvalid", resourceCulture);
             }
@@ -154,7 +154,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Could not identify Visual Studio version. {0} requires at least Visual Studio 2012 Update 1..
         /// </summary>
-        internal static string IdentifyVSError {
+        public static string IdentifyVSError {
             get {
                 return ResourceManager.GetString("IdentifyVSError", resourceCulture);
             }
@@ -163,7 +163,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Invalid {0}.
         /// </summary>
-        internal static string Invalid {
+        public static string Invalid {
             get {
                 return ResourceManager.GetString("Invalid", resourceCulture);
             }
@@ -172,7 +172,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to {0} matches {1}.
         /// </summary>
-        internal static string Matches {
+        public static string Matches {
             get {
                 return ResourceManager.GetString("Matches", resourceCulture);
             }
@@ -181,7 +181,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to There might be more information on the problem in Visual Studio&apos;s ActivityLog.xml (see e.g. https://blogs.msdn.microsoft.com/visualstudio/2010/02/24/troubleshooting-extensions-with-the-activity-log/).
         /// </summary>
-        internal static string MoreInformationMessage {
+        public static string MoreInformationMessage {
             get {
                 return ResourceManager.GetString("MoreInformationMessage", resourceCulture);
             }
@@ -190,7 +190,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to No test case filter provided.
         /// </summary>
-        internal static string NoTestCaseFilter {
+        public static string NoTestCaseFilter {
             get {
                 return ResourceManager.GetString("NoTestCaseFilter", resourceCulture);
             }
@@ -199,7 +199,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Could not find process.
         /// </summary>
-        internal static string ProcessNotFound {
+        public static string ProcessNotFound {
             get {
                 return ResourceManager.GetString("ProcessNotFound", resourceCulture);
             }
@@ -208,7 +208,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to RunSettingsDocument does not contain a RunSettings node! Canceling settings merging....
         /// </summary>
-        internal static string RunSettingsMissingNode {
+        public static string RunSettingsMissingNode {
             get {
                 return ResourceManager.GetString("RunSettingsMissingNode", resourceCulture);
             }
@@ -217,7 +217,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Solution settings: {0}.
         /// </summary>
-        internal static string Settings {
+        public static string Settings {
             get {
                 return ResourceManager.GetString("Settings", resourceCulture);
             }
@@ -226,7 +226,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Solution test settings file found at &apos;{0}&apos;, but does not contain {1} node.
         /// </summary>
-        internal static string SolutionFoundButMissingNode {
+        public static string SolutionFoundButMissingNode {
             get {
                 return ResourceManager.GetString("SolutionFoundButMissingNode", resourceCulture);
             }
@@ -235,7 +235,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Test case filter: {0}.
         /// </summary>
-        internal static string TestCaseFilter {
+        public static string TestCaseFilter {
             get {
                 return ResourceManager.GetString("TestCaseFilter", resourceCulture);
             }
@@ -244,7 +244,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to test discovery.
         /// </summary>
-        internal static string TestDiscovery {
+        public static string TestDiscovery {
             get {
                 return ResourceManager.GetString("TestDiscovery", resourceCulture);
             }
@@ -253,7 +253,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Test discovery completed, overall duration: {0}.
         /// </summary>
-        internal static string TestDiscoveryCompleted {
+        public static string TestDiscoveryCompleted {
             get {
                 return ResourceManager.GetString("TestDiscoveryCompleted", resourceCulture);
             }
@@ -262,7 +262,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Exception while discovering tests: {0}.
         /// </summary>
-        internal static string TestDiscoveryExceptionError {
+        public static string TestDiscoveryExceptionError {
             get {
                 return ResourceManager.GetString("TestDiscoveryExceptionError", resourceCulture);
             }
@@ -271,7 +271,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to test execution.
         /// </summary>
-        internal static string TestExecution {
+        public static string TestExecution {
             get {
                 return ResourceManager.GetString("TestExecution", resourceCulture);
             }
@@ -280,7 +280,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Test execution canceled..
         /// </summary>
-        internal static string TestExecutionCancelled {
+        public static string TestExecutionCancelled {
             get {
                 return ResourceManager.GetString("TestExecutionCancelled", resourceCulture);
             }
@@ -289,7 +289,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Google Test execution completed, overall duration: {0}.
         /// </summary>
-        internal static string TestExecutionCompleted {
+        public static string TestExecutionCompleted {
             get {
                 return ResourceManager.GetString("TestExecutionCompleted", resourceCulture);
             }
@@ -298,7 +298,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Exception while running tests: {0}.
         /// </summary>
-        internal static string TestRunningException {
+        public static string TestRunningException {
             get {
                 return ResourceManager.GetString("TestRunningException", resourceCulture);
             }
@@ -307,7 +307,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Trait has same name as base test property and will thus be ignored for test case filtering: {0}.
         /// </summary>
-        internal static string TraitIgnoreMessage {
+        public static string TraitIgnoreMessage {
             get {
                 return ResourceManager.GetString("TraitIgnoreMessage", resourceCulture);
             }
@@ -316,7 +316,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Unknown enum literal: {0}.
         /// </summary>
-        internal static string UnknownEnum {
+        public static string UnknownEnum {
             get {
                 return ResourceManager.GetString("UnknownEnum", resourceCulture);
             }
@@ -325,7 +325,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Unknown enum literal: {0}.
         /// </summary>
-        internal static string UnknownLiteral {
+        public static string UnknownLiteral {
             get {
                 return ResourceManager.GetString("UnknownLiteral", resourceCulture);
             }
@@ -334,7 +334,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Unknown Visual Studio version: {0}.
         /// </summary>
-        internal static string UnknownVisualStudioVersion {
+        public static string UnknownVisualStudioVersion {
             get {
                 return ResourceManager.GetString("UnknownVisualStudioVersion", resourceCulture);
             }
@@ -343,7 +343,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to {0} requires at least Visual Studio 2012 Update 1 - please update your Visual Studio installation..
         /// </summary>
-        internal static string VS2012Error {
+        public static string VS2012Error {
             get {
                 return ResourceManager.GetString("VS2012Error", resourceCulture);
             }
@@ -352,7 +352,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Visual Studio version: {0}.
         /// </summary>
-        internal static string VSVersion {
+        public static string VSVersion {
             get {
                 return ResourceManager.GetString("VSVersion", resourceCulture);
             }
@@ -361,7 +361,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Could not find out Visual Studio version: {0}.
         /// </summary>
-        internal static string VSVersionMessage {
+        public static string VSVersionMessage {
             get {
                 return ResourceManager.GetString("VSVersionMessage", resourceCulture);
             }
@@ -370,7 +370,7 @@ namespace GoogleTestAdapter.TestAdapter {
         /// <summary>
         ///   Looks up a localized string similar to Warning: {0}.
         /// </summary>
-        internal static string WarningMessage {
+        public static string WarningMessage {
             get {
                 return ResourceManager.GetString("WarningMessage", resourceCulture);
             }
