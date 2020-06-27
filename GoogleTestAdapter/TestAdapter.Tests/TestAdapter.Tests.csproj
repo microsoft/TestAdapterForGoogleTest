@@ -144,6 +144,10 @@
       <Project>{2f0e4458-6c1c-461f-a60a-b731ad97e839}</Project>
       <Name>Tests.Common</Name>
     </ProjectReference>
+    <ProjectReference Include="..\VsPackage.TAfGT\VsPackage.TAfGT.csproj">
+      <Project>{55294b5f-a075-43f2-b0e9-2b11925e8b91}</Project>
+      <Name>VsPackage.TAfGT</Name>
+    </ProjectReference>
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
