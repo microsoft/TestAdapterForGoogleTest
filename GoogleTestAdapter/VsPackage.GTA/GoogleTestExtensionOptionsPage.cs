@@ -22,6 +22,8 @@ namespace GoogleTestAdapter.VsPackage
         private const string OptionsCategoryName = "Google Test Adapter";
         private bool _isAsyncLoadSupported;
 
+        private IGlobalRunSettingsInternal _globalRunSettings;
+
         protected override void Initialize()
         {
             base.Initialize();

@@ -22,12 +22,14 @@ namespace GoogleTestAdapter.VsPackage
         private const string TestExplorerContextGuid = "ec25b527-d893-4ec0-a814-d2c9f1782997";
         private const string OptionsCategoryName = "Test Adapter for Google Test";
 
+        private IGlobalRunSettingsInternal2 _globalRunSettings;
+
         protected override async System.Threading.Tasks.Task InitializeAsync(CancellationToken cancellationToken, IProgress<ServiceProgressData> progress)
         {
             await base.InitializeAsync(cancellationToken, progress);
 
             var componentModel = await GetServiceAsync(typeof(SComponentModel)) as IComponentModel;
-            _globalRunSettings = componentModel.GetService<IGlobalRunSettingsInternal>();
+            _globalRunSettings = componentModel.GetService<IGlobalRunSettingsInternal2>();
 
             await this.JoinableTaskFactory.SwitchToMainThreadAsync(cancellationToken);
 

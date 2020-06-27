@@ -87,6 +87,9 @@
     </Compile>
     <Compile Include="ReleaseNotes\VersionProvider.cs" />
     <Compile Include="ReleaseNotes\History.cs" />
+    <Compile Include="Settings\GlobalRunSettingsProvider.cs" />
+    <Compile Include="Settings\IGlobalRunSettings.cs" />
+    <Compile Include="Settings\IGlobalRunSettingsInternal.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />

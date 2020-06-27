@@ -29,8 +29,6 @@ namespace GoogleTestAdapter.VsPackage
     {
         private readonly string _debuggingNamedPipeId = Guid.NewGuid().ToString();
 
-        private IGlobalRunSettingsInternal _globalRunSettings;
-
         private GeneralOptionsDialogPage _generalOptions;
         private ParallelizationOptionsDialogPage _parallelizationOptions;
         private GoogleTestOptionsDialogPage _googleTestOptions;
