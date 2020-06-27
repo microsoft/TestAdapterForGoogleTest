@@ -8,6 +8,7 @@ using System.Xml.XPath;
 using FluentAssertions;
 using GoogleTestAdapter.Settings;
 using GoogleTestAdapter.TestAdapter.Helpers;
+using GoogleTestAdapter.TestAdapter.Settings;
 using GoogleTestAdapter.Tests.Common;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -305,7 +306,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
                 TraitsRegexesBefore = "Global"
             };
 
-            var mockGlobalRunSettings = new Mock<IGlobalRunSettings>();
+            var mockGlobalRunSettings = new Mock<IGlobalRunSettings2>();
             mockGlobalRunSettings.Setup(grs => grs.RunSettings).Returns(globalRunSettings);
 
             return new RunSettingsServiceUnderTest(mockGlobalRunSettings.Object, solutionRunSettingsFile);
@@ -345,7 +346,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
             string userSolutionWorkingDir, string userProject1WorkingDir, string userProject3WorkingDir)
         {
             var globalSettings = new RunSettings { ProjectRegex = null, WorkingDir = GlobalWorkingDir };
-            var mockGlobalRunSettings = new Mock<IGlobalRunSettings>();
+            var mockGlobalRunSettings = new Mock<IGlobalRunSettings2>();
             mockGlobalRunSettings.Setup(grs => grs.RunSettings).Returns(globalSettings);
 
             var solutionSettingsContainer = SetupSettingsContainer(solutionSolutionWorkingDir, solutionProject1WorkingDir, solutionProject2WorkingDir, null);
