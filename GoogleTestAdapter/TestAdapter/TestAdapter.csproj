@@ -207,8 +207,12 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <Compile Include="Settings\GlobalRunSettingsProvider.cs" />
+    <Compile Include="Settings\IGlobalRunSettings.cs" />
+    <Compile Include="Settings\IGlobalRunSettingsInternal.cs" />
     <Compile Include="Settings\RunSettingsContainer.cs" />
     <Compile Include="Settings\RunSettingsProvider.cs" />
+    <Compile Include="Settings\RunSettingsService.cs" />
     <Compile Include="Settings\TestPropertySettings.cs" />
     <Compile Include="Settings\TestPropertySettingsContainer.cs" />
     <Compile Include="Settings\TestPropertySettingsProvider.cs" />

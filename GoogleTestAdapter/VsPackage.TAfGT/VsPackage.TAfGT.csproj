@@ -75,10 +75,6 @@
   <ItemGroup>
     <Compile Include="GoogleTestExtensionOptionsPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Settings\GlobalRunSettingsProvider.cs" />
-    <Compile Include="Settings\IGlobalRunSettings.cs" />
-    <Compile Include="Settings\IGlobalRunSettingsInternal.cs" />
-    <Compile Include="Settings\RunSettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Key.snk" />
