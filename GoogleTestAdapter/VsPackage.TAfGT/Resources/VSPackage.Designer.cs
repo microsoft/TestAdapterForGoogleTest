@@ -97,6 +97,15 @@ namespace GoogleTestAdapter.VsPackage.TAfGT.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Google Test.
+        /// </summary>
+        internal static string _115 {
+            get {
+                return ResourceManager.GetString("115", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
         /// </summary>
         internal static System.Drawing.Icon _400 {
