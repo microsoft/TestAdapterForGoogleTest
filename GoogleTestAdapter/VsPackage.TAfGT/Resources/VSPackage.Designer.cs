@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace GoogleTestAdapter.Common {
+namespace GoogleTestAdapter.VsPackage.TAfGT.Resources {
     using System;
     
     
@@ -22,24 +22,24 @@ namespace GoogleTestAdapter.Common {
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("System.Resources.Tools.StronglyTypedResourceBuilder", "15.0.0.0")]
     [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
-    public class Resources {
+    internal class VSPackage {
         
         private static global::System.Resources.ResourceManager resourceMan;
         
         private static global::System.Globalization.CultureInfo resourceCulture;
         
         [global::System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1811:AvoidUncalledPrivateCode")]
-        internal Resources() {
+        internal VSPackage() {
         }
         
         /// <summary>
         ///   Returns the cached ResourceManager instance used by this class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Resources.ResourceManager ResourceManager {
+        internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GoogleTestAdapter.Common.Resources", typeof(Resources).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("GoogleTestAdapter.VsPackage.TAfGT.Resources.VSPackage", typeof(VSPackage).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;
@@ -51,7 +51,7 @@ namespace GoogleTestAdapter.Common {
         ///   resource lookups using this strongly typed resource class.
         /// </summary>
         [global::System.ComponentModel.EditorBrowsableAttribute(global::System.ComponentModel.EditorBrowsableState.Advanced)]
-        public static global::System.Globalization.CultureInfo Culture {
+        internal static global::System.Globalization.CultureInfo Culture {
             get {
                 return resourceCulture;
             }
@@ -61,47 +61,75 @@ namespace GoogleTestAdapter.Common {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Enables Visual Studio&apos;s testing tools with unit tests written for Google Test..
-        /// </summary>
-        public static string ExtensionDescription {
-            get {
-                return ResourceManager.GetString("ExtensionDescription", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Test Adapter for Google Test.
         /// </summary>
-        public static string ExtensionName {
+        internal static string _110 {
             get {
-                return ResourceManager.GetString("ExtensionName", resourceCulture);
+                return ResourceManager.GetString("110", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Adapter for Google Test: Test discovery starting....
+        ///   Looks up a localized string similar to Enables Visual Studio&apos;s testing tools with unit tests written for Google Test.  The use terms and Third Party Notices are available in the extension installation directory..
         /// </summary>
-        public static string TestDiscoveryStarting {
+        internal static string _112 {
             get {
-                return ResourceManager.GetString("TestDiscoveryStarting", resourceCulture);
+                return ResourceManager.GetString("112", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Test Adapter for Google Test: Test execution starting....
+        ///   Looks up a localized string similar to A Google Test based unit test..
         /// </summary>
-        public static string TestExecutionStarting {
+        internal static string _113 {
             get {
-                return ResourceManager.GetString("TestExecutionStarting", resourceCulture);
+                return ResourceManager.GetString("113", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to {0}Check out Test Adapter for Google Test&apos;s trouble shooting section at https://go.microsoft.com/fwlink/?linkid=848168.
+        ///   Looks up a localized string similar to Write C++ unit tests using Google Test. Includes a copy of the Google Test library for use..
         /// </summary>
-        public static string TroubleShootingLink {
+        internal static string _114 {
             get {
-                return ResourceManager.GetString("TroubleShootingLink", resourceCulture);
+                return ResourceManager.GetString("114", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Icon similar to (Icon).
+        /// </summary>
+        internal static System.Drawing.Icon _400 {
+            get {
+                object obj = ResourceManager.GetObject("400", resourceCulture);
+                return ((System.Drawing.Icon)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to General.
+        /// </summary>
+        internal static string _501 {
+            get {
+                return ResourceManager.GetString("501", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Parallelization.
+        /// </summary>
+        internal static string _502 {
+            get {
+                return ResourceManager.GetString("502", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Google Test.
+        /// </summary>
+        internal static string _503 {
+            get {
+                return ResourceManager.GetString("503", resourceCulture);
             }
         }
     }
