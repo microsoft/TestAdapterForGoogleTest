@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+
+Localization Specific Metadata
+_________________________________________________________
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+-->
+<Project DefaultTargets="Localize" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <LocalizeFile Include=".\googletest.propertiesui.xml">
+        <Languages>$(VS)</Languages>
+        <ProjectFile>$(MSBuildThisFileFullPath)</ProjectFile>
+    </LocalizeFile>
+  </ItemGroup>
+</Project>
