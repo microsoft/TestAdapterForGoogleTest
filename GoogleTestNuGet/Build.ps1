@@ -247,8 +247,6 @@ function Build-NuGet {
     $TargetsTTArgs += "googletest.targets.tt.proj"
     Invoke-Executable msbuild $TargetsTTArgs
 
-    Invoke-Executable msbuild googletest.propertiesui.xml.locproj
-
     Copy-Item -Path "googletest.propertiesui.xml" -Destination "$Dir\build\native\googletest.propertiesui.xml"
 
     Copy-Item -Recurse -Path "..\ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
