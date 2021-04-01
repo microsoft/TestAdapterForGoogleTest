@@ -15,7 +15,6 @@ using GoogleTestAdapter.Settings;
 using GoogleTestAdapter.Model;
 using GoogleTestAdapter.TestAdapter.Helpers;
 using GoogleTestAdapter.TestAdapter.Framework;
-using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 
 namespace GoogleTestAdapter.TestAdapter
 {
