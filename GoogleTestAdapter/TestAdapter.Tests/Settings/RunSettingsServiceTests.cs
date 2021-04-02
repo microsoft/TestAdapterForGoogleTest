@@ -7,9 +7,8 @@ using System.Xml;
 using System.Xml.XPath;
 using FluentAssertions;
 using GoogleTestAdapter.Settings;
-using GoogleTestAdapter.TestAdapter.Settings;
+using GoogleTestAdapter.TestAdapter.Helpers;
 using GoogleTestAdapter.Tests.Common;
-using GoogleTestAdapter.VsPackage.Helpers;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Microsoft.VisualStudio.TestWindow.Extensibility;
@@ -17,7 +16,7 @@ using Moq;
 using static GoogleTestAdapter.Tests.Common.TestMetadata.TestCategories;
 // ReSharper disable PossibleNullReferenceException
 
-namespace GoogleTestAdapter.VsPackage.Settings
+namespace GoogleTestAdapter.TestAdapter.Settings
 {
 
     [TestClass]

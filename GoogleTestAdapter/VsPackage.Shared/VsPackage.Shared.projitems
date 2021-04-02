@@ -34,7 +34,6 @@
     <Compile Include="$(MSBuildThisFileDirectory)OptionsPages\ParallelizationOptionsDialogPage.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="$(MSBuildThisFileDirectory)Settings\RunSettingsService.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="$(MSBuildThisFileDirectory)..\Resources\Icons\Icon.ico" />

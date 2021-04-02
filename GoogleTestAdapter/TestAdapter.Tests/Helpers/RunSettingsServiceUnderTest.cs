@@ -1,6 +1,6 @@
 using GoogleTestAdapter.TestAdapter.Settings;
 
-namespace GoogleTestAdapter.VsPackage.Helpers
+namespace GoogleTestAdapter.TestAdapter.Helpers
 {
     public class RunSettingsServiceUnderTest : RunSettingsService
     {
