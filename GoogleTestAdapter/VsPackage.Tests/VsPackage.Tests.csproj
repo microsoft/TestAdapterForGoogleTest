@@ -36,7 +36,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.0.0-preview-1-31209-1111" />
+    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.0.0-preview-2-31221-277" />
     <PackageReference Include="Castle.Core" Version="4.0.0" Private="true" />
     <PackageReference Include="FluentAssertions" Version="4.19.0" Private="true" GeneratePathProperty="true" />
     <Reference Include="FluentAssertions.Core">
