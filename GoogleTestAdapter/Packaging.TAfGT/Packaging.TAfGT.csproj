@@ -61,6 +61,7 @@
       <CopyToOutputDirectory>CopyIfNewer</CopyToOutputDirectory>
       <IncludeInVSIX>true</IncludeInVSIX>
     </Content>
+    <None Include="ItemTemplates\VC\Test\Test.VSTDIR" />
     <None Include="source.extension.vsixmanifest">
       <SubType>Designer</SubType>
     </None>
