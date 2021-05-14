@@ -17,13 +17,13 @@ Microsoft [collaborated with the creators of GTA](https://blogs.msdn.microsoft.c
 * Project and item templates for setting up unit tests based on the Google Test framework; the project template provides automatic acquisition and setup of the Google Test framework, making it easy to get started with writing unit tests
 * Sequential and [parallel](#parallelization) test execution
 * [Traits](http://blogs.msdn.com/b/visualstudioalm/archive/2012/11/09/how-to-manage-unit-tests-in-visual-studio-2012-update-1-part-1-using-traits-in-the-unit-test-explorer.aspx) support by means of [custom C++ macros](#trait_macros) and/or [trait assignment by regexes](#trait_regexes)
-* Support for [value-parameterized](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#value-parameterized-tests), [typed](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#typed-tests), and [type-parameterized](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#type-parameterized-tests) tests
-* Google Test's runtime behavior ([handling of exceptions](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#disabling-catching-test-thrown-exceptions), [break on assertion failure](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#turning-assertion-failures-into-break-points)) can be controlled via [VS options](#global_settings)
+* Support for [value-parameterized](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#value-parameterized-tests), [typed](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#typed-tests), and [type-parameterized](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#type-parameterized-tests) tests
+* Google Test's runtime behavior ([handling of exceptions](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#disabling-catching-test-thrown-exceptions), [break on assertion failure](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#turning-assertion-failures-into-break-points)) can be controlled via [VS options](#global_settings)
 * Most important runtime options can be controlled via [toolbar](#toolbar) without entering VS's options
-* Support for all Google Test command line options, including [test shuffling](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#shuffling-the-tests) and [test repetition](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#repeating-the-tests)
+* Support for all Google Test command line options, including [test shuffling](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#shuffling-the-tests) and [test repetition](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#repeating-the-tests)
 * [TFS support](#vstest_console) by means of [`VSTest.Console.exe`](https://msdn.microsoft.com/en-us/library/jj155800.aspx)
 * [Support](#test_case_filters) for [test case filters](http://blogs.msdn.com/b/vikramagrawal/archive/2012/07/23/running-selective-unit-tests-in-vs-2012-rc-using-testcasefilter.aspx)
-* Failed assertions and [SCOPED_TRACE](https://github.com/google/googletest/blob/master/googletest/docs/AdvancedGuide.md#adding-traces-to-assertions)s are linked to their source locations
+* Failed assertions and [SCOPED_TRACE](https://github.com/google/googletest/blob/master/googletest/docs/advanced.md#adding-traces-to-assertions)s are linked to their source locations
 * Identification of crashed tests
 * Test output can be piped to test console
 * Execution of [parameterized batch files](#test_setup_and_teardown) for test setup/teardown
@@ -136,7 +136,7 @@ If you need to perform some setup or teardown tasks in addition to the setup/tea
 ### External resources
 
 * [Blog post](https://blogs.msdn.microsoft.com/vcblog/2017/05/10/unit-testing-and-the-future-announcing-the-test-adapter-for-google-test/) for using Google Test with TAfGT in Visual Studio
-* [Basic tutorial](https://usingcpp.wordpress.com/2016/07/23/google-test-and-visual-studio/) for using Google Test with the Google Test Adapter in Visual Studio
+* [Basic tutorial](https://computingonplains.wordpress.com/google-test-and-visual-studio/) for using Google Test with the Google Test Adapter and Test Adapter for Google Test in Visual Studio
 
 
 ### <a name="trouble_shooting"></a>Troubleshooting
