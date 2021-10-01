@@ -22,7 +22,7 @@
     <ProjectGuid>{6EFFF365-F626-4BBA-A255-38468E4DF6E0}</ProjectGuid>
     <Keyword>Win32Proj</Keyword>
     <RootNamespace>FailingExe</RootNamespace>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$([MSBuild]::GetDirectoryNameOfFileAbove($(MSBuildThisFileDirectory), Common.props))\Common.props" />
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
