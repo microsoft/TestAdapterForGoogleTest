@@ -1,0 +1,3 @@
+[submodule "ThirdParty/googletest"]
+	path = ThirdParty/googletest
+	url = https://devdiv.visualstudio.com/DefaultCollection/DevDiv/_git/googletest
