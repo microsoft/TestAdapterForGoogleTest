@@ -63,16 +63,6 @@ namespace GoogleTestAdapter.VsPackage.OptionsPages
         private string _pathExtension = SettingsWrapper.OptionPathExtensionDefaultValue;
 
         [LocalizedCategory("CategoryTestExecutionName")]
-        [LocalizedDisplayName("OptionAdditionalTestDiscoveryParams")]
-        [LocalizedDescription("OptionAdditionalTestDiscoveryParamsDescription")]
-        public string AdditionalTestDiscoveryParams
-        {
-            get { return _additionalTestDiscoveryParams; }
-            set { SetAndNotify(ref _additionalTestDiscoveryParams, value); }
-        }
-        private string _additionalTestDiscoveryParams = SettingsWrapper.OptionAdditionalTestDiscoveryParamsDefaultValue;
-
-        [LocalizedCategory("CategoryTestExecutionName")]
         [LocalizedDisplayName("OptionAdditionalTestExecutionParams")]
         [LocalizedDescription("OptionAdditionalTestExecutionParamsDescription")]
         public string AdditionalTestExecutionParams
@@ -212,6 +202,16 @@ namespace GoogleTestAdapter.VsPackage.OptionsPages
             set { SetAndNotify(ref _timestampOutput, value); }
         }
         private bool _timestampOutput = SettingsWrapper.OptionTimestampOutputDefaultValue;
+
+        [LocalizedCategory("CategoryMiscName")]
+        [LocalizedDisplayName("OptionAdditionalTestDiscoveryParams")]
+        [LocalizedDescription("OptionAdditionalTestDiscoveryParamsDescription")]
+        public string AdditionalTestDiscoveryParams
+        {
+            get { return _additionalTestDiscoveryParams; }
+            set { SetAndNotify(ref _additionalTestDiscoveryParams, value); }
+        }
+        private string _additionalTestDiscoveryParams = SettingsWrapper.OptionAdditionalTestDiscoveryParamsDefaultValue;
 
         #endregion
     }
