@@ -112,7 +112,7 @@ namespace GoogleTestAdapter.Helpers
 
                         ResumeThread(thread);
 
-                        using (var reader = new StreamReader(pipeStream, Encoding.Default))
+                        using (var reader = new StreamReader(pipeStream, Encoding.UTF8))
                             while (!reader.EndOfStream)
                                 reportOutputLine(reader.ReadLine());
 
