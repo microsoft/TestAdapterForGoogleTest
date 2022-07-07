@@ -54,7 +54,7 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="XMLDiffPatch.View">
-      <HintPath>$(PkgXmlDiffPatch.Core)\lib\net\XmlDiffPatch.View.dll</HintPath>
+      <HintPath>$(PkgXmlDiffPatch_Core)\lib\net\XmlDiffPatch.View.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
