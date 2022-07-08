@@ -54,7 +54,7 @@ namespace GoogleTestAdapter.Helpers
         {
             new TestProcessLauncher(TestEnvironment.Logger, TestEnvironment.Options, false)
                 .Invoking(pl => pl.GetOutputOfCommand(".", "cmd.exe", "/C \"exit 2\"", false, true, null))
-                .ShouldThrow<Exception>();
+                .Should().Throw<Exception>();
         }
 
         [TestMethod]

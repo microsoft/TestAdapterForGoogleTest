@@ -184,7 +184,7 @@ namespace GoogleTestAdapter.TestAdapter.Helpers
 
         private static void AssertAreEqual(IEnumerable<TestCase> testCases1, IEnumerable<TestCase> testCases2)
         {
-            testCases1.Count().Should().BeEquivalentTo(testCases2.Count());
+            testCases1.Count().Should().Be(testCases2.Count());
 
             using (IEnumerator<TestCase> enumerator1 = testCases1.GetEnumerator())
             using (IEnumerator<TestCase> enumerator2 = testCases2.GetEnumerator())
@@ -202,10 +202,10 @@ namespace GoogleTestAdapter.TestAdapter.Helpers
             testCase1.DisplayName.Should().BeEquivalentTo(testCase2.DisplayName);
             testCase1.CodeFilePath.Should().BeEquivalentTo(testCase2.CodeFilePath);
             testCase1.Source.Should().BeEquivalentTo(testCase2.Source);
-            testCase1.LineNumber.Should().BeEquivalentTo(testCase2.LineNumber);
-            testCase1.Id.Should().BeEquivalentTo(testCase2.Id);
+            testCase1.LineNumber.Should().Be(testCase2.LineNumber);
+            testCase1.Id.Should().Be(testCase2.Id);
             testCase1.ExecutorUri.Should().BeEquivalentTo(testCase2.ExecutorUri);
-            testCase1.Traits.Count().Should().BeEquivalentTo(testCase2.Traits.Count());
+            testCase1.Traits.Count().Should().Be(testCase2.Traits.Count());
         }
 
     }
