@@ -36,7 +36,7 @@ namespace GoogleTestAdapter.Helpers
 
             new TestProcessLauncher(TestEnvironment.Logger, TestEnvironment.Options, true)
                 .Invoking(pl => pl.GetOutputOfCommand("theDir", "theCommand", "theParams", false, false, mockLauncher.Object))
-                .ShouldThrow<ArgumentException>()
+                .Should().Throw<ArgumentException>()
                 .Where(e => e.Message.Contains(processId.ToString()));
 
             mockLauncher.Verify(l => l.LaunchProcessWithDebuggerAttached(
