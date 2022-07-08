@@ -25,9 +25,8 @@ namespace GoogleTestAdapter.Tests.Common.Assertions
 
             protected override string Identifier { get; } = "files";
 
-            public FileAssertions(FileInfo file)
+            public FileAssertions(FileInfo file) : base(file)
             {
-                Subject = file;
             }
 
             public AndConstraint<FileAssertions> Exist(string because = "", params object[] becauseArgs)
