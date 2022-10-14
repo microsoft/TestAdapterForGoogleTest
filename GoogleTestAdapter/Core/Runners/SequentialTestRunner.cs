@@ -60,13 +60,12 @@ namespace GoogleTestAdapter.Runners
                     if (_settings.TestPropertySettingsContainer != null)
                     {
                         testsWithNoTestPropertySettings = new List<TestCase>();
-
                         foreach (var testCase in groupedTestCases[executable])
                         {
                             ITestPropertySettings settings;
                             // Tests with default settings are treated as not having settings and can be run together
                             if (_settings.TestPropertySettingsContainer.TryGetSettings(testCase.FullyQualifiedName, out settings)
-                                && (settings.Environment.Count > 0 || settings.WorkingDirectory != finalWorkingDir))
+                                && (settings.Environment.Count > 0 || Path.GetFullPath(settings.WorkingDirectory) != Path.GetFullPath(finalWorkingDir)))
                             {
                                 RunTestsFromExecutable(
                                     executable,
