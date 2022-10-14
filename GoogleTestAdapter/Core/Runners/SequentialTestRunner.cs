@@ -60,6 +60,7 @@ namespace GoogleTestAdapter.Runners
                     if (_settings.TestPropertySettingsContainer != null)
                     {
                         testsWithNoTestPropertySettings = new List<TestCase>();
+
                         foreach (var testCase in groupedTestCases[executable])
                         {
                             ITestPropertySettings settings;
