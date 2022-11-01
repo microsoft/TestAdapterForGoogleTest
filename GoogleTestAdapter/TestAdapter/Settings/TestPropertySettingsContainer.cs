@@ -1,5 +1,6 @@
 ﻿// Copyright (c) Microsoft Corporation. All rights reserved.
 // Licensed under the MIT license.
+// This file has been modified by Microsoft on 11/2022.
 
 using GoogleTestAdapter.Settings;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
@@ -46,10 +47,10 @@ namespace GoogleTestAdapter.TestAdapter.Settings
             return document.DocumentElement;
         }
 
-        public bool TryGetSettings(string testName, out ITestPropertySettings settings)
+        public bool TryGetSettings(string key, out ITestPropertySettings settings)
         {
             EnsureTestPropertiesMap();
-            return _tests.TryGetValue(testName, out settings);
+            return _tests.TryGetValue(key, out settings);
         }
 
         private void EnsureTestPropertiesMap()
@@ -64,8 +65,9 @@ namespace GoogleTestAdapter.TestAdapter.Settings
             {
                 foreach (var t in this.Tests)
                 {
+                    var key = t.Command + ":" + t.Name;
                     var propertySettings = new TestPropertySettings(t);
-                    _tests.Add(t.Name, propertySettings);
+                    _tests.Add(key, propertySettings);
                 }
             }
         }
