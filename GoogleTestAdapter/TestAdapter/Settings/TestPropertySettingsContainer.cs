@@ -5,6 +5,7 @@
 using GoogleTestAdapter.Settings;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
 using System.Collections.Generic;
+using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
 
