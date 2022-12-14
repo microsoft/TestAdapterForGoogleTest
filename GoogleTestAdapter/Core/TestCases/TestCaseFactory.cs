@@ -253,8 +253,9 @@ namespace GoogleTestAdapter.TestCases
         {
             if (location != null)
             {
+                var ns = GetTestSignatureNamespace(location.TestClassSignature); 
                 var testCase = new TestCase(
-                    descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
+                    ns + '.' + descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
                 testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, location.Traits));
                 return testCase;
             }
@@ -262,6 +263,12 @@ namespace GoogleTestAdapter.TestCases
             _logger.LogWarning(String.Format(Resources.LocationNotFoundError, descriptor.FullyQualifiedName));
             return new TestCase(
                 descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
+        }
+
+        internal static string GetTestSignatureNamespace(string signature)
+        {
+            var namespaceEnd = signature.LastIndexOf("::", StringComparison.Ordinal);
+            return signature.Substring(0, namespaceEnd - 2);
         }
 
         internal static string StripTestSymbolNamespace(string symbol)
