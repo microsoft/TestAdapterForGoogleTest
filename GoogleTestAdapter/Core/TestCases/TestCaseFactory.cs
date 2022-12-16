@@ -272,7 +272,12 @@ namespace GoogleTestAdapter.TestCases
         internal static string GetTestSignatureNamespace(string signature)
         {
             var namespaceEnd = signature.LastIndexOf("::", StringComparison.Ordinal);
-            return signature.Substring(0, namespaceEnd);
+            if (namespaceEnd > 0)
+            {
+                return signature.Substring(0, namespaceEnd);
+            }
+
+            return string.Empty;
         }
 
         internal static string StripTestSymbolNamespace(string symbol)
