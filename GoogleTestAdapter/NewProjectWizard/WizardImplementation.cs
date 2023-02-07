@@ -25,6 +25,12 @@ namespace Microsoft.NewProjectWizard
         private const string RuntimeDebug = "$rtdebug$";
         private const string RuntimeRelease = "$rtrelease$";
         private const string RunSilent = "$runsilent$";
+        private const string ARM64DebugPlatform = "$arm64debugplatform$";
+        private string arm64DebugXMLChunk = "  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|ARM64'\"> <ClCompile>  <PrecompiledHeader>Use</PrecompiledHeader>  <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>  <Optimization>Disabled</Optimization>  <PreprocessorDefinitions>ARM64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>   <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>   <RuntimeLibrary>$rtdebug$</RuntimeLibrary>   <WarningLevel>Level3</WarningLevel> </ClCompile> <Link>   <GenerateDebugInformation>true</GenerateDebugInformation>   <SubSystem>Console</SubSystem> </Link>  </ItemDefinitionGroup>";
+        private const string ARM64ReleasePlatform = "$arm64releaseplatform$";
+        private string arm64ReleaseXMLChunk = "  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|ARM64'\"> <ClCompile>   <PrecompiledHeader>Use</PrecompiledHeader>   <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>   <PreprocessorDefinitions>ARM64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>   <RuntimeLibrary>$rtrelease$</RuntimeLibrary>   <WarningLevel>Level3</WarningLevel>   <DebugInformationFormat>ProgramDatabase</DebugInformationFormat> </ClCompile> <Link>   <GenerateDebugInformation>true</GenerateDebugInformation>   <SubSystem>Console</SubSystem>   <OptimizeReferences>true</OptimizeReferences>   <EnableCOMDATFolding>true</EnableCOMDATFolding> </Link>  </ItemDefinitionGroup>";
+        private const string ARM64Config = "$arm64config$";
+        private string arm64ConfigXML = "<ProjectConfiguration Include=\"Debug|ARM64\">   <Configuration>Debug</Configuration>   <Platform>ARM64</Platform> </ProjectConfiguration> <ProjectConfiguration Include=\"Release|ARM64\"> <Configuration>Release</Configuration>  <Platform>ARM64</Platform> </ProjectConfiguration>";
         private List<Project> projects = new List<Project>();
         private int selectedProjectIndex;
         private IWizard nugetWizard;
@@ -176,6 +182,16 @@ namespace Microsoft.NewProjectWizard
                         .Select(moniker => TryParsePlatformVersion(moniker))
                         .Where(name => name != null)
                         .OrderByDescending(p => p.Version).ToList();
+
+                    if (!this.IsARM64()) {
+                        arm64DebugXMLChunk = "";
+                        arm64ReleaseXMLChunk = "";
+                        arm64ConfigXML = "";
+                    }
+                    replacementsDictionary[ARM64Config] = arm64ConfigXML;
+                    replacementsDictionary[ARM64DebugPlatform] = arm64DebugXMLChunk;
+                    replacementsDictionary[ARM64ReleasePlatform] = arm64ReleaseXMLChunk;
+
                     Platform latestPlatform = allPlatformsForLatestSdk.FirstOrDefault();
 
                     if (latestPlatform == null)
@@ -193,6 +209,16 @@ namespace Microsoft.NewProjectWizard
 
                 replacementsDictionary[TargetPlatformVersion] = versionString;
             }
+        }
+
+        /// <summary>
+        /// Checks architecture of Visual Studio Process.
+        /// </summary>
+        /// <returns>boolean indicating if running arm64 VS</returns>
+        protected bool IsARM64() {
+            string cpu = System.Environment.GetEnvironmentVariable("PROCESSOR_ARCHITECTURE", EnvironmentVariableTarget.Process);
+
+            return cpu.Equals("ARM64", StringComparison.OrdinalIgnoreCase);
         }
 
         // This method is only called for item templates,
