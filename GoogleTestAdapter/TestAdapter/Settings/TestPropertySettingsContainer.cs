@@ -67,8 +67,11 @@ namespace GoogleTestAdapter.TestAdapter.Settings
                 foreach (var t in this.Tests)
                 {
                     var key = Path.GetFullPath(t.Command) + ":" + t.Name;
-                    var propertySettings = new TestPropertySettings(t);
-                    _tests.Add(key, propertySettings);
+                    if (!_tests.ContainsKey(key))
+                    {
+                        var propertySettings = new TestPropertySettings(t);
+                        _tests.Add(key, propertySettings);
+                    }
                 }
             }
         }
