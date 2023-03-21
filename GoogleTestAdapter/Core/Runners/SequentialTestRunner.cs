@@ -63,7 +63,7 @@ namespace GoogleTestAdapter.Runners
 
                         foreach (var testCase in groupedTestCases[executable])
                         {
-                            var key = Path.GetFullPath(testCase.Source) + ":" + testCase.DisplayName;
+                            var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
                             ITestPropertySettings settings;
                             // Tests with default settings are treated as not having settings and can be run together
                             if (_settings.TestPropertySettingsContainer.TryGetSettings(key, out settings)
