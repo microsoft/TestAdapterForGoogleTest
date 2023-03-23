@@ -59,8 +59,8 @@ namespace GoogleTestAdapter.TestResults
             int currentLineIndex = indexOfTestcase;
 
             string line = _consoleOutput[currentLineIndex++];
-            string testDisplayName = RemovePrefix(line).Trim();
-            TestCase testCase = FindTestcase(testDisplayName);
+            string qualifiedTestname = RemovePrefix(line).Trim();
+            TestCase testCase = FindTestcase(qualifiedTestname);
             if (testCase == null)
             {
                 _logger.DebugWarning(String.Format(Resources.NoKnownTestCaseMessage, line));
@@ -189,14 +189,31 @@ namespace GoogleTestAdapter.TestResults
             return -1;
         }
 
-        private TestCase FindTestcase(string testDisplayName)
+        private TestCase FindTestcase(string qualifiedTestname)
         {
-            return FindTestcase(testDisplayName, _testCasesRun);
+            return FindTestcase(qualifiedTestname, _testCasesRun);
         }
 
-        public static TestCase FindTestcase(string testDisplayName, IList<TestCase> testCasesRun)
+        public static TestCase FindTestcase(string qualifiedTestname, IList<TestCase> testCasesRun)
         {
-            return testCasesRun.SingleOrDefault(tc => tc.DisplayName == testDisplayName);
+            foreach (TestCase tc in testCasesRun)
+            {
+                // If namespace exists then remove it so we can compare the test display names.
+                //  Using just tc.DisplayName does not work for paramaterized test cases.
+                string fullyQualifiedName = tc.FullyQualifiedName;
+                int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
+                if (frequency > 1)
+                {
+                    fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
+                }
+
+                if (fullyQualifiedName == qualifiedTestname)
+                {
+                    return tc;
+                }
+            }
+
+            return null;
         }
 
         public static bool IsRunLine(string line)
