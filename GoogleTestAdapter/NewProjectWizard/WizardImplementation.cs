@@ -29,6 +29,8 @@ namespace Microsoft.NewProjectWizard
         private const string ARM64ReleasePlatform = "$arm64releaseplatform$";
         private const string ARM64Config = "$arm64config$";
         private string arm64ConfigXML = "<ProjectConfiguration Include=\"Debug|ARM64\">   <Configuration>Debug</Configuration>   <Platform>ARM64</Platform> </ProjectConfiguration> <ProjectConfiguration Include=\"Release|ARM64\"> <Configuration>Release</Configuration>  <Platform>ARM64</Platform> </ProjectConfiguration>";
+        private const string ARM64Pch = "$arm64Pch$";
+        private string ARM64PchXML = "<PrecompiledHeader Condition=\"'$(Configuration)|$(Platform)'=='Debug|ARM64'\">Create</PrecompiledHeader>   <PrecompiledHeader Condition=\"'$(Configuration)|$(Platform)'=='Release|ARM64'\">Create</PrecompiledHeader>";
         private List<Project> projects = new List<Project>();
         private int selectedProjectIndex;
         private IWizard nugetWizard;
@@ -150,21 +152,21 @@ namespace Microsoft.NewProjectWizard
             }
 
             string RuntimeDebugValue = "MultiThreadedDebugDLL";
-            string RuntimeReleasevalue = "MultiThreadedDLL";
+            string RuntimeReleaseValue = "MultiThreadedDLL";
             if (configurationData.IsRuntimeStatic)
             {
-                RuntimeReleasevalue = "MultiThreaded";
+                RuntimeReleaseValue = "MultiThreaded";
                 RuntimeDebugValue = "MultiThreadedDebug";
             }
             else
             {
-                RuntimeReleasevalue = "MultiThreadedDLL";
+                RuntimeReleaseValue = "MultiThreadedDLL";
                 RuntimeDebugValue =  "MultiThreadedDebugDLL";
             }
 
             string arm64DebugXMLChunk = $"  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='Debug|ARM64'\"> <ClCompile>  <PrecompiledHeader>Use</PrecompiledHeader>  <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>  <Optimization>Disabled</Optimization>  <PreprocessorDefinitions>ARM64;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>   <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>   <RuntimeLibrary>{RuntimeDebugValue}</RuntimeLibrary>   <WarningLevel>Level3</WarningLevel> </ClCompile> <Link>   <GenerateDebugInformation>true</GenerateDebugInformation>   <SubSystem>Console</SubSystem> </Link>  </ItemDefinitionGroup>";
-            string arm64ReleaseXMLChunk = $"  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|ARM64'\"> <ClCompile>   <PrecompiledHeader>Use</PrecompiledHeader>   <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>   <PreprocessorDefinitions>ARM64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>   <RuntimeLibrary>{RuntimeReleasevalue}</RuntimeLibrary>   <WarningLevel>Level3</WarningLevel>   <DebugInformationFormat>ProgramDatabase</DebugInformationFormat> </ClCompile> <Link>   <GenerateDebugInformation>true</GenerateDebugInformation>   <SubSystem>Console</SubSystem>   <OptimizeReferences>true</OptimizeReferences>   <EnableCOMDATFolding>true</EnableCOMDATFolding> </Link>  </ItemDefinitionGroup>";
-            replacementsDictionary[RuntimeRelease] = RuntimeReleasevalue;
+            string arm64ReleaseXMLChunk = $"  <ItemDefinitionGroup Condition=\"'$(Configuration)|$(Platform)'=='Release|ARM64'\"> <ClCompile>   <PrecompiledHeader>Use</PrecompiledHeader>   <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>   <PreprocessorDefinitions>ARM64;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>   <RuntimeLibrary>{RuntimeReleaseValue}</RuntimeLibrary>   <WarningLevel>Level3</WarningLevel>   <DebugInformationFormat>ProgramDatabase</DebugInformationFormat> </ClCompile> <Link>   <GenerateDebugInformation>true</GenerateDebugInformation>   <SubSystem>Console</SubSystem>   <OptimizeReferences>true</OptimizeReferences>   <EnableCOMDATFolding>true</EnableCOMDATFolding> </Link>  </ItemDefinitionGroup>";
+            replacementsDictionary[RuntimeRelease] = RuntimeReleaseValue;
             replacementsDictionary[RuntimeDebug] = RuntimeDebugValue;
 
             if (!isPlatformSet)
@@ -192,8 +194,10 @@ namespace Microsoft.NewProjectWizard
                         arm64DebugXMLChunk = "";
                         arm64ReleaseXMLChunk = "";
                         arm64ConfigXML = "";
+                        ARM64PchXML = "";
                     }
                     replacementsDictionary[ARM64Config] = arm64ConfigXML;
+                    replacementsDictionary[ARM64Pch] = ARM64PchXML;
                     replacementsDictionary[ARM64DebugPlatform] = arm64DebugXMLChunk;
                     replacementsDictionary[ARM64ReleasePlatform] = arm64ReleaseXMLChunk;
 
