@@ -17,7 +17,7 @@
       <Configuration>Release</Configuration>
       <Platform>x64</Platform>
     </ProjectConfiguration>
-	$arm64config$
+	  $arm64config$
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{$guid1$}</ProjectGuid>
