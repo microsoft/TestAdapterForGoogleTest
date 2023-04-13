@@ -6,6 +6,23 @@
 
 extern std::string TEST_DIRECTORY;
 
+namespace NamespaceFoo
+{
+	TEST(BasicTestsInNamespace, BasicTest)
+	{
+		EXPECT_EQ(10, 10);
+	}
+
+	class ParamTestsInNamespace : public testing::TestWithParam<int> {};
+
+	TEST_P(ParamTestsInNamespace, ParamTest)
+	{
+		EXPECT_GT(10, GetParam());
+	}
+
+	INSTANTIATE_TEST_CASE_P(, ParamTestsInNamespace, testing::Range(0, 5));
+}
+
 // http://stackoverflow.com/questions/8233842/how-to-check-if-directory-exist-using-c-and-winapi
 bool DirExists(const std::string& dirName_in)
 {
