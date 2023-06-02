@@ -63,7 +63,17 @@ namespace GoogleTestAdapter.Runners
 
                         foreach (var testCase in groupedTestCases[executable])
                         {
-                            var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
+                            string fullyQualifiedName = testCase.FullyQualifiedName;
+
+                            // If testCase contains a namespace then remove it because GoogleTest has no knowledge of namespaces.
+                            int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
+
+                            if (frequency > 1)
+                            {
+                                fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
+                            }
+
+                            var key = Path.GetFullPath(testCase.Source) + ":" + fullyQualifiedName;
                             ITestPropertySettings settings;
                             // Tests with default settings are treated as not having settings and can be run together
                             if (_settings.TestPropertySettingsContainer.TryGetSettings(key, out settings)
