@@ -6,7 +6,7 @@ namespace GoogleTestAdapter.Model
     {
         public string Source { get; }
 
-        public string FullyQualifiedName { get; }
+        public string FullyQualifiedName { get; set; }
         public string DisplayName { get; }
 
         public string CodeFilePath { get; }

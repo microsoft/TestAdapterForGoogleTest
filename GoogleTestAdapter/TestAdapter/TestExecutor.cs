@@ -229,6 +229,20 @@ namespace GoogleTestAdapter.TestAdapter
 
                 _executor = new GoogleTestExecutor(_logger, _settings);
             }
+            foreach (TestCase tc in testCasesToRun)
+            {
+                // If namespace exists then remove it so we can compare the test display names.
+                //  Using just tc.DisplayName does not work for paramaterized test cases.
+                string fullyQualifiedName = tc.FullyQualifiedName;
+                int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
+                if (frequency > 1)
+                {
+                    fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
+                }
+
+                tc.FullyQualifiedName = fullyQualifiedName;
+            }
+
             _executor.RunTests(testCasesToRun, reporter, launcher,
                 runContext.IsBeingDebugged, runContext.SolutionDirectory, processExecutor);
             reporter.AllTestsFinished();
