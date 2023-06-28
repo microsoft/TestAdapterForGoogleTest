@@ -12,6 +12,8 @@ namespace GoogleTestAdapter.Model
         public string CodeFilePath { get; }
         public int LineNumber { get; }
 
+        public string Namespace { get; set; }
+
         public List<Trait> Traits { get; } = new List<Trait>();
         public List<TestProperty> Properties { get; } = new List<TestProperty>();
 

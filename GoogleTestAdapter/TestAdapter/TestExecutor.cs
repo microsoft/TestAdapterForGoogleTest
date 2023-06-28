@@ -237,10 +237,14 @@ namespace GoogleTestAdapter.TestAdapter
                 int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
                 if (frequency > 1)
                 {
+                    string ns = fullyQualifiedName.Substring(0, fullyQualifiedName.IndexOf('.'));
+                    tc.Namespace = ns;
+                    _logger.LogInfo("NS removing: " + tc.Namespace);
                     fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
                 }
 
                 tc.FullyQualifiedName = fullyQualifiedName;
+                _logger.LogInfo("Test Name after removing NS: " + tc.FullyQualifiedName);
             }
 
             _executor.RunTests(testCasesToRun, reporter, launcher,
