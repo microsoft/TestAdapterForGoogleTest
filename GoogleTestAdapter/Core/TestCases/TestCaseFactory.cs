@@ -253,13 +253,8 @@ namespace GoogleTestAdapter.TestCases
         {
             if (location != null)
             {
-                var ns = GetTestSignatureNamespace(location.TestClassSignature);
-
-                if (ns != string.Empty)
-                    ns += ".";
-
                 var testCase = new TestCase(
-                    ns + descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
+                    descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
                 testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, location.Traits));
                 return testCase;
             }

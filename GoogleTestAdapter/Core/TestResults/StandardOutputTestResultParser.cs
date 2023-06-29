@@ -196,24 +196,7 @@ namespace GoogleTestAdapter.TestResults
 
         public static TestCase FindTestcase(string qualifiedTestname, IList<TestCase> testCasesRun)
         {
-            foreach (TestCase tc in testCasesRun)
-            {
-                // If namespace exists then remove it so we can compare the test display names.
-                //  Using just tc.DisplayName does not work for paramaterized test cases.
-                string fullyQualifiedName = tc.FullyQualifiedName;
-                int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
-                if (frequency > 1)
-                {
-                    fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
-                }
-
-                if (fullyQualifiedName == qualifiedTestname)
-                {
-                    return tc;
-                }
-            }
-
-            return null;
+            return testCasesRun.SingleOrDefault(tc => tc.FullyQualifiedName == qualifiedTestname);
         }
 
         public static bool IsRunLine(string line)
