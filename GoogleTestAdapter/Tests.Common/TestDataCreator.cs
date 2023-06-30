@@ -70,7 +70,7 @@ namespace GoogleTestAdapter.Tests.Common
 
         public TestCase ToTestCase(string name, string executable, string sourceFile = "")
         {
-            return new TestCase(name, executable, name, sourceFile, 0);
+            return new TestCase(name, name,executable, name, sourceFile, 0);
         }
 
         public TestCase ToTestCase(string name)
@@ -109,7 +109,7 @@ namespace GoogleTestAdapter.Tests.Common
                 {
                     if (qualifiedNamesToRun.Contains(testCase.FullyQualifiedName))
                     {
-                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasePair.Value.Count, allQualifiedNames.Length));
+                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasePair.Value.Count, allQualifiedNames.Length, testCase.FullyQualifiedName));
                         testCases.Add(testCase);
                     }
                 }
