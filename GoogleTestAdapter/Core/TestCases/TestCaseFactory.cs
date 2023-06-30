@@ -87,7 +87,7 @@ namespace GoogleTestAdapter.TestCases
             {
                 foreach (var testCase in suiteTestCasesPair.Value)
                 {
-                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count));
+                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
                 }
             }
 
@@ -179,7 +179,7 @@ namespace GoogleTestAdapter.TestCases
                 {
                     foreach (var testCase in suiteTestCasesPair.Value)
                     {
-                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count));
+                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
                         reportTestCase?.Invoke(testCase);
                     }
                 }
@@ -232,7 +232,7 @@ namespace GoogleTestAdapter.TestCases
         private TestCase CreateTestCase(TestCaseDescriptor descriptor)
         {
             var testCase = new TestCase(
-                descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
+                descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
             testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, new List<Trait>()));
             return testCase;
         }
@@ -259,14 +259,14 @@ namespace GoogleTestAdapter.TestCases
                     ns += ".";
 
                 var testCase = new TestCase(
-                    ns + descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
+                    descriptor.FullyQualifiedName, ns + descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
                 testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, location.Traits));
                 return testCase;
             }
 
             _logger.LogWarning(String.Format(Resources.LocationNotFoundError, descriptor.FullyQualifiedName));
             return new TestCase(
-                descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
+                descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
         }
 
         internal static string GetTestSignatureNamespace(string signature)
