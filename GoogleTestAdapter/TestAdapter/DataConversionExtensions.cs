@@ -30,20 +30,28 @@ namespace GoogleTestAdapter.TestAdapter
 
         public static TestCase ToTestCase(this VsTestCase vsTestCase)
         {
-            var testCase = new TestCase(vsTestCase.FullyQualifiedName, vsTestCase.Source, 
+            TestCaseMetaDataProperty metaData = null;
+            var metaDataSerialization = vsTestCase.GetPropertyValue(TestMetaDataProperty);
+            if (metaDataSerialization != null)
+                metaData = new TestCaseMetaDataProperty((string)metaDataSerialization);
+
+            var fullyQualifiedNameWithoutNamespace = vsTestCase.FullyQualifiedName;
+            if (metaData != null)
+                fullyQualifiedNameWithoutNamespace = metaData.FullyQualifiedNameWithoutNamespace;
+
+            var testCase = new TestCase(fullyQualifiedNameWithoutNamespace, vsTestCase.FullyQualifiedName, vsTestCase.Source, 
                 vsTestCase.DisplayName, vsTestCase.CodeFilePath, vsTestCase.LineNumber);
             testCase.Traits.AddRange(vsTestCase.Traits.Select(ToTrait));
 
-            var metaDataSerialization = vsTestCase.GetPropertyValue(TestMetaDataProperty);
-            if (metaDataSerialization != null)
-                testCase.Properties.Add(new TestCaseMetaDataProperty((string)metaDataSerialization));
+            if (metaData != null)
+                testCase.Properties.Add(metaData);
 
             return testCase;
         }
 
         public static VsTestCase ToVsTestCase(this TestCase testCase)
         {
-            var vsTestCase = new VsTestCase(testCase.FullyQualifiedName, TestExecutor.ExecutorUri, testCase.Source)
+            var vsTestCase = new VsTestCase(testCase.FullyQualifiedNameWithNamespace, TestExecutor.ExecutorUri, testCase.Source)
             {
                 DisplayName = testCase.DisplayName,
                 CodeFilePath = testCase.CodeFilePath,
@@ -52,9 +60,9 @@ namespace GoogleTestAdapter.TestAdapter
 
             vsTestCase.Traits.AddRange(testCase.Traits.Select(ToVsTrait));
 
-            var property = testCase.Properties.OfType<TestCaseMetaDataProperty>().SingleOrDefault();
-            if (property != null)
-                vsTestCase.SetPropertyValue(TestMetaDataProperty, property.Serialization);
+            var metaData = testCase.Properties.OfType<TestCaseMetaDataProperty>().SingleOrDefault();
+            if (metaData != null)
+                vsTestCase.SetPropertyValue(TestMetaDataProperty, metaData.Serialization);
 
             return vsTestCase;
         }

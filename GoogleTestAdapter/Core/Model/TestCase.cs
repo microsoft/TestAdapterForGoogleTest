@@ -6,20 +6,20 @@ namespace GoogleTestAdapter.Model
     {
         public string Source { get; }
 
-        public string FullyQualifiedName { get; set; }
+        public string FullyQualifiedName { get; }
+        public string FullyQualifiedNameWithNamespace { get; }
         public string DisplayName { get; }
 
         public string CodeFilePath { get; }
         public int LineNumber { get; }
 
-        public string Namespace { get; set; }
-
         public List<Trait> Traits { get; } = new List<Trait>();
         public List<TestProperty> Properties { get; } = new List<TestProperty>();
 
-        public TestCase(string fullyQualifiedName, string source, string displayName, string codeFilePath, int lineNumber)
+        public TestCase(string fullyQualifiedName, string fullyQualifiedNameWithNamespace, string source, string displayName, string codeFilePath, int lineNumber)
         {
             FullyQualifiedName = fullyQualifiedName;
+            FullyQualifiedNameWithNamespace = fullyQualifiedNameWithNamespace;
             Source = source;
             DisplayName = displayName;
             CodeFilePath = codeFilePath;

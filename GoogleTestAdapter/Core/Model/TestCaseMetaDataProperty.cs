@@ -10,19 +10,21 @@ namespace GoogleTestAdapter.Model
 
         public int NrOfTestCasesInSuite { get; }
         public int NrOfTestCasesInExecutable { get; }
+        public string FullyQualifiedNameWithoutNamespace { get; }
 
-        public TestCaseMetaDataProperty(int nrOfTestCasesInSuite, int nrOfTestCasesInExecutable)
-            : this($"{nrOfTestCasesInSuite}:{nrOfTestCasesInExecutable}")
+        public TestCaseMetaDataProperty(int nrOfTestCasesInSuite, int nrOfTestCasesInExecutable, string fullyQualifiedNameWithoutNamespace)
+            : this($"{nrOfTestCasesInSuite}|{nrOfTestCasesInExecutable}|{fullyQualifiedNameWithoutNamespace}")
         {
         }
 
         public TestCaseMetaDataProperty(string serialization) : base(serialization)
         {
-            int[] values = serialization.Split(':').Select(int.Parse).ToArray();
-            if (values.Length != 2)
+            string[] fields = serialization.Split('|');
+            if (fields.Length != 3)
                 throw new ArgumentException(serialization, nameof(serialization));
-            NrOfTestCasesInSuite = values[0];
-            NrOfTestCasesInExecutable = values[1];
+            NrOfTestCasesInSuite = int.Parse(fields[0]);
+            NrOfTestCasesInExecutable = int.Parse(fields[1]);
+            FullyQualifiedNameWithoutNamespace = fields[2];
         }
     }
 }

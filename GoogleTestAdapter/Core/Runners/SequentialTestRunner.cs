@@ -180,24 +180,6 @@ namespace GoogleTestAdapter.Runners
         private IEnumerable<TestResult> TryRunTests(string executable, string workingDir, IDictionary<string, string> envVars, bool isBeingDebugged,
             IDebuggedProcessLauncher debuggedLauncher, CommandLineGenerator.Args arguments, IProcessExecutor executor, StreamingStandardOutputTestResultParser streamingParser)
         {
-            foreach (TestCase tc in arguments.TestCases)
-            {
-                // If namespace exists then remove it so we can compare the test display names.
-                //  Using just tc.DisplayName does not work for paramaterized test cases.
-                string fullyQualifiedName = tc.FullyQualifiedName;
-                int frequency = fullyQualifiedName.Where(x => (x == '.')).Count();
-                if (frequency > 1)
-                {
-                    string ns = fullyQualifiedName.Substring(0, fullyQualifiedName.IndexOf('.'));
-                    tc.Namespace = ns;
-                    _logger.LogInfo("NS removing: " + tc.Namespace);
-                    fullyQualifiedName = fullyQualifiedName.Substring(fullyQualifiedName.IndexOf('.') + 1);
-                }
-
-                tc.FullyQualifiedName = fullyQualifiedName;
-                _logger.LogInfo("Test Name after removing NS: " + tc.FullyQualifiedName);
-            }
-
             List<string> consoleOutput;
             if (_settings.UseNewTestExecutionFramework)
             {

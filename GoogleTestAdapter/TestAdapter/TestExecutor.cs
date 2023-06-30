@@ -98,7 +98,7 @@ namespace GoogleTestAdapter.TestAdapter
                 filter.Filter(allTestCasesInExecutables.Select(tc => tc.ToVsTestCase())).ToList();
             ICollection<TestCase> testCasesToRun =
                 allTestCasesInExecutables.Where(
-                    tc => vsTestCasesToRun.Any(vtc => tc.FullyQualifiedName == vtc.FullyQualifiedName)).ToArray();
+                    tc => vsTestCasesToRun.Any(vtc => tc.FullyQualifiedNameWithNamespace == vtc.FullyQualifiedName)).ToArray();
 
             DoRunTests(testCasesToRun, runContext, frameworkHandle);
 
