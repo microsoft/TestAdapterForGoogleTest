@@ -125,7 +125,7 @@ namespace GoogleTestAdapter.Scheduling
             serializer.UpdateTestDurations(testResults);
 
             IDictionary<Model.TestCase, int> durations = serializer.ReadTestDurations(
-                new Model.TestCase("TestSuite1.Test2", tempFile, "TestSuite1.Test2", "", 0).Yield());
+                new Model.TestCase("TestSuite1.Test2", "TestSuite1.Test2", tempFile, "TestSuite1.Test2", "", 0).Yield());
 
             durations.Should().NotBeNull();
             durations.Count.Should().Be(0);
