@@ -28,7 +28,7 @@ namespace GoogleTestAdapter.Scheduling
 
             result.Count.Should().Be(2);
             result[0].Count.Should().Be(1);
-            result[0][0].FullyQualifiedName.Should().Be("LongTest");
+            result[0][0].FullyQualifiedNameWithoutNamespace.Should().Be("LongTest");
             result[1].Count.Should().Be(3);
         }
 
@@ -49,7 +49,7 @@ namespace GoogleTestAdapter.Scheduling
 
             result.Count.Should().Be(3);
             result[0].Count.Should().Be(1);
-            result[0][0].FullyQualifiedName.Should().Be("LongTest");
+            result[0][0].FullyQualifiedNameWithoutNamespace.Should().Be("LongTest");
             result[1].Count.Should().Be(2);
             result[2].Count.Should().Be(1);
         }
@@ -69,7 +69,7 @@ namespace GoogleTestAdapter.Scheduling
 
             result.Count.Should().Be(2);
             result[0].Count.Should().Be(1);
-            result[0][0].FullyQualifiedName.Should().Be("LongTest");
+            result[0][0].FullyQualifiedNameWithoutNamespace.Should().Be("LongTest");
             result[1].Count.Should().Be(1);
         }
 

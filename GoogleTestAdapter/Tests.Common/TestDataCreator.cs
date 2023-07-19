@@ -64,7 +64,7 @@ namespace GoogleTestAdapter.Tests.Common
         {
             return AllTestCasesExceptLoadTests.Where(
                 testCase => qualifiedNames.Any(
-                    qualifiedName => testCase.FullyQualifiedName.Contains(qualifiedName)))
+                    qualifiedName => testCase.FullyQualifiedNameWithoutNamespace.Contains(qualifiedName)))
                     .ToList();
         }
 
@@ -107,9 +107,9 @@ namespace GoogleTestAdapter.Tests.Common
             {
                 foreach (var testCase in suiteTestCasePair.Value)
                 {
-                    if (qualifiedNamesToRun.Contains(testCase.FullyQualifiedName))
+                    if (qualifiedNamesToRun.Contains(testCase.FullyQualifiedNameWithoutNamespace))
                     {
-                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasePair.Value.Count, allQualifiedNames.Length, testCase.FullyQualifiedName));
+                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasePair.Value.Count, allQualifiedNames.Length, testCase.FullyQualifiedNameWithoutNamespace));
                         testCases.Add(testCase);
                     }
                 }

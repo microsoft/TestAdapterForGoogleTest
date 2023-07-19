@@ -73,7 +73,7 @@ namespace GoogleTestAdapter.Scheduling
             _logger.DebugInfo(String.Format(Resources.WorstDifferences, nrOfWorstDifferences));
             for (int i = 0; i < nrOfWorstDifferences; i++)
             {
-                _logger.DebugInfo(String.Format(Resources.Results, differences[i].TestCase.FullyQualifiedName, ExpectedTestcaseDurations[differences[i].TestCase], ActualTestcaseDurations[differences[i].TestCase]));
+                _logger.DebugInfo(String.Format(Resources.Results, differences[i].TestCase.FullyQualifiedNameWithoutNamespace, ExpectedTestcaseDurations[differences[i].TestCase], ActualTestcaseDurations[differences[i].TestCase]));
             }
         }
 

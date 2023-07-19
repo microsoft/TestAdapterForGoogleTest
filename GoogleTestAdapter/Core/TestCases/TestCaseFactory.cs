@@ -87,7 +87,7 @@ namespace GoogleTestAdapter.TestCases
             {
                 foreach (var testCase in suiteTestCasesPair.Value)
                 {
-                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
+                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedNameWithoutNamespace));
                 }
             }
 
@@ -179,7 +179,7 @@ namespace GoogleTestAdapter.TestCases
                 {
                     foreach (var testCase in suiteTestCasesPair.Value)
                     {
-                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
+                        testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedNameWithoutNamespace));
                         reportTestCase?.Invoke(testCase);
                     }
                 }

@@ -113,7 +113,7 @@ namespace GoogleTestAdapter.Runners
             }
 
             string result = "";
-            string nextTest = testCases[0].FullyQualifiedName;
+            string nextTest = testCases[0].FullyQualifiedNameWithoutNamespace;
             if (nextTest.Length > maxLength)
             {
                 throw new Exception(String.Format(Resources.CommandLineGeneratorError, maxLength, includedTestCases.Count, nextTest.Length));
@@ -126,7 +126,7 @@ namespace GoogleTestAdapter.Runners
                 testCases.RemoveAt(0);
                 if (testCases.Count > 0)
                 {
-                    nextTest = ":" + testCases[0].FullyQualifiedName;
+                    nextTest = ":" + testCases[0].FullyQualifiedNameWithoutNamespace;
                 }
             }
             return result;
@@ -247,7 +247,7 @@ namespace GoogleTestAdapter.Runners
 
         private string GetTestsuiteName(TestCase testCase)
         {
-            return testCase.FullyQualifiedName.Split('.')[0];
+            return testCase.FullyQualifiedNameWithoutNamespace.Split('.')[0];
         }
 
     }

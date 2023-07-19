@@ -283,7 +283,7 @@ namespace GoogleTestAdapter
                 testCase.LineNumber.Should().Be(0);
                 testCase.Source.Should().Be(TestResources.Tests_DebugX86);
                 testCase.DisplayName.Should().NotBeNullOrEmpty();
-                testCase.FullyQualifiedName.Should().NotBeNullOrEmpty();
+                testCase.FullyQualifiedNameWithoutNamespace.Should().NotBeNullOrEmpty();
             }
         }
 
@@ -309,8 +309,8 @@ namespace GoogleTestAdapter
             discoverer.DiscoverTests(TestResources.TestDiscoveryParamExe.Yield(), MockFrameworkReporter.Object);
 
             testCases.Count.Should().Be(2);
-            testCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestFails");
-            testCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestPasses");
+            testCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestFails");
+            testCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestPasses");
         }
 
         [TestMethod]
@@ -323,8 +323,8 @@ namespace GoogleTestAdapter
             IList<TestCase> testCases = discoverer.GetTestsFromExecutable(TestResources.TestDiscoveryParamExe);
 
             testCases.Count.Should().Be(2);
-            testCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestFails");
-            testCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestPasses");
+            testCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestFails");
+            testCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestPasses");
         }
 
         [TestMethod]
@@ -338,7 +338,7 @@ namespace GoogleTestAdapter
             for (int i = 0; i < 5000; i++)
             {
                 string fullyQualifiedName = $"LoadTests.Test/{i}";
-                bool contains = testCases.Any(tc => tc.FullyQualifiedName == fullyQualifiedName);
+                bool contains = testCases.Any(tc => tc.FullyQualifiedNameWithoutNamespace == fullyQualifiedName);
                 contains.Should().BeTrue($" Test not found: {fullyQualifiedName}");
             }
         }
@@ -374,12 +374,12 @@ namespace GoogleTestAdapter
 
             testCases.Count.Should().Be(TestResources.NrOfTests);
 
-            TestCase testCase = testCases.Single(tc => tc.FullyQualifiedName == "TheFixture.AddFails");
+            TestCase testCase = testCases.Single(tc => tc.FullyQualifiedNameWithoutNamespace == "TheFixture.AddFails");
             testCase.DisplayName.Should().Be("TheFixture.AddFails");
             testCase.CodeFilePath.Should().EndWith(@"sampletests\tests\fixturetests.cpp");
             testCase.LineNumber.Should().Be(11);
 
-            testCase = testCases.Single(tc => tc.FullyQualifiedName == "Arr/TypeParameterizedTests/1.CanDefeatMath");
+            testCase = testCases.Single(tc => tc.FullyQualifiedNameWithoutNamespace == "Arr/TypeParameterizedTests/1.CanDefeatMath");
             testCase.DisplayName.Should().Be("Arr/TypeParameterizedTests/1.CanDefeatMath<MyStrangeArray>");
             testCase.CodeFilePath.Should().EndWith(@"sampletests\tests\typeparameterizedtests.cpp");
             testCase.LineNumber.Should().Be(53);
@@ -416,7 +416,7 @@ namespace GoogleTestAdapter
             var discoverer = new GoogleTestDiscoverer(TestEnvironment.Logger, TestEnvironment.Options);
             IList<TestCase> tests = discoverer.GetTestsFromExecutable(TestResources.Tests_DebugX86);
 
-            TestCase testCase = tests.Single(t => t.FullyQualifiedName == fullyQualifiedName);
+            TestCase testCase = tests.Single(t => t.FullyQualifiedNameWithoutNamespace == fullyQualifiedName);
             testCase.DisplayName.Should().MatchRegex(displayNameRegex.ToString());
         }
 

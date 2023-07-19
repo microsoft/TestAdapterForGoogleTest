@@ -98,7 +98,7 @@ namespace GoogleTestAdapter.Runners
                 foreach (KeyValuePair<TestCase, int> duration in durations)
                 {
                     if (!_schedulingAnalyzer.AddExpectedDuration(duration.Key, duration.Value))
-                        _logger.DebugWarning(String.Format(Resources.TestCaseInAnalyzer, duration.Key.FullyQualifiedName));
+                        _logger.DebugWarning(String.Format(Resources.TestCaseInAnalyzer, duration.Key.FullyQualifiedNameWithoutNamespace));
                 }
             }
             catch (InvalidTestDurationsException e)
