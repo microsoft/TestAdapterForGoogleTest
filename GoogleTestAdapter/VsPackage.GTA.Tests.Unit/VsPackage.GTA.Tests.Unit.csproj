@@ -42,7 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="Castle.Core" Version="5.1.1" Private="true" />
-    <PackageReference Include="FluentAssertions" Version="6.7.0" Private="true" GeneratePathProperty="true" />
+    <PackageReference Include="FluentAssertions" Version="6.12.0" Private="true" GeneratePathProperty="true" />
     <Reference Include="FluentAssertions.Core">
       <HintPath>$(PkgFluentAssertions)\lib\net45\FluentAssertions.Core.dll</HintPath>
       <Private>True</Private>
