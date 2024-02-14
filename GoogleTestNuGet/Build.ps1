@@ -8,7 +8,7 @@ available through PATH, e.g. made through Developer Command Prompt for VS.
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $false)]
-        [ValidateScript({Test-Path $_ -PathType 'Container'})]
+    [ValidateScript({Test-Path $_ -PathType 'Container'})]
         [string]$VSPath
 )
 Set-StrictMode -Version Latest
@@ -189,7 +189,7 @@ function Build-Binaries {
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
         -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage
 
-    $CMakeDir = "$pwd\..\ThirdParty\googletest\googletest"
+    $CMakeDir = "$pwd\googletest\googletest"
 
     Push-Location $Dir
     try {
@@ -267,7 +267,7 @@ function Build-NuGet {
     Copy-Item -Path "1055" -Destination "$Dir\build\native\1055" -Recurse
     Copy-Item -Path "2052" -Destination "$Dir\build\native\2052" -Recurse
 
-    Copy-Item -Recurse -Path "..\ThirdParty\googletest\googletest\include" -Destination "$Dir\build\native\include"
+    Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
     $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
