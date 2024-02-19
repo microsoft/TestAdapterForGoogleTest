@@ -124,11 +124,11 @@ extends:
             platform: $(BuildPlatform)
             configuration: $(BuildConfiguration)
             maximumCpuCount: true
-        - task: PowerShell@2
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Generate TAfGT specific sln
           inputs:
-            targetType: filePath
-            filePath: './TestAdapterForGoogleTest/Tools/RemoveGtaProjects.ps1'
+            type: FilePath
+            scriptName: TestAdapterForGoogleTest\Tools\RemoveGtaProjects.ps1
         - task: NuGetCommand@2
           displayName: NuGet restore to sign packages
           inputs:
@@ -142,17 +142,16 @@ extends:
             solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
             selectOrConfig: config
             nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
-        - task: PowerShell@2
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Set Version
           inputs:
-            targetType: filePath
-            filePath: './TestAdapterForGoogleTest/GoogleTestAdapter/SetVersion.ps1'
-            arguments: '-version 1.17.0.30'
-        - task: PowerShell@1
+            type: InlineScript
+            script: .\TestAdapterForGoogleTest\GoogleTestAdapter\SetVersion.ps1 -version 1.17.0.30
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Add Keys for RealSign to TAfGT
           inputs:
-            scriptType: inlineScript
-            inlineScript: |-
+            type: InlineScript
+            script: |-
               $projects_to_sign = @(
                 "TestAdapterForGoogleTest\GoogleTestAdapter\Common\Common.csproj",
                 "TestAdapterForGoogleTest\GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
@@ -175,11 +174,11 @@ extends:
           clean: true
           fetchDepth: 1
           persistCredentials: true
-        - task: PowerShell@1
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Add Keys for RealSign to googletest
           inputs:
-            scriptType: inlineScript
-            inlineScript: |-
+            type: InlineScript
+            script: |-
               $build_script = 'TestAdapterForGoogleTest\GoogleTestNuGet\Build.ps1'
               $match_string = '*$DelaySign.set_InnerXML("true")*'
               (Get-Content $build_script) | ForEach-Object {
@@ -192,11 +191,11 @@ extends:
                   $_
                 }
               } | Set-Content $build_script
-        - task: PowerShell@1
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Update token for template
           inputs:
-            scriptType: inlineScript
-            inlineScript: |-
+            type: InlineScript
+            script: |-
               $project_template = 'TestAdapterForGoogleTest\GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
               (Get-Content $project_template) | ForEach-Object {
                 $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
