@@ -8,7 +8,7 @@ available through PATH, e.g. made through Developer Command Prompt for VS.
 [CmdletBinding()]
 param(
     [Parameter(Mandatory = $false)]
-    [ValidateScript({Test-Path $_ -PathType 'Container'})]
+        [ValidateScript({Test-Path $_ -PathType 'Container'})]
         [string]$VSPath
 )
 Set-StrictMode -Version Latest
