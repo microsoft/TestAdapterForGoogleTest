@@ -78,15 +78,15 @@ extends:
   template: azure-pipelines/MicroBuild.1ES.Official.yml@MicroBuildTemplate
   parameters:
     pool:
-      name: VSEngSS-MicroBuild2019-1ES
+      name: VSEngSS-MicroBuild2022-1ES
     sdl:
       sourceAnalysisPool:
-        name: VSEngSS-MicroBuild2019-1ES
+        name: VSEngSS-MicroBuild2022-1ES
       sourceRepositoriesToScan:
         exclude:
+        - repository: googletest
         - repository: MicroBuildTemplate
         - repository: TestAdapterForGoogleTest
-        - repository: googletest
     stages:
     - stage: stage
       jobs:
