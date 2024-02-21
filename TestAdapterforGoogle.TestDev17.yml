@@ -79,6 +79,13 @@ extends:
   parameters:
     pool:
       name: VSEngSS-MicroBuild2019-1ES
+      demands:
+      - vstest
+      - msbuild
+      - visualstudio
+      - DotNetFramework
+      - Cmd
+      - npm
     sdl:
       sourceAnalysisPool:
         name: VSEngSS-MicroBuild2019-1ES
