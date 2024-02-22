@@ -13,10 +13,6 @@ trigger:
 name: $(date:yyyyMMdd)$(rev:.r)
 resources:
   repositories:
-  - repository: googletest
-    type: git
-    name: googletest
-    ref: refs/heads/main
   - repository: MicroBuildTemplate
     type: git
     name: 1ESPipelineTemplates/MicroBuildTemplate
@@ -91,9 +87,7 @@ extends:
         name: VSEngSS-MicroBuild2019-1ES
       sourceRepositoriesToScan:
         exclude:
-        - repository: googletest
         - repository: MicroBuildTemplate
-        - repository: TestAdapterForGoogleTest
     stages:
     - stage: stage
       jobs:
@@ -112,11 +106,16 @@ extends:
           clean: true
           fetchDepth: 1
           persistCredentials: true
-        - checkout: googletest
-          displayName: 'Checkout googletest ADO Repo'
-          clean: true
-          fetchDepth: 1
-          persistCredentials: true
+        - task: Febiunz.GitClone.gitclone.GitClone@2
+          displayName: 'Git Repository Clone: https://devdiv.visualstudio.com/DefaultCollection/DevDiv/_git/googletest'
+          inputs:
+            RepositoryURL: https://devdiv.visualstudio.com/DefaultCollection/DevDiv/_git/googletest
+            RepositoryPath: $(Build.SourcesDirectory)\googletest
+            Branch: main
+            FallbackBranch: main
+            BaseBranch: main
+          env:
+            MY_ACCESS_TOKEN: $(System.AccessToken)
         - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@1
           displayName: Install Localization Plugin
         - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
