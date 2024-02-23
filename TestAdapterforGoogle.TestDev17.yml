@@ -217,7 +217,7 @@ extends:
           displayName: Build GoogleTest NuGet packages
           inputs:
             scriptName: TestAdapterForGoogleTest\GoogleTestNuGet\Build.ps1
-            arguments: -Verbose -VSPath "$(ProgramFiles)\Microsoft Visual Studio\2019\Enterprise\"
+            arguments: -Verbose -VSPath "$(ProgramFilesX86)\Microsoft Visual Studio\2019\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages
@@ -226,7 +226,7 @@ extends:
         - task: BatchScript@1
           displayName: Set up developer command prompt environment
           inputs:
-            filename: $(ProgramFiles)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
+            filename: $(ProgramFilesX86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
             modifyEnvironment: true
         - task: NuGetCommand@2
           displayName: NuGet install dia amd64
