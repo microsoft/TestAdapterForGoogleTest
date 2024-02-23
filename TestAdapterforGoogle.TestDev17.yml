@@ -38,8 +38,6 @@ variables:
   value: "$(TAfGTBuildConfiguration)"
 - name: BuildPlatform
   value: Any CPU
-- name: CodeQL.Cadence
-  value: 0
 - name: CodeQL.Enabled
   value: true
 - name: Codeql.Language
