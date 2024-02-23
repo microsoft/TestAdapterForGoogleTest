@@ -255,7 +255,7 @@ extends:
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm\msdia140.dll' -Destination '..\arm\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm64\msdia140.dll' -Destination '..\arm64\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.X86Files\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
-            workingDirectory: GoogleTestAdapter/DiaResolver/dia2
+            workingDirectory: TestAdapterForGoogleTest/GoogleTestAdapter/DiaResolver/dia2
         - task: VSBuild@1
           displayName: Build GoogleTestAdapter.sln
           inputs:
