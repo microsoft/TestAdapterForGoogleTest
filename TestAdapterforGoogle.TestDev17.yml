@@ -129,12 +129,19 @@ extends:
           displayName: Install NuGet
           inputs:
             versionSpec: 5.9.1
-        - task: VSBuild@1
-          displayName: Build ResolveTTs.proj
+        #- task: VSBuild@1
+        #  displayName: Build ResolveTTs.proj
+        #  inputs:
+        #    solution: 'TestAdapterForGoogleTest/ResolveTTs.proj'
+        #    vsVersion: '16.0'
+        #    msbuildArgs: '-v:diag'
+        #    platform: '$(BuildPlatform)'
+        #    configuration: '$(BuildConfiguration)'
+        #    createLogFile: true
+        #    logFileVerbosity: 'diagnostic'
+        - task: MSBuild@1
           inputs:
             solution: 'TestAdapterForGoogleTest/ResolveTTs.proj'
-            vsVersion: '16.0'
-            msbuildArgs: '-v:diag'
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
             createLogFile: true
