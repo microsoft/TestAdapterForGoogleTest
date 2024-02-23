@@ -140,6 +140,7 @@ extends:
         #    createLogFile: true
         #    logFileVerbosity: 'diagnostic'
         - task: MSBuild@1
+          timeoutInMinutes: 5
           inputs:
             solution: 'TestAdapterForGoogleTest/ResolveTTs.proj'
             platform: '$(BuildPlatform)'
