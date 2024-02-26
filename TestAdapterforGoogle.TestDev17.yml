@@ -281,14 +281,12 @@ extends:
             nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
             packagesDirectory: ..\NugetPackages
         - task: VSBuild@1
-          displayName: Build core vsmanproj
+          displayName: 'Build core vsmanproj'
           inputs:
             solution: TestAdapterForGoogleTest/swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
-            msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
-            platform: $(BuildPlatform)
-            configuration: $(BuildConfiguration)
+            platform: '$(BuildPlatform)'
+            configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
-          continueOnError: true
         - task: PublishSymbols@1
           displayName: 'Publish symbols path: '
           inputs:
@@ -297,14 +295,14 @@ extends:
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
           inputs:
-            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
+            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
             Contents: '*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy vsix to root
           inputs:
-            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
+            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
             Contents: Packaging.TAfGT.vsix
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
