@@ -262,6 +262,7 @@ extends:
             solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
             platform: $(BuildPlatform)
             configuration: $(BuildConfiguration)
+            clean: true
             maximumCpuCount: true
             createLogFile: true
         - task: CopyFiles@2
@@ -282,8 +283,10 @@ extends:
             packagesDirectory: ..\NugetPackages
         - task: VSBuild@1
           displayName: 'Build core vsmanproj'
+          continueOnError: True
           inputs:
             solution: TestAdapterForGoogleTest/swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
+            msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
