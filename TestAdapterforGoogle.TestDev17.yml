@@ -276,7 +276,7 @@ extends:
         - task: NuGetCommand@2
           displayName: NuGet restore vsmanproj
           inputs:
-            solution: swix/packages.config
+            solution: TestAdapterForGoogleTest/swix/packages.config
             selectOrConfig: config
             nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
             packagesDirectory: ..\NugetPackages
