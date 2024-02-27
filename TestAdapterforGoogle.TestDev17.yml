@@ -294,9 +294,9 @@ extends:
             configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
         - task: PublishSymbols@1
-          displayName: 'Publish symbols path: '
+          displayName: 'Publish Symbols Path'
           inputs:
-            SearchPattern: out\binaries\**\*.pdb
+            SearchPattern: TestAdapterForGoogleTest\out\binaries\**\*.pdb
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
@@ -369,12 +369,6 @@ extends:
             DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
             AccessToken: $(DropPAT)
             DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
-        - task: PublishSymbols@2
-          displayName: Publish symbols path
-          inputs:
-            SymbolsFolder: $(Build.ArtifactStagingDirectory)\drop
-            SearchPattern: '**/*.pdb'
-            SymbolServerType: TeamServices
         - task: VSTest@2
           displayName: Run Tests
           inputs:
