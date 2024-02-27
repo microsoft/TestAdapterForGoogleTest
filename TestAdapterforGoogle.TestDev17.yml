@@ -362,7 +362,7 @@ extends:
           displayName: Run Tests
           inputs:
             testAssemblyVer2: |-
-              out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
+              TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
               **\*.Tests.Common.*dll
             vsTestVersion: 15.0
             runInParallel: false
