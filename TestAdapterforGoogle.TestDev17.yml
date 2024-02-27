@@ -325,23 +325,6 @@ extends:
             continueOnError: true
           env:
             AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId);TenantId=$(ApiScanTenant);AppKey=$(ApiScanSecret)
-        - task: PowerShell@2
-          displayName: Pull msdia symbols
-          inputs:
-            targetType: inline
-            script: |-
-              # Using symchk to pull the symbols as BinSkim cannot cope with the symbol server currently.
-              # NOTE: availability of symchk depends on APIScan being pulled down first, so this step must follow APIScan and may require updates to path as APIScan is revised.
-              $symchkPath = (Get-ChildItem -Path "C:/ToolCache/Guardian/_gdn/" -Recurse -Filter "symchk.exe").FullName
-              if (Test-Path C:\Symbols) { Remove-Item C:\Symbols -Recurse -Force }
-              Write-Host "*** x86 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\Core\x86\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** x64 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\Core\x64\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** arm ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\Core\arm\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** arm64 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\Core\arm64\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
         - task: 1ES.MicroBuildVstsDrop@1
           displayName: Upload VSTS Drop
           inputs:
