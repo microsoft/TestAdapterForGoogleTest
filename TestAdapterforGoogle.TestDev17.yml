@@ -91,7 +91,7 @@ extends:
       sourceAnalysisPool:
         name: VSEngSS-MicroBuild2019-1ES
       sourceRepositoriesToScan:
-        exclude:
+        include:
         - repository: googletest
       tsa:
         enabled: true
