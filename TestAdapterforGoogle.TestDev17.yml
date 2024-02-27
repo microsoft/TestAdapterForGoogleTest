@@ -91,9 +91,10 @@ extends:
       sourceAnalysisPool:
         name: VSEngSS-MicroBuild2019-1ES
       sourceRepositoriesToScan:
-        exclude:
-        - repository: MicroBuildTemplate
+        include:
         - repository: googletest
+      customBuildTags:
+        - ES365AIMigrationTooling
     stages:
     - stage: stage
       jobs:
