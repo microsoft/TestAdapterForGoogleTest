@@ -58,6 +58,9 @@ variables:
   value: "$(TAfGTProductComponent)"
 - name: Publish
   value: "$(TAfGTPublish)"
+  # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
+- name: QuickBuild
+  value: "$(TAfGTQuickBuild)"
 - name: RealSign
   value: "$(TAfGTRealSign)"
 - name: RetainBuild
@@ -310,11 +313,14 @@ extends:
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
         - task: PoliCheck@2
+          displayName: 'PoliCheck'
+          condition: eq (variables.QuickBuild, False)
           inputs:
             targetType: 'F'
             targetArgument: '$(Build.SourcesDirectory)'
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
+          condition: eq (variables.QuickBuild, False)
           inputs:
             softwareFolder: '$(Build.ArtifactStagingDirectory)\drop'
             softwareName: GoogleTest
@@ -325,6 +331,12 @@ extends:
             continueOnError: true
           env:
             AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId);TenantId=$(ApiScanTenant);AppKey=$(ApiScanSecret)
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+          displayName: 'Publish Guardian Artifacts'
+          condition: eq (variables.QuickBuild, False)
+          inputs:
+            PublishProcessedResults: true
+          continueOnError: true
         - task: 1ES.MicroBuildVstsDrop@1
           displayName: Upload VSTS Drop
           inputs:
@@ -355,11 +367,6 @@ extends:
             vsTestVersion: 15.0
             runInParallel: false
             diagnosticsEnabled: True
-          continueOnError: true
-        - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-          displayName: 'Publish Guardian Artifacts'
-          inputs:
-            PublishProcessedResults: true
           continueOnError: true
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
           displayName: 'TSA Upload'
