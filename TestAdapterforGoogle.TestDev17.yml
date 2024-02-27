@@ -91,10 +91,16 @@ extends:
       sourceAnalysisPool:
         name: VSEngSS-MicroBuild2019-1ES
       sourceRepositoriesToScan:
-        include:
+        exclude:
         - repository: googletest
-      customBuildTags:
-        - ES365AIMigrationTooling
+      tsa:
+        enabled: true
+        configFile: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest\TSAOptions.json'
+      binskim:
+        enabled: true
+        scanOutputDirectoryOnly: true
+    customBuildTags:
+    - ES365AIMigrationTooling
     stages:
     - stage: stage
       jobs:
@@ -287,7 +293,7 @@ extends:
             packagesDirectory: ..\NugetPackages
         - task: VSBuild@1
           displayName: 'Build core vsmanproj'
-          continueOnError: True
+          continueOnError: true
           inputs:
             solution: TestAdapterForGoogleTest/swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
             msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
@@ -341,20 +347,16 @@ extends:
           inputs:
             PublishProcessedResults: true
           continueOnError: true
-        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
-        - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
-          displayName: 'TSA Upload'
-          condition: eq (variables.QuickBuild, False)
+        - task: VSTest@2
+          displayName: Run Tests
           inputs:
-            tsaVersion: TsaV2
-            codebase: NewOrUpdate
-            codeBaseName: 'VCLS GoogleTest GitHub'
-            notificationAlias: 'bogdan.mihalcea@microsoft.com,cppintellisense@microsoft.com'
-            codeBaseAdmins: 'redmond\bogdanm;redmond\cpp-apogee'
-            instanceUrlForTsaV2: DEVDIV
-            projectNameDEVDIV: DevDiv
-            areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
-            iterationPath: DevDiv
+            testAssemblyVer2: |-
+              TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
+              **\*.Tests.Common.*dll
+            vsTestVersion: 15.0
+            runInParallel: false
+            diagnosticsEnabled: True
+          continueOnError: true
         - task: 1ES.MicroBuildVstsDrop@1
           displayName: Upload VSTS Drop
           inputs:
@@ -370,16 +372,6 @@ extends:
             DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
             AccessToken: $(DropPAT)
             DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
-        - task: VSTest@2
-          displayName: Run Tests
-          inputs:
-            testAssemblyVer2: |-
-              TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
-              **\*.Tests.Common.*dll
-            vsTestVersion: 15.0
-            runInParallel: false
-            diagnosticsEnabled: True
-          continueOnError: true
         - task: 1ES.PublishPipelineArtifact@1
           displayName: 'Publish Artifact: drop'
           inputs:

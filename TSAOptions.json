@@ -1,0 +1,21 @@
+{
+    "tsaVersion": "TsaV2",
+    "codebase": "NewOrUpdate",
+    "codebaseName": "VCLS GoogleTest GitHub",
+    "tsaStamp": "DevDiv",
+    "tsaEnvironment": "PROD",
+    "notificationAliases": [
+       "cppintellisense@microsoft.com",
+       "bogdan.mihalcea@microsoft.com"
+    ],
+    "codebaseAdmins": [
+        "REDMOND\\bogdanm",
+        "REDMOND\\cpp-apogee"
+    ],
+    "instanceUrl": "https://devdiv.visualstudio.com",
+    "projectName": "DevDiv",
+    "areaPath": "DevDiv\\Cpp Developer Experience\\Apogee\\Google Test and Boost Test integration",
+    "iterationPath": "DevDiv",
+    "alltools": true,
+    "repositoryName": "VCLS-Extensions"
+ }
