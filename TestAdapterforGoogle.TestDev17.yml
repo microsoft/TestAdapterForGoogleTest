@@ -58,6 +58,9 @@ variables:
   value: "$(TAfGTProductComponent)"
 - name: Publish
   value: "$(TAfGTPublish)"
+  # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
+- name: QuickBuild
+  value: "$(TAfGTQuickBuild)"
 - name: RealSign
   value: "$(TAfGTRealSign)"
 - name: RetainBuild
@@ -89,8 +92,11 @@ extends:
         name: VSEngSS-MicroBuild2019-1ES
       sourceRepositoriesToScan:
         exclude:
-        - repository: MicroBuildTemplate
         - repository: googletest
+      binskim:
+        scanOutputDirectoryOnly: true
+    customBuildTags:
+    - ES365AIMigrationTooling
     stages:
     - stage: stage
       jobs:
@@ -114,7 +120,6 @@ extends:
           clean: true
           fetchDepth: 1
           persistCredentials: true
-          path: s\ThirdParty\googletest
         - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@1
           displayName: Install Localization Plugin
         - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
@@ -135,8 +140,6 @@ extends:
             msbuildArgs: '-v:diag'
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
-        #    createLogFile: true
-        #    logFileVerbosity: 'diagnostic'
         - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Generate TAfGT specific sln
           inputs:
@@ -217,7 +220,7 @@ extends:
           displayName: Build GoogleTest NuGet packages
           inputs:
             scriptName: TestAdapterForGoogleTest\GoogleTestNuGet\Build.ps1
-            arguments: -Verbose -VSPath "$(ProgramFilesX86)\Microsoft Visual Studio\2019\Enterprise\"
+            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages
@@ -226,7 +229,7 @@ extends:
         - task: BatchScript@1
           displayName: Set up developer command prompt environment
           inputs:
-            filename: $(ProgramFilesX86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
+            filename: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
             modifyEnvironment: true
         - task: NuGetCommand@2
           displayName: NuGet install dia amd64
@@ -258,13 +261,14 @@ extends:
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm\msdia140.dll' -Destination '..\arm\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm64\msdia140.dll' -Destination '..\arm64\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.X86Files\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
-            workingDirectory: GoogleTestAdapter/DiaResolver/dia2
+            workingDirectory: TestAdapterForGoogleTest/GoogleTestAdapter/DiaResolver/dia2
         - task: VSBuild@1
           displayName: Build GoogleTestAdapter.sln
           inputs:
             solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
             platform: $(BuildPlatform)
             configuration: $(BuildConfiguration)
+            clean: true
             maximumCpuCount: true
             createLogFile: true
         - task: CopyFiles@2
@@ -279,44 +283,49 @@ extends:
         - task: NuGetCommand@2
           displayName: NuGet restore vsmanproj
           inputs:
-            solution: swix/packages.config
+            solution: TestAdapterForGoogleTest/swix/packages.config
             selectOrConfig: config
             nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
             packagesDirectory: ..\NugetPackages
         - task: VSBuild@1
-          displayName: Build core vsmanproj
+          displayName: 'Build core vsmanproj'
+          continueOnError: True
           inputs:
             solution: TestAdapterForGoogleTest/swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
             msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
-            platform: $(BuildPlatform)
-            configuration: $(BuildConfiguration)
+            platform: '$(BuildPlatform)'
+            configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
-          continueOnError: true
         - task: PublishSymbols@1
-          displayName: 'Publish symbols path: '
+          displayName: 'Publish Symbols Path'
           inputs:
-            SearchPattern: out\binaries\**\*.pdb
+            SearchPattern: TestAdapterForGoogleTest\out\binaries\**\*.pdb
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
           inputs:
-            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
+            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
             Contents: '*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy vsix to root
           inputs:
-            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
+            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
             Contents: Packaging.TAfGT.vsix
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
+          displayName: 'PoliCheck'
+          condition: eq (variables.QuickBuild, False)
           inputs:
             targetType: 'F'
             targetArgument: '$(Build.SourcesDirectory)'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
+          condition: eq (variables.QuickBuild, False)
           inputs:
             softwareFolder: '$(Build.ArtifactStagingDirectory)\drop'
             softwareName: GoogleTest
@@ -327,23 +336,27 @@ extends:
             continueOnError: true
           env:
             AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId);TenantId=$(ApiScanTenant);AppKey=$(ApiScanSecret)
-        - task: PowerShell@2
-          displayName: Pull msdia symbols
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+          displayName: 'Publish Guardian Artifacts'
+          condition: eq (variables.QuickBuild, False)
           inputs:
-            targetType: inline
-            script: |-
-              # Using symchk to pull the symbols as BinSkim cannot cope with the symbol server currently.
-              # NOTE: availability of symchk depends on APIScan being pulled down first, so this step must follow APIScan and may require updates to path as APIScan is revised.
-              $symchkPath = (Get-ChildItem -Path "C:/ToolCache/Guardian/_gdn/" -Recurse -Filter "symchk.exe").FullName
-              if (Test-Path C:\Symbols) { Remove-Item C:\Symbols -Recurse -Force }
-              Write-Host "*** x86 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\out\binaries\GoogleTestAdapter\Release\Core\x86\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** x64 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\out\binaries\GoogleTestAdapter\Release\Core\x64\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** arm ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\out\binaries\GoogleTestAdapter\Release\Core\arm\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
-              Write-Host "*** arm64 ***"
-              & $symchkPath $(Build.ArtifactStagingDirectory)\drop\out\binaries\GoogleTestAdapter\Release\Core\arm64\msdia140.dll /s srv*C:\Symbols*https://symbols_ro:$(SYMBOLS_PAT)@artifacts.dev.azure.com/microsoft/_apis/Symbol/symsrv /v
+            PublishProcessedResults: true
+          continueOnError: true
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
+          displayName: 'TSA Upload'
+          condition: eq (variables.QuickBuild, False)
+          inputs:
+            tsaVersion: TsaV2
+            codebase: NewOrUpdate
+            codeBaseName: 'VCLS GoogleTest GitHub'
+            notificationAlias: 'bogdan.mihalcea@microsoft.com,cppintellisense@microsoft.com'
+            codeBaseAdmins: 'redmond\bogdanm;redmond\cpp-apogee'
+            instanceUrlForTsaV2: DEVDIV
+            projectNameDEVDIV: DevDiv
+            areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
+            iterationPath: DevDiv
         - task: 1ES.MicroBuildVstsDrop@1
           displayName: Upload VSTS Drop
           inputs:
@@ -359,39 +372,16 @@ extends:
             DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
             AccessToken: $(DropPAT)
             DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
-        - task: PublishSymbols@2
-          displayName: Publish symbols path
-          inputs:
-            SymbolsFolder: $(Build.ArtifactStagingDirectory)\drop
-            SearchPattern: '**/*.pdb'
-            SymbolServerType: TeamServices
         - task: VSTest@2
           displayName: Run Tests
           inputs:
             testAssemblyVer2: |-
-              out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
+              TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
               **\*.Tests.Common.*dll
             vsTestVersion: 15.0
             runInParallel: false
             diagnosticsEnabled: True
           continueOnError: true
-        - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
-          displayName: 'Publish Guardian Artifacts'
-          inputs:
-            PublishProcessedResults: true
-          continueOnError: true
-        - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
-          displayName: 'TSA Upload'
-          inputs:
-            tsaVersion: TsaV2
-            codebase: NewOrUpdate
-            codeBaseName: 'VCLS GoogleTest GitHub'
-            notificationAlias: 'lukaszme@microsoft.com,cpp-apogee@microsoft.com'
-            codeBaseAdmins: 'redmond\lukaszme;redmond\cpp-apogee'
-            instanceUrlForTsaV2: DEVDIV
-            projectNameDEVDIV: DevDiv
-            areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
-            iterationPath: DevDiv
         - task: 1ES.PublishPipelineArtifact@1
           displayName: 'Publish Artifact: drop'
           inputs:
