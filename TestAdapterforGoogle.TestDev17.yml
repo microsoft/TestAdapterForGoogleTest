@@ -312,12 +312,14 @@ extends:
             Contents: Packaging.TAfGT.vsix
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
           displayName: 'PoliCheck'
           condition: eq (variables.QuickBuild, False)
           inputs:
             targetType: 'F'
             targetArgument: '$(Build.SourcesDirectory)'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
           condition: eq (variables.QuickBuild, False)
@@ -331,12 +333,27 @@ extends:
             continueOnError: true
           env:
             AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId);TenantId=$(ApiScanTenant);AppKey=$(ApiScanSecret)
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
           displayName: 'Publish Guardian Artifacts'
           condition: eq (variables.QuickBuild, False)
           inputs:
             PublishProcessedResults: true
           continueOnError: true
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
+          displayName: 'TSA Upload'
+          condition: eq (variables.QuickBuild, False)
+          inputs:
+            tsaVersion: TsaV2
+            codebase: NewOrUpdate
+            codeBaseName: 'VCLS GoogleTest GitHub'
+            notificationAlias: 'bogdan.mihalcea@microsoft.com,cppintellisense@microsoft.com'
+            codeBaseAdmins: 'redmond\bogdanm;redmond\cpp-apogee'
+            instanceUrlForTsaV2: DEVDIV
+            projectNameDEVDIV: DevDiv
+            areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
+            iterationPath: DevDiv
         - task: 1ES.MicroBuildVstsDrop@1
           displayName: Upload VSTS Drop
           inputs:
@@ -368,18 +385,6 @@ extends:
             runInParallel: false
             diagnosticsEnabled: True
           continueOnError: true
-        - task: securedevelopmentteam.vss-secure-development-tools.build-task-uploadtotsa.TSAUpload@1
-          displayName: 'TSA Upload'
-          inputs:
-            tsaVersion: TsaV2
-            codebase: NewOrUpdate
-            codeBaseName: 'VCLS GoogleTest GitHub'
-            notificationAlias: 'bogdan.mihalcea@microsoft.com,cppintellisense@microsoft.com'
-            codeBaseAdmins: 'redmond\bogdanm;redmond\cpp-apogee'
-            instanceUrlForTsaV2: DEVDIV
-            projectNameDEVDIV: DevDiv
-            areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
-            iterationPath: DevDiv
         - task: 1ES.PublishPipelineArtifact@1
           displayName: 'Publish Artifact: drop'
           inputs:
