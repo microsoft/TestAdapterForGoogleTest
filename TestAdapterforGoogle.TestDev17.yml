@@ -374,8 +374,8 @@ extends:
             tsaVersion: TsaV2
             codebase: NewOrUpdate
             codeBaseName: 'VCLS GoogleTest GitHub'
-            notificationAlias: 'lukaszme@microsoft.com,cpp-apogee@microsoft.com'
-            codeBaseAdmins: 'redmond\lukaszme;redmond\cpp-apogee'
+            notificationAlias: 'bogdan.mihalcea@microsoft.com,cppintellisense@microsoft.com'
+            codeBaseAdmins: 'redmond\bogdanm;redmond\cpp-apogee'
             instanceUrlForTsaV2: DEVDIV
             projectNameDEVDIV: DevDiv
             areaPath: 'DevDiv\Cpp Developer Experience\Apogee\Google Test and Boost Test integration'
