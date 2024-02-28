@@ -10,7 +10,7 @@
     ],
     "codebaseAdmins": [
         "REDMOND\\bogdanm",
-        "REDMOND\\cpp-apogee"
+        "REDMOND\\cppintellisense"
     ],
     "instanceUrl": "https://devdiv.visualstudio.com",
     "projectName": "DevDiv",
