@@ -95,7 +95,7 @@ extends:
         - repository: googletest
       tsa:
         enabled: true
-        configFile: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest\TSAOptions.json'
+        configFile: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest\tsaoptions.json'
       binskim:
         enabled: true
         scanOutputDirectoryOnly: true
