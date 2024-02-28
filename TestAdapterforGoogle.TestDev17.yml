@@ -75,6 +75,8 @@ variables:
   value: davidraygoza
 - name: TeamName
   value: VCLS
+- name: VersionNumber
+  value: "$(TAfGTVersionNumber)"
 extends:
   template: azure-pipelines/MicroBuild.1ES.Official.yml@MicroBuildTemplate
   parameters:
@@ -162,11 +164,12 @@ extends:
             solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
             selectOrConfig: config
             nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
-        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+        - task: PowerShell@2
           displayName: Set Version
           inputs:
-            type: InlineScript
-            script: .\TestAdapterForGoogleTest\GoogleTestAdapter\SetVersion.ps1 -version 1.17.0.30
+            targetType: filePath
+            filePath: './TestAdapterForGoogleTest/GoogleTestAdapter/SetVersion.ps1'
+            arguments: '-version $(VersionNumber)'
         - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Add Keys for RealSign to TAfGT
           inputs:
