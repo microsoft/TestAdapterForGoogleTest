@@ -206,10 +206,10 @@ function Build-Binaries {
         Add-Signing -Directory $Dir -ProjectName "gtest"
         Add-Signing -Directory $Dir -ProjectName "gtest_main"
 
-        Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=Debug")
-        Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=Debug")
-        Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=RelWithDebInfo")
-        Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=RelWithDebInfo")
+        Invoke-Executable msbuild @("gtest.vcxproj",      "/Zi /p:Configuration=Debug")
+        Invoke-Executable msbuild @("gtest_main.vcxproj", "/Zi /p:Configuration=Debug")
+        Invoke-Executable msbuild @("gtest.vcxproj",      "/Zi /p:Configuration=RelWithDebInfo")
+        Invoke-Executable msbuild @("gtest_main.vcxproj", "/Zi /p:Configuration=RelWithDebInfo")
     } finally {
         Pop-Location
     }
