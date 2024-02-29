@@ -330,7 +330,7 @@ extends:
           displayName: 'Copy Scannable Files to: $(Build.ArtifactStagingDirectory)\FilesToScanDrop'
           inputs:
             filePath: './TestAdapterForGoogleTest/FilesToScan.ps1'
-            arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.SourcesDirectory)\TestAdapterForGoogleTest\out\binaries\'
+            arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
         # Debug task for now to verify what files are in this FilesToScanDrop.
         - task: 1ES.PublishPipelineArtifact@1
           displayName: 'Publish Artifact: FilesToScanDrop'
