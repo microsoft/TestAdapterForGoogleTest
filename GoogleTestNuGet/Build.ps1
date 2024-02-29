@@ -134,12 +134,17 @@ function Add-Signing {
     $MicroBuildProps.SetAttribute("Project", "$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props")
     $MicroBuildProps.SetAttribute("Condition", "Exists('$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props')")
 
-    $LinkerGroup = $xml.CreateElement("ItemGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $BuildGroup = $xml.CreateElement("ItemGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalOptions = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
+    $ClCompile.AppendChild($AdditionalOptions) | Out-Null
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
     $Profile = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $Profile.set_InnerXML("true");
     $Link.AppendChild($Profile) | Out-Null
-    $LinkerGroup.AppendChild($Link) | Out-Null
+    $BuildGroup.AppendChild($ClCompile) | Out-Null
+    $BuildGroup.AppendChild($Link) | Out-Null
 
     $RealSignGroup = $xml.CreateElement("PropertyGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $RealSignGroup.SetAttribute("Condition", "'`$(RealSign)' == 'True'")
@@ -177,12 +182,15 @@ function Add-Signing {
     $MicroBuildTargets.SetAttribute("Condition", "Exists('$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets')")
 
     $xml.Project.AppendChild($MicroBuildProps) | Out-Null
-    $xml.Project.AppendChild($LinkerGroup) | Out-Null
+    $xml.Project.AppendChild($BuildGroup) | Out-Null
     $xml.Project.AppendChild($RealSignGroup) | Out-Null
     $xml.Project.AppendChild($FileSignGroup) | Out-Null
     $xml.Project.AppendChild($MicroBuildTargets) | Out-Null
 
     $xml.Save("$Directory\$ProjectName.vcxproj")
+
+    #Print the contents of the project to validate the modifications
+    Get-Content "$Directory\$ProjectName.vcxproj"
 }
 
 function Build-Binaries {
@@ -214,10 +222,10 @@ function Build-Binaries {
         Add-Signing -Directory $Dir -ProjectName "gtest"
         Add-Signing -Directory $Dir -ProjectName "gtest_main"
 
-        Invoke-Executable msbuild @("gtest.vcxproj",      "/Zi /p:Configuration=Debug")
-        Invoke-Executable msbuild @("gtest_main.vcxproj", "/Zi /p:Configuration=Debug")
-        Invoke-Executable msbuild @("gtest.vcxproj",      "/Zi /p:Configuration=RelWithDebInfo")
-        Invoke-Executable msbuild @("gtest_main.vcxproj", "/Zi /p:Configuration=RelWithDebInfo")
+        Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=Debug")
+        Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=Debug")
+        Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=RelWithDebInfo")
+        Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=RelWithDebInfo")
     } finally {
         Pop-Location
     }
