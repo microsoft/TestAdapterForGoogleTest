@@ -11,10 +11,11 @@ if (!(Test-Path -Path $FilesToScanDrop)) {
 }
 
 foreach ($file in $filesToScan) {
-    $sourcePaths = Get-ChildItem -Path $directoryToSearch -Recurse -Include $file -File
+    # Search in output directory for files we want to scan, but exclude any arm binaries.
+    $sourcePaths = Get-ChildItem -Path $directoryToSearch -Recurse -Include $file -File | Where-Object { $_.DirectoryName -notmatch '\\arm\\|\\arm64\\' }
     foreach ($sourcePath in $sourcePaths) {
         $destinationPath = Join-Path $FilesToScanDrop $sourcePath.Name
         Copy-Item $sourcePath.FullName $destinationPath
-        Write-Host "Found File to Scan: $file"
+        Write-Host "Found File to Scan: $destinationPath"
     }
 }
