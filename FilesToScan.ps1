@@ -16,6 +16,6 @@ foreach ($file in $filesToScan) {
     foreach ($sourcePath in $sourcePaths) {
         $destinationPath = Join-Path $FilesToScanDrop $sourcePath.Name
         Copy-Item $sourcePath.FullName $destinationPath
-        Write-Host "Found File to Scan: $destinationPath"
+        Write-Host "Found File to Scan: $sourcePath"
     }
 }
