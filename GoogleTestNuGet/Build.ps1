@@ -309,8 +309,6 @@ function Build-NuGet {
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.pdb" -Destination "$DestinationPath\Release\gtest_main.pdb"
 
             # Copy gtest dlls to drop artifacts folder for scanning.
-            Copy-CreateItem -Path "$BuildPath\Debug\gtestd.dll"              -Destination "..\a\drop\gtestd.dll"
-            Copy-CreateItem -Path "$BuildPath\Debug\gtest_maind.dll"         -Destination "..\a\drop\gtest_maind.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.dll"      -Destination "..\a\drop\gtest.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "..\a\drop\gtest_main.dll"
 
