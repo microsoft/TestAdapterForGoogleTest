@@ -283,10 +283,12 @@ function Build-NuGet {
     Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
-    $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
-    $BuildToDestinationPath += ,@($BuildDir64, "$Dir\$PathToBinaries\x64")
     $BuildToDestinationPath += ,@($BuildDirARM64, "$Dir\$PathToBinaries\arm64")
     $BuildToDestinationPath += ,@($BuildDirARM, "$Dir\$PathToBinaries\arm")
+    $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
+
+    # Build x64 last to ensure that the supported x64 binaries are copied to the drop folder for scanning.
+    $BuildToDestinationPath += ,@($BuildDir64, "$Dir\$PathToBinaries\x64")
     $BuildToDestinationPath | ForEach-Object {
         $BuildPath = $_[0]
         $DestinationPath = $_[1]
@@ -311,6 +313,14 @@ function Build-NuGet {
             Copy-CreateItem -Path "$BuildPath\Debug\gtest_maind.dll"         -Destination "..\a\drop\gtest_maind.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.dll"      -Destination "..\a\drop\gtest.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "..\a\drop\gtest_main.dll"
+
+            if ((Get-Item "$BuildPath\RelWithDebInfo\gtest.dll").VersionInfo.FileDescription -like "*x64*") {
+                Write-Verbose "Found x64 dll"
+            }
+            else{
+                Write-Verbose "Non-x64 dll encountered"
+            }
+
         } else {
             Copy-CreateItem -Path "$BuildPath\Debug\gtestd.lib"                    -Destination "$DestinationPath\Debug\gtestd.lib"
             Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"
