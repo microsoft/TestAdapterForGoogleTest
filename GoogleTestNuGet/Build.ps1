@@ -134,7 +134,7 @@ function Add-Signing {
     $MicroBuildProps.SetAttribute("Project", "$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props")
     $MicroBuildProps.SetAttribute("Condition", "Exists('$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props')")
 
-    $BuildGroup = $xml.CreateElement("ItemGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $BuildGroup = $xml.CreateElement("ItemDefinitionGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
@@ -190,7 +190,10 @@ function Add-Signing {
     $xml.Save("$Directory\$ProjectName.vcxproj")
 
     #Print the contents of the project to validate the modifications
-    Get-Content "$Directory\$ProjectName.vcxproj"
+    Write-Host $xml
+    Write-Host "$Directory\$ProjectName.vcxproj"
+    Write-Output $xml
+    Write-Output "$Directory\$ProjectName.vcxproj"
 }
 
 function Build-Binaries {
