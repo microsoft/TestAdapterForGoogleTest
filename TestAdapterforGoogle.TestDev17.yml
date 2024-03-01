@@ -325,6 +325,18 @@ extends:
             Contents: Packaging.TAfGT.vsix
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
+        # Pull a list only of files we build and ship to be scanned in FilesToScanDrop.
+        - task: PowerShell@2
+          displayName: 'Copy Scannable Files to: $(Build.ArtifactStagingDirectory)\FilesToScanDrop'
+          inputs:
+            filePath: './TestAdapterForGoogleTest/FilesToScan.ps1'
+            arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
+        # Debug task for now to verify what files are in this FilesToScanDrop.
+        - task: 1ES.PublishPipelineArtifact@1
+          displayName: 'Publish Artifact: FilesToScanDrop'
+          inputs:
+            path: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop'
+            artifact: FilesToScanDrop
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
           displayName: 'PoliCheck'
@@ -337,7 +349,7 @@ extends:
           displayName: 'Run APIScan'
           condition: eq (variables.QuickBuild, False)
           inputs:
-            softwareFolder: '$(Build.ArtifactStagingDirectory)\drop'
+            softwareFolder: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop'
             softwareName: GoogleTest
             softwareVersionNum: 1.0
             isLargeApp: false

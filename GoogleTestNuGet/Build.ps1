@@ -134,6 +134,18 @@ function Add-Signing {
     $MicroBuildProps.SetAttribute("Project", "$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props")
     $MicroBuildProps.SetAttribute("Condition", "Exists('$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.props')")
 
+    $BuildGroup = $xml.CreateElement("ItemDefinitionGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalOptions = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
+    $ClCompile.AppendChild($AdditionalOptions) | Out-Null
+    $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $Profile = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $Profile.set_InnerXML("true");
+    $Link.AppendChild($Profile) | Out-Null
+    $BuildGroup.AppendChild($ClCompile) | Out-Null
+    $BuildGroup.AppendChild($Link) | Out-Null
+
     $RealSignGroup = $xml.CreateElement("PropertyGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $RealSignGroup.SetAttribute("Condition", "'`$(RealSign)' == 'True'")
     $SignAsm = $xml.CreateElement("SignAssembly", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -170,6 +182,7 @@ function Add-Signing {
     $MicroBuildTargets.SetAttribute("Condition", "Exists('$microbuild\build\Microsoft.VisualStudioEng.MicroBuild.Core.targets')")
 
     $xml.Project.AppendChild($MicroBuildProps) | Out-Null
+    $xml.Project.AppendChild($BuildGroup) | Out-Null
     $xml.Project.AppendChild($RealSignGroup) | Out-Null
     $xml.Project.AppendChild($FileSignGroup) | Out-Null
     $xml.Project.AppendChild($MicroBuildTargets) | Out-Null
@@ -270,10 +283,12 @@ function Build-NuGet {
     Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
-    $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
-    $BuildToDestinationPath += ,@($BuildDir64, "$Dir\$PathToBinaries\x64")
     $BuildToDestinationPath += ,@($BuildDirARM64, "$Dir\$PathToBinaries\arm64")
     $BuildToDestinationPath += ,@($BuildDirARM, "$Dir\$PathToBinaries\arm")
+    $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
+
+    # Build x64 last to ensure that the supported x64 binaries are copied to the drop folder for scanning.
+    $BuildToDestinationPath += ,@($BuildDir64, "$Dir\$PathToBinaries\x64")
     $BuildToDestinationPath | ForEach-Object {
         $BuildPath = $_[0]
         $DestinationPath = $_[1]
@@ -292,6 +307,18 @@ function Build-NuGet {
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "$DestinationPath\Release\gtest_main.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.lib" -Destination "$DestinationPath\Release\gtest_main.lib"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.pdb" -Destination "$DestinationPath\Release\gtest_main.pdb"
+
+            # Copy gtest dlls to drop artifacts folder for scanning.
+            Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.dll"      -Destination "..\a\drop\gtest.dll"
+            Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "..\a\drop\gtest_main.dll"
+
+            if ((Get-Item "$BuildPath\RelWithDebInfo\gtest.dll").VersionInfo.FileDescription -like "*x64*") {
+                Write-Verbose "Found x64 dll"
+            }
+            else{
+                Write-Verbose "Non-x64 dll encountered"
+            }
+
         } else {
             Copy-CreateItem -Path "$BuildPath\Debug\gtestd.lib"                    -Destination "$DestinationPath\Debug\gtestd.lib"
             Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"
