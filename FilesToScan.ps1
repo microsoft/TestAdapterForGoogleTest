@@ -3,7 +3,7 @@ param (
     [string]$directoryToSearch
 )
 
-$filesToScan = @("GoogleTestAdapter.Common.dll", "GoogleTestAdapter.Common.Dynamic.dll", "GoogleTestAdapter.Core.dll", "GoogleTestAdapter.DiaResolver.dll", "GoogleTestAdapter.TestAdapter.dll", "GoogleTestAdapter.VsPackage.TAfGT.dll", "NewProjectWizard.dll", "gtest.dll", "gtestd.dll", "gtest_main.dll", "gtest_maind.dll")
+$filesToScan = @("GoogleTestAdapter.Common.dll", "GoogleTestAdapter.Common.Dynamic.dll", "GoogleTestAdapter.Core.dll", "GoogleTestAdapter.DiaResolver.dll", "GoogleTestAdapter.TestAdapter.dll", "GoogleTestAdapter.VsPackage.TAfGT.dll", "NewProjectWizard.dll", "gtest.dll", "gtest_main.dll")
 $FilesToScanDrop = "$buildArtifactStagingDirectory/FilesToScanDrop"
 
 if (!(Test-Path -Path $FilesToScanDrop)) {
