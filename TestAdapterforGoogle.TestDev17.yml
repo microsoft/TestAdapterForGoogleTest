@@ -221,11 +221,12 @@ extends:
               (Get-Content $project_template) | ForEach-Object {
                 $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
               } | Set-Content $project_template
-        - task: PowerShell@1
+        - task: PowerShell@2
           displayName: Copy internal key
           inputs:
-            scriptType: inlineScript
-            inlineScript: Invoke-WebRequest -Headers @{"AUTHORIZATION"="bearer $env:SYSTEM_ACCESSTOKEN"}-OutFile 'FinalPublicKey.snk' 'https://devdiv.visualstudio.com/DefaultCollection/0bdbc590-a062-4c3f-b0f6-9383f67865ee/0c9127d6-f650-4a04-9399-25be18b8e2fb/_api/_versioncontrol/itemContent?repositoryId=2961dea4-f77c-4c8e-b46f-72b6bfe62c29&path=%2FInternalAPIs%2FDevDiv%2FFinalPublicKey.snk&version=GBdev15'
+            targetType: inline
+            script: Invoke-WebRequest -Headers @{"AUTHORIZATION"="bearer $env:SYSTEM_ACCESSTOKEN"}-OutFile 'FinalPublicKey.snk' 'https://devdiv.visualstudio.com/DefaultCollection/0bdbc590-a062-4c3f-b0f6-9383f67865ee/0c9127d6-f650-4a04-9399-25be18b8e2fb/_api/_versioncontrol/itemContent?repositoryId=2961dea4-f77c-4c8e-b46f-72b6bfe62c29&path=%2FInternalAPIs%2FDevDiv%2FFinalPublicKey.snk&version=GBdev15'
+            workingDirectory: TestAdapterForGoogleTest/
         - task: PowerShell@1
           displayName: Build GoogleTest NuGet packages
           inputs:
