@@ -225,8 +225,33 @@ extends:
           displayName: Copy internal key
           inputs:
             targetType: inline
-            script: Invoke-WebRequest -Headers @{"AUTHORIZATION"="bearer $env:SYSTEM_ACCESSTOKEN"}-OutFile 'FinalPublicKey.snk' 'https://devdiv.visualstudio.com/DefaultCollection/0bdbc590-a062-4c3f-b0f6-9383f67865ee/0c9127d6-f650-4a04-9399-25be18b8e2fb/_api/_versioncontrol/itemContent?repositoryId=2961dea4-f77c-4c8e-b46f-72b6bfe62c29&path=%2FInternalAPIs%2FDevDiv%2FFinalPublicKey.snk&version=GBdev15'
+            script: Invoke-WebRequest -Headers @{"AUTHORIZATION"="bearer $env:SYSTEM_ACCESSTOKEN"}-OutFile 'FinalPublicKey.snk' 'https://devdiv.visualstudio.com/DefaultCollection/0bdbc590-a062-4c3f-b0f6-9383f67865ee/0c9127d6-f650-4a04-9399-25be18b8e2fb/_api/_versioncontrol/itemContent?repositoryId=2961dea4-f77c-4c8e-b46f-72b6bfe62c29&path=%2FInternalAPIs%2FDevDiv%2FFinalPublicKey.snk&version=GBdev17'
             workingDirectory: TestAdapterForGoogleTest/
+        # Debug task for now
+        - task: PowerShell@2
+          displayName: Verify FinalPublicKey.snk exists
+          inputs:
+            targetType: inline
+            script: |
+              $file = 'FinalPublicKey.snk'
+              if (Test-Path $file) {
+                Write-Output "$file exists."
+              } else {
+                Write-Output "$file does not exist."
+              }
+            workingDirectory: TestAdapterForGoogleTest/
+        # Debug task for now
+        - task: CopyFiles@2
+          displayName: 'Copy FinalPublicKey.snk to FilesToScanDrop'
+          inputs:
+            Contents: 'TestAdapterForGoogleTest/FinalPublicKey.snk'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)/PublicKeyDrop'
+        # Debug task for now
+        - task: 1ES.PublishPipelineArtifact@1
+          displayName: 'Publish Artifact: PublicKeyDrop'
+          inputs:
+            path: '$(Build.ArtifactStagingDirectory)\PublicKeyDrop'
+            artifact: PublicKeyDrop
         - task: PowerShell@1
           displayName: Build GoogleTest NuGet packages
           inputs:
