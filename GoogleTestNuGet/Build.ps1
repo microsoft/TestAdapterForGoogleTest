@@ -136,7 +136,7 @@ function Add-Signing {
 
     $BuildGroup = $xml.CreateElement("ItemDefinitionGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $AdditionalOptions = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
     $ClCompile.AppendChild($AdditionalOptions) | Out-Null
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -311,14 +311,6 @@ function Build-NuGet {
             # Copy gtest dlls to drop artifacts folder for scanning.
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.dll"      -Destination "..\a\drop\gtest.dll"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "..\a\drop\gtest_main.dll"
-
-            if ((Get-Item "$BuildPath\RelWithDebInfo\gtest.dll").VersionInfo.FileDescription -like "*x64*") {
-                Write-Verbose "Found x64 dll"
-            }
-            else{
-                Write-Verbose "Non-x64 dll encountered"
-            }
-
         } else {
             Copy-CreateItem -Path "$BuildPath\Debug\gtestd.lib"                    -Destination "$DestinationPath\Debug\gtestd.lib"
             Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"

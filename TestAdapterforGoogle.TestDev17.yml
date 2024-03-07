@@ -24,6 +24,10 @@ resources:
     type: git
     name: googletest
     ref: refs/heads/main
+  - repository: VCLS-Extensions
+    type: git
+    name: VCLS-Extensions
+    ref: refs/heads/dev17
 variables:
 - name: ApiScanClientId
   value: 1d6a3de7-4a6a-4b75-b15d-e305293c75af
@@ -98,6 +102,9 @@ extends:
       sourceRepositoriesToScan:
         include:
         - repository: googletest
+        exclude:
+        # No need to scan this source as we only use this repo to copy the public signing key.
+        - repository: VCLS-Extensions
       tsa:
         enabled: true
         configFile: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest\tsaoptions.json'
@@ -126,6 +133,11 @@ extends:
           persistCredentials: true
         - checkout: googletest
           displayName: 'Checkout googletest ADO Repo'
+          clean: true
+          fetchDepth: 1
+          persistCredentials: true
+        - checkout: VCLS-Extensions
+          displayName: 'Checkout VCLS-Extensions ADO Repo to copy public key'
           clean: true
           fetchDepth: 1
           persistCredentials: true
@@ -221,11 +233,12 @@ extends:
               (Get-Content $project_template) | ForEach-Object {
                 $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
               } | Set-Content $project_template
-        - task: PowerShell@1
-          displayName: Copy internal key
+        - task: CopyFiles@2
+          displayName: 'Copy FinalPublicKey.snk to TestAdapterForGoogleTest'
           inputs:
-            scriptType: inlineScript
-            inlineScript: Invoke-WebRequest -Headers @{"AUTHORIZATION"="bearer $env:SYSTEM_ACCESSTOKEN"}-OutFile 'FinalPublicKey.snk' 'https://devdiv.visualstudio.com/DefaultCollection/0bdbc590-a062-4c3f-b0f6-9383f67865ee/0c9127d6-f650-4a04-9399-25be18b8e2fb/_api/_versioncontrol/itemContent?repositoryId=2961dea4-f77c-4c8e-b46f-72b6bfe62c29&path=%2FInternalAPIs%2FDevDiv%2FFinalPublicKey.snk&version=GBdev15'
+            SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
+            Contents: 'FinalPublicKey.snk'
+            TargetFolder: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
         - task: PowerShell@1
           displayName: Build GoogleTest NuGet packages
           inputs:
@@ -331,12 +344,6 @@ extends:
           inputs:
             filePath: './TestAdapterForGoogleTest/FilesToScan.ps1'
             arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
-        # Debug task for now to verify what files are in this FilesToScanDrop.
-        - task: 1ES.PublishPipelineArtifact@1
-          displayName: 'Publish Artifact: FilesToScanDrop'
-          inputs:
-            path: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop'
-            artifact: FilesToScanDrop
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
           displayName: 'PoliCheck'
