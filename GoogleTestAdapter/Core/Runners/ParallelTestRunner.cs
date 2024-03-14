@@ -36,7 +36,8 @@ namespace GoogleTestAdapter.Runners
         public void RunTests(IEnumerable<TestCase> testCasesToRun, string baseDir,
             string workingDir, string userParameters, bool isBeingDebugged, IDebuggedProcessLauncher debuggedLauncher, IProcessExecutor executor)
         {
-            System.Windows.Forms.MessageBox.Show("");
+            _logger.LogInfo("PARALLEL PARALLEL");
+            _logger.LogInfo(workingDir);
             List<Thread> threads;
             lock (this)
             {

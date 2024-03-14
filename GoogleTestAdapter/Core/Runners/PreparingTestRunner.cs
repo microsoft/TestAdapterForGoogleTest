@@ -49,7 +49,8 @@ namespace GoogleTestAdapter.Runners
         public void RunTests(IEnumerable<TestCase> testCasesToRun, string baseDir,
              string workingDir, string userParameters, bool isBeingDebugged, IDebuggedProcessLauncher debuggedLauncher, IProcessExecutor executor)
         {
-            System.Windows.Forms.MessageBox.Show("");
+            _logger.LogInfo("PREPARING PREPARING");
+            _logger.LogInfo(workingDir);
             DebugUtils.AssertIsNull(userParameters, nameof(userParameters));
             DebugUtils.AssertIsNull(workingDir, nameof(workingDir));
 
