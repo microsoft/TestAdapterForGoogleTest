@@ -4,7 +4,9 @@
 
 using GoogleTestAdapter.Settings;
 using Microsoft.VisualStudio.TestPlatform.ObjectModel;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Xml;
 using System.Xml.Serialization;
@@ -50,6 +52,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
 
         public bool TryGetSettings(string key, out ITestPropertySettings settings)
         {
+            Debug.Fail("TryGetSettings");
             EnsureTestPropertiesMap();
             return _tests.TryGetValue(key, out settings);
         }
@@ -58,6 +61,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
         {
             if (_tests != null)
             {
+                Debug.Fail("tests inside of EnsureTestPropertiesMap were null");
                 return;
             }
 
@@ -67,6 +71,7 @@ namespace GoogleTestAdapter.TestAdapter.Settings
                 foreach (var t in this.Tests)
                 {
                     var key = Path.GetFullPath(t.Command) + ":" + t.Name;
+                    Debug.Fail("key: " + key);
                     if (!_tests.ContainsKey(key))
                     {
                         var propertySettings = new TestPropertySettings(t);

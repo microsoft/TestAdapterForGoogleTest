@@ -46,6 +46,8 @@ namespace GoogleTestAdapter.TestCases
                 var launcher = new ProcessLauncher(_logger, _settings.GetPathExtension(_executable), null);
                 int processExitCode;
                 string workingDir = new FileInfo(_executable).DirectoryName;
+                _logger.LogInfo("CREATE TEST CASES");
+                _logger.LogInfo(workingDir);
 
                 string cmdLine = GoogleTestConstants.ListTestsOption;
                 if (!string.IsNullOrEmpty(_settings.AdditionalTestDiscoveryParam))
