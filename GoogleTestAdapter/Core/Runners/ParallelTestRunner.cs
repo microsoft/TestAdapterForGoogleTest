@@ -36,6 +36,7 @@ namespace GoogleTestAdapter.Runners
         public void RunTests(IEnumerable<TestCase> testCasesToRun, string baseDir,
             string workingDir, string userParameters, bool isBeingDebugged, IDebuggedProcessLauncher debuggedLauncher, IProcessExecutor executor)
         {
+            System.Windows.Forms.MessageBox.Show("");
             List<Thread> threads;
             lock (this)
             {
