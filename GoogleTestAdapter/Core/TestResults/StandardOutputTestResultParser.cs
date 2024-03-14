@@ -196,7 +196,7 @@ namespace GoogleTestAdapter.TestResults
 
         public static TestCase FindTestcase(string qualifiedTestname, IList<TestCase> testCasesRun)
         {
-            return testCasesRun.SingleOrDefault(tc => tc.FullyQualifiedName == qualifiedTestname);
+            return testCasesRun.SingleOrDefault(tc => tc.FullyQualifiedNameWithoutNamespace == qualifiedTestname);
         }
 
         public static bool IsRunLine(string line)

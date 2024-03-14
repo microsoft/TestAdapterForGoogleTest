@@ -143,7 +143,7 @@ namespace GoogleTestAdapter.TestResults
 
             results.Count.Should().Be(3);
 
-            results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddFails");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddFails");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[0]);
             results[0].ErrorMessage.Should().NotContain(StandardOutputTestResultParser.CrashText);
             results[0].Duration.Should().Be(TimeSpan.FromMilliseconds(3));
@@ -151,11 +151,11 @@ namespace GoogleTestAdapter.TestResults
                 .Contain(
                     @"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp");
 
-            results[1].TestCase.FullyQualifiedName.Should().Be("TestMath.AddPasses");
+            results[1].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddPasses");
             XmlTestResultParserTests.AssertTestResultIsPassed(results[1]);
             results[1].Duration.Should().Be(StandardOutputTestResultParser.ShortTestDuration);
 
-            results[2].TestCase.FullyQualifiedName.Should().Be("TestMath.Crash");
+            results[2].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.Crash");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[2]);
             results[2].ErrorMessage.Should().NotContain(StandardOutputTestResultParser.CrashText);
             results[2].Duration.Should().Be(TimeSpan.FromMilliseconds(9));
@@ -169,13 +169,13 @@ namespace GoogleTestAdapter.TestResults
 
             results.Count.Should().Be(2);
 
-            results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddFails");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddFails");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[0]);
             results[0].ErrorMessage.Should().NotContain(StandardOutputTestResultParser.CrashText);
             results[0].Duration.Should().Be(TimeSpan.FromMilliseconds(3));
             results[0].ErrorStackTrace.Should().Contain(@"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp");
 
-            results[1].TestCase.FullyQualifiedName.Should().Be("TestMath.AddPasses");
+            results[1].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddPasses");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[1]);
             results[1].ErrorMessage.Should().Contain(StandardOutputTestResultParser.CrashText);
             results[1].ErrorMessage.Should().NotContain("Test output:");
@@ -190,17 +190,17 @@ namespace GoogleTestAdapter.TestResults
 
             results.Count.Should().Be(3);
 
-            results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddFails");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddFails");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[0]);
             results[0].ErrorMessage.Should().NotContain(StandardOutputTestResultParser.CrashText);
             results[0].Duration.Should().Be(TimeSpan.FromMilliseconds(3));
             results[0].ErrorStackTrace.Should().Contain(@"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp");
 
-            results[1].TestCase.FullyQualifiedName.Should().Be("TestMath.AddPasses");
+            results[1].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddPasses");
             XmlTestResultParserTests.AssertTestResultIsPassed(results[1]);
             results[1].Duration.Should().Be(StandardOutputTestResultParser.ShortTestDuration);
 
-            results[2].TestCase.FullyQualifiedName.Should().Be("TestMath.Crash");
+            results[2].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.Crash");
             XmlTestResultParserTests.AssertTestResultIsFailure(results[2]);
             results[2].ErrorMessage.Should().Contain(StandardOutputTestResultParser.CrashText);
             results[2].ErrorMessage.Should().Contain("Test output:");
@@ -215,7 +215,7 @@ namespace GoogleTestAdapter.TestResults
             List<TestResult> results = ComputeTestResults(WrongDurationUnit);
 
             results.Count.Should().Be(1);
-            results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddFails");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddFails");
             results[0].Duration.Should().Be(TimeSpan.FromMilliseconds(1));
             results[0].ErrorStackTrace.Should().Contain(@"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp");
 
@@ -234,7 +234,7 @@ namespace GoogleTestAdapter.TestResults
                 List<TestResult> results = ComputeTestResults(ThousandsSeparatorInDuration);
 
                 results.Count.Should().Be(1);
-                results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddFails");
+                results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddFails");
                 results[0].Duration.Should().Be(TimeSpan.FromMilliseconds(4656));
             }
             finally
@@ -250,7 +250,7 @@ namespace GoogleTestAdapter.TestResults
             List<TestResult> results = ComputeTestResults(PassingTestProducesConsoleOutput);
 
             results.Count.Should().Be(1);
-            results[0].TestCase.FullyQualifiedName.Should().Be("TestMath.AddPasses");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("TestMath.AddPasses");
             XmlTestResultParserTests.AssertTestResultIsPassed(results[0]);
         }
 
@@ -270,9 +270,9 @@ namespace GoogleTestAdapter.TestResults
                 .GetTestResults();
 
             results.Count.Should().Be(2);
-            results[0].TestCase.FullyQualifiedName.Should().Be("Test.AB");
+            results[0].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("Test.AB");
             XmlTestResultParserTests.AssertTestResultIsPassed(results[0]);
-            results[1].TestCase.FullyQualifiedName.Should().Be("Test.A");
+            results[1].TestCase.FullyQualifiedNameWithoutNamespace.Should().Be("Test.A");
             XmlTestResultParserTests.AssertTestResultIsPassed(results[1]);
         }
 

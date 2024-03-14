@@ -35,7 +35,7 @@ namespace GoogleTestAdapter.Runners
                     crashedTestCase = consoleParser.CrashedTestCase;
 
                 var remainingTestCases = arrTestCasesRun
-                    .Where(tc => !testResults.Exists(tr => tr.TestCase.FullyQualifiedName == tc.FullyQualifiedName))
+                    .Where(tc => !testResults.Exists(tr => tr.TestCase.FullyQualifiedNameWithoutNamespace == tc.FullyQualifiedNameWithoutNamespace))
                     .ToArray();
 
                 if (crashedTestCase != null)
@@ -52,7 +52,7 @@ namespace GoogleTestAdapter.Runners
             List<TestResult> consoleResults = consoleParser.GetTestResults();
             int nrOfCollectedTestResults = 0;
             foreach (TestResult testResult in consoleResults.Where(
-                tr => !testResults.Exists(tr2 => tr.TestCase.FullyQualifiedName == tr2.TestCase.FullyQualifiedName)))
+                tr => !testResults.Exists(tr2 => tr.TestCase.FullyQualifiedNameWithoutNamespace == tr2.TestCase.FullyQualifiedNameWithoutNamespace)))
             {
                 testResults.Add(testResult);
                 nrOfCollectedTestResults++;

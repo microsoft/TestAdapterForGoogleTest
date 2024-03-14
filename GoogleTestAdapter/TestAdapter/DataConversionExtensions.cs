@@ -51,7 +51,7 @@ namespace GoogleTestAdapter.TestAdapter
 
         public static VsTestCase ToVsTestCase(this TestCase testCase)
         {
-            var vsTestCase = new VsTestCase(testCase.FullyQualifiedNameWithNamespace, TestExecutor.ExecutorUri, testCase.Source)
+            var vsTestCase = new VsTestCase(testCase.FullyQualifiedName, TestExecutor.ExecutorUri, testCase.Source)
             {
                 DisplayName = testCase.DisplayName,
                 CodeFilePath = testCase.CodeFilePath,

@@ -63,7 +63,7 @@ namespace GoogleTestAdapter.Runners
 
                         foreach (var testCase in groupedTestCases[executable])
                         {
-                            var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
+                            var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedNameWithoutNamespace;
                             ITestPropertySettings settings;
                             // Tests with default settings are treated as not having settings and can be run together
                             if (_settings.TestPropertySettingsContainer.TryGetSettings(key, out settings)
@@ -150,7 +150,7 @@ namespace GoogleTestAdapter.Runners
                 foreach (TestResult result in results)
                 {
                     if (!_schedulingAnalyzer.AddActualDuration(result.TestCase, (int)result.Duration.TotalMilliseconds))
-                        _logger.DebugWarning(String.Format(Resources.TestCaseInAnalyzer, result.TestCase.FullyQualifiedName));
+                        _logger.DebugWarning(String.Format(Resources.TestCaseInAnalyzer, result.TestCase.FullyQualifiedNameWithoutNamespace));
                 }
             }
         }
@@ -199,7 +199,7 @@ namespace GoogleTestAdapter.Runners
                 arguments.TestCases.Except(streamingParser.TestResults.Select(tr => tr.TestCase));
             var testResults = new TestResultCollector(_logger, _threadName)
                 .CollectTestResults(remainingTestCases, consoleOutput, streamingParser.CrashedTestCase);
-            testResults = testResults.OrderBy(tr => tr.TestCase.FullyQualifiedName).ToList();
+            testResults = testResults.OrderBy(tr => tr.TestCase.FullyQualifiedNameWithoutNamespace).ToList();
 
             return testResults;
         }
@@ -247,7 +247,7 @@ namespace GoogleTestAdapter.Runners
             foreach (TestResult result in streamingParser.TestResults)
             {
                 if (!_schedulingAnalyzer.AddActualDuration(result.TestCase, (int) result.Duration.TotalMilliseconds))
-                    _logger.LogWarning(String.Format(Resources.AlreadyInAnalyzer, _threadName, result.TestCase.FullyQualifiedName));
+                    _logger.LogWarning(String.Format(Resources.AlreadyInAnalyzer, _threadName, result.TestCase.FullyQualifiedNameWithoutNamespace));
             }
             return consoleOutput;
         }

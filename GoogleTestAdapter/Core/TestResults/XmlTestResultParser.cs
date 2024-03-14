@@ -26,7 +26,7 @@ namespace GoogleTestAdapter.TestResults
         {
             _logger = logger;
             _xmlResultFile = xmlResultFile;
-            _testCasesMap = testCasesRun.ToDictionary(tc => tc.FullyQualifiedName, tc => tc);
+            _testCasesMap = testCasesRun.ToDictionary(tc => tc.FullyQualifiedNameWithoutNamespace, tc => tc);
         }
 
 

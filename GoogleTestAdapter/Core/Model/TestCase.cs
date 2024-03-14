@@ -6,8 +6,8 @@ namespace GoogleTestAdapter.Model
     {
         public string Source { get; }
 
+        public string FullyQualifiedNameWithoutNamespace { get; }
         public string FullyQualifiedName { get; }
-        public string FullyQualifiedNameWithNamespace { get; }
         public string DisplayName { get; }
 
         public string CodeFilePath { get; }
@@ -16,10 +16,10 @@ namespace GoogleTestAdapter.Model
         public List<Trait> Traits { get; } = new List<Trait>();
         public List<TestProperty> Properties { get; } = new List<TestProperty>();
 
-        public TestCase(string fullyQualifiedName, string fullyQualifiedNameWithNamespace, string source, string displayName, string codeFilePath, int lineNumber)
+        public TestCase(string fullyQualifiedNameWithoutNamespace, string fullyQualifiedName, string source, string displayName, string codeFilePath, int lineNumber)
         {
+            FullyQualifiedNameWithoutNamespace = fullyQualifiedNameWithoutNamespace;
             FullyQualifiedName = fullyQualifiedName;
-            FullyQualifiedNameWithNamespace = fullyQualifiedNameWithNamespace;
             Source = source;
             DisplayName = displayName;
             CodeFilePath = codeFilePath;
@@ -33,13 +33,13 @@ namespace GoogleTestAdapter.Model
             if (other == null)
                 return false;
 
-            return FullyQualifiedName == other.FullyQualifiedName && Source == other.Source;
+            return FullyQualifiedNameWithoutNamespace == other.FullyQualifiedNameWithoutNamespace && Source == other.Source;
         }
 
         public override int GetHashCode()
         {
             int hash = 17;
-            hash = hash * 31 + FullyQualifiedName.GetHashCode();
+            hash = hash * 31 + FullyQualifiedNameWithoutNamespace.GetHashCode();
             hash = hash * 31 + Source.GetHashCode();
             return hash;
         }

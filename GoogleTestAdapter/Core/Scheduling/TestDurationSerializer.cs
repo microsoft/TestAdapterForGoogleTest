@@ -103,7 +103,7 @@ namespace GoogleTestAdapter.Scheduling
             foreach (TestCase testcase in testcases)
             {
                 TestDuration pair;
-                if (durationsMap.TryGetValue(testcase.FullyQualifiedName, out pair))
+                if (durationsMap.TryGetValue(testcase.FullyQualifiedNameWithoutNamespace, out pair))
                     durations.Add(testcase, pair.Duration);
             }
 
@@ -131,8 +131,8 @@ namespace GoogleTestAdapter.Scheduling
             foreach (TestResult testResult in 
                 testresults.Where(tr => tr.Outcome == TestOutcome.Passed || tr.Outcome == TestOutcome.Failed))
             {
-                durations[testResult.TestCase.FullyQualifiedName] =
-                    new TestDuration(testResult.TestCase.FullyQualifiedName, GetDuration(testResult));
+                durations[testResult.TestCase.FullyQualifiedNameWithoutNamespace] =
+                    new TestDuration(testResult.TestCase.FullyQualifiedNameWithoutNamespace, GetDuration(testResult));
             }
 
             container.TestDurations.Clear();

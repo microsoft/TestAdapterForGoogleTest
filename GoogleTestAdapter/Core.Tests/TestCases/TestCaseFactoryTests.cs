@@ -48,8 +48,8 @@ namespace GoogleTestAdapter.TestCases
             var returnedTestCases = factory.CreateTestCases(testCase => reportedTestCases.Add(testCase));
 
             reportedTestCases.Count.Should().Be(2);
-            reportedTestCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestFails");
-            reportedTestCases.Should().Contain(t => t.FullyQualifiedName == "TestDiscovery.TestPasses");
+            reportedTestCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestFails");
+            reportedTestCases.Should().Contain(t => t.FullyQualifiedNameWithoutNamespace == "TestDiscovery.TestPasses");
         }
 
     }
