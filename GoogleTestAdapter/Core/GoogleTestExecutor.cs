@@ -45,7 +45,6 @@ namespace GoogleTestAdapter
                 ComputeTestRunner(reporter, isBeingDebugged, solutionDirectory);
             }
 
-            _logger.LogInfo("INFO INFO INFO");
             _runner.RunTests(testCasesToRunAsArray, solutionDirectory, null, null, isBeingDebugged, launcher, executor);
 
             if (_settings.ParallelTestExecution)

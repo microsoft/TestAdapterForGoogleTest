@@ -42,8 +42,6 @@ namespace GoogleTestAdapter.Runners
         public void RunTests(IEnumerable<TestCase> testCasesToRun, string baseDir,
             string workingDir, string userParameters, bool isBeingDebugged, IDebuggedProcessLauncher debuggedLauncher, IProcessExecutor executor)
         {
-            _logger.LogInfo("TEST TEST TEST");
-            _logger.LogInfo(workingDir);
             DebugUtils.AssertIsNotNull(userParameters, nameof(userParameters));
             DebugUtils.AssertIsNotNull(workingDir, nameof(workingDir));
 
@@ -52,8 +50,6 @@ namespace GoogleTestAdapter.Runners
             {
                 string finalParameters = SettingsWrapper.ReplacePlaceholders(userParameters, executable);
                 string finalWorkingDir = SettingsWrapper.ReplacePlaceholders(workingDir, executable);
-                _logger.LogInfo("HEY HEY HEY");
-                _logger.LogInfo(finalWorkingDir);
 
                 if (_canceled)
                     break;
@@ -85,8 +81,6 @@ namespace GoogleTestAdapter.Runners
                             if (_settings.TestPropertySettingsContainer.TryGetSettings(key, out settings)
                                 && (settings.Environment.Count > 0 || Path.GetFullPath(settings.WorkingDirectory) != Path.GetFullPath(finalWorkingDir)))
                             {
-                                _logger.LogInfo("LOGGING WITH TEST PROPERTY SETTINGS");
-                                _logger.LogInfo(settings.WorkingDirectory);
                                 RunTestsFromExecutable(
                                     executable,
                                     settings.WorkingDirectory,
@@ -106,8 +100,6 @@ namespace GoogleTestAdapter.Runners
 
                     if (testsWithNoTestPropertySettings.Count != 0)
                     {
-                        _logger.LogInfo("LOGGING WITHOUT TEST PROPERTY SETTINGS");
-                        _logger.LogInfo(finalWorkingDir);
                         RunTestsFromExecutable(
                             executable,
                             finalWorkingDir,
