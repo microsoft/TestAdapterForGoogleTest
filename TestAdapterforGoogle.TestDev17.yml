@@ -68,8 +68,8 @@ variables:
   # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
 - name: QuickBuild
   value: "$(TAfGTQuickBuild)"
-- name: RealSign
-  value: "$(TAfGTRealSign)"
+- name: TAfGTRealSign
+  value: "$(RealSign)"
 - name: RetainBuild
   value: "$(TAfGTRetainBuild)"
 - name: SignType
