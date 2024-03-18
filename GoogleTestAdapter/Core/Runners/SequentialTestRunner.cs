@@ -12,7 +12,6 @@ using GoogleTestAdapter.TestResults;
 using GoogleTestAdapter.Model;
 using GoogleTestAdapter.Framework;
 using GoogleTestAdapter.Settings;
-using GoogleTestAdapter.TestCases;
 
 namespace GoogleTestAdapter.Runners
 {
@@ -70,8 +69,8 @@ namespace GoogleTestAdapter.Runners
                         {
                             var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
 
-                            var testType = testCase.Traits.FirstOrDefault(t => t.Name.Equals(nameof(TestCaseDescriptor.TestType)));
-                            if (testType != null && testType.Value.Equals(TestCaseDescriptor.TestTypes.Parameterized))
+                            var testType = testCase.Traits.FirstOrDefault(t => t.Name.Equals("TestType"));
+                            if (testType != null && testType.Value.Equals("Parameterized"))
                             {
                                 key = "*/BadWorkingDirTestFixture.BadWorkingDirTest/*";
                             }
