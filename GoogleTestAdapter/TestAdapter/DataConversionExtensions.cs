@@ -14,6 +14,7 @@ using VsTestProperty = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestPrope
 using VsTestResult = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResult;
 using VsTestOutcome = Microsoft.VisualStudio.TestPlatform.ObjectModel.TestOutcome;
 using VsTrait = Microsoft.VisualStudio.TestPlatform.ObjectModel.Trait;
+using GoogleTestAdapter.TestCases;
 
 namespace GoogleTestAdapter.TestAdapter
 {
