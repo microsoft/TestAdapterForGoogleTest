@@ -12,7 +12,6 @@ using GoogleTestAdapter.TestResults;
 using GoogleTestAdapter.Model;
 using GoogleTestAdapter.Framework;
 using GoogleTestAdapter.Settings;
-using GoogleTestAdapter.TestCases;
 
 namespace GoogleTestAdapter.Runners
 {
@@ -66,10 +65,10 @@ namespace GoogleTestAdapter.Runners
                         {
                             var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
 
-                            var testType = testCase.Traits.FirstOrDefault(t => t.Name.Equals(nameof(TestCaseDescriptor.TestType)));
+                            var testType = testCase.Traits.FirstOrDefault(t => t.Name.Equals("TestType"));
                             // If it is a parameterized test, we should look for the "parent" key which doesn't have the suite or the id defined in the xml file. 
                             // The strategy for this can also be seen in the MethodSignatureCreate.cs file, going the other way.
-                            if (testType != null && testType.Value.Equals(TestCaseDescriptor.TestTypes.Parameterized))
+                            if (testType != null && testType.Value.Equals("Parameterized"))
                             {
                                 int firstIndex = key.IndexOf("/");
                                 int lastIndex = key.LastIndexOf("/");
