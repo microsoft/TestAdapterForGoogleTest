@@ -270,7 +270,7 @@ namespace GoogleTestAdapter.TestCases
 
             var returnTest = new TestCase(
                 descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
-            returnTest.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString());
+            returnTest.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
             _logger.LogWarning(String.Format(Resources.LocationNotFoundError, descriptor.FullyQualifiedName));
             return returnTest;
         }
