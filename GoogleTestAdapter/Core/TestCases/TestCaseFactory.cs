@@ -234,7 +234,6 @@ namespace GoogleTestAdapter.TestCases
             var testCase = new TestCase(
                 descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
             testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, new List<Trait>()));
-            testCase.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
             return testCase;
         }
 
@@ -262,15 +261,12 @@ namespace GoogleTestAdapter.TestCases
                 var testCase = new TestCase(
                     descriptor.FullyQualifiedName, ns + descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, location.Sourcefile, (int)location.Line);
                 testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, location.Traits));
-                testCase.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
                 return testCase;
             }
 
-            var returnTest = new TestCase(
-                descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
-            returnTest.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
             _logger.LogWarning(String.Format(Resources.LocationNotFoundError, descriptor.FullyQualifiedName));
-            return returnTest;
+            return new TestCase(
+                descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
         }
 
         internal static string GetTestSignatureNamespace(string signature)
