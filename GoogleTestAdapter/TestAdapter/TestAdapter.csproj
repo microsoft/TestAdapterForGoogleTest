@@ -14,13 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(RealSign)' == 'True'">
+  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(RealSign)' != 'True'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -45,7 +41,7 @@
     <FilesToLocalize Include="$(OutDir)\GoogleTestAdapter.TestAdapter.dll">
       <TranslationFile>$(MSBuildThisFileDirectory)..\..\loc\lcl\{Lang}\GoogleTestAdapter.TestAdapter.dll.lcl</TranslationFile>
     </FilesToLocalize>
-    <FilesToSign Include="$(OutDir)\GoogleTestAdapter.TestAdapter.dll" Condition="'$(RealSign)' == 'True'">
+    <FilesToSign Include="$(OutDir)\GoogleTestAdapter.TestAdapter.dll">
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
     </FilesToSign>
@@ -139,15 +135,6 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent Condition="'$(RealSign)' != 'True'">if exist "$(SolutionDir)Keys\Key_Release.snk" (
-    echo Using Release key for signing assembly
-    copy "$(SolutionDir)Keys\Key_Release.snk" "$(ProjectDir)Key.snk"
-) else (
-    echo Using Debug key for signing assembly
-    copy "$(SolutionDir)Keys\Key_Debug.snk" "$(ProjectDir)Key.snk"
-)</PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
@@ -160,7 +147,7 @@
     <StartProgram>$(DevEnvDir)CommonExtensions\Microsoft\TestWindow\vstest.console.exe</StartProgram>
     <StartArguments>"$(SolutionDir)..\SampleTests\Debug\Tests_gta.exe" /Settings:"$(SolutionDir)..\SampleTests\SampleTests.gta.runsettings" /TestCaseFilter:"DisplayName=TestMath.AddPasses" /TestAdapterPath:"$(TargetDir)"</StartArguments>
   </PropertyGroup>
-  <Target Name="GatherLocalizedOutputsForSigning" Condition="'$(LocalizationEnabled)' == 'true' AND '$(RealSign)' == 'True'">
+  <Target Name="GatherLocalizedOutputsForSigning" Condition="'$(LocalizationEnabled)' == 'true'">
     <ItemGroup>
       <FilesToSign Include="$(OutDir)\localize\**\$(AssemblyName).resources.dll">
         <Authenticode>Microsoft400</Authenticode>

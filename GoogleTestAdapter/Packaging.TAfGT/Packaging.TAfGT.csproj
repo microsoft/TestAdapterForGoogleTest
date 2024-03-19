@@ -69,7 +69,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <FilesToSign Include="$(OutDir)\Packaging.TAfGT.vsix" Condition="'$(RealSign)' == 'True'">
+    <FilesToSign Include="$(OutDir)\Packaging.TAfGT.vsix">
       <Authenticode>VsixSHA2</Authenticode>
     </FilesToSign>
   </ItemGroup>

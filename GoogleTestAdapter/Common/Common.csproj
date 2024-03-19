@@ -14,13 +14,9 @@
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
-  <PropertyGroup Condition="'$(RealSign)' == 'True'">
+  <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(RealSign)' != 'True'">
-    <SignAssembly>true</SignAssembly>
-    <AssemblyOriginatorKeyFile>Key.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -38,7 +34,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <FilesToSign Include="$(OutDir)\GoogleTestAdapter.Common.dll" Condition="'$(RealSign)' == 'True'">
+    <FilesToSign Include="$(OutDir)\GoogleTestAdapter.Common.dll">
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
     </FilesToSign>
@@ -68,15 +64,6 @@
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
-  <PropertyGroup>
-    <PreBuildEvent Condition="'$(RealSign)' != 'True'">if exist "$(SolutionDir)Keys\Key_Release.snk" (
-    echo Using Release key for signing assembly
-    copy "$(SolutionDir)Keys\Key_Release.snk" "$(ProjectDir)Key.snk"
-) else (
-    echo Using Debug key for signing assembly
-    copy "$(SolutionDir)Keys\Key_Debug.snk" "$(ProjectDir)Key.snk"
-)</PreBuildEvent>
-  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

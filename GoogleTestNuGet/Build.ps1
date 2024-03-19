@@ -147,7 +147,6 @@ function Add-Signing {
     $BuildGroup.AppendChild($Link) | Out-Null
 
     $RealSignGroup = $xml.CreateElement("PropertyGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $RealSignGroup.SetAttribute("Condition", "'`$(RealSign)' == 'True'")
     $SignAsm = $xml.CreateElement("SignAssembly", "http://schemas.microsoft.com/developer/msbuild/2003")
     $SignAsm.set_InnerXML("true")
     $DelaySign = $xml.CreateElement("DelaySign", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -158,7 +157,7 @@ function Add-Signing {
     $FileSignGroup = $xml.CreateElement("ItemGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $FilesToSignRel = $xml.CreateElement("FilesToSign", "http://schemas.microsoft.com/developer/msbuild/2003")
     $FilesToSignRel.SetAttribute("Include", "`$(OutDir)\$ProjectName.dll")
-    $FilesToSignRel.SetAttribute("Condition", "'`$(RealSign)' == 'True' and '`$(TargetExt)' == '.dll' and '`$(Configuration)' == 'RelWithDebInfo'")
+    $FilesToSignRel.SetAttribute("Condition", "'`$(TargetExt)' == '.dll' and '`$(Configuration)' == 'RelWithDebInfo'")
     $AuthenticodeRel = $xml.CreateElement("Authenticode", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AuthenticodeRel.set_InnerXML("Microsoft400")
     $StrongNameRel = $xml.CreateElement("StrongName", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -168,7 +167,7 @@ function Add-Signing {
     $FileSignGroup.AppendChild($FilesToSignRel) | Out-Null
     $FilesToSignDebug = $xml.CreateElement("FilesToSign", "http://schemas.microsoft.com/developer/msbuild/2003")
     $FilesToSignDebug.SetAttribute("Include", "`$(OutDir)\$ProjectNameDebug.dll")
-    $FilesToSignDebug.SetAttribute("Condition", "'`$(RealSign)' == 'True' and '`$(TargetExt)' == '.dll' and '`$(Configuration)' == 'Debug'")
+    $FilesToSignDebug.SetAttribute("Condition", "'`$(TargetExt)' == '.dll' and '`$(Configuration)' == 'Debug'")
     $AuthenticodeDebug = $xml.CreateElement("Authenticode", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AuthenticodeDebug.set_InnerXML("Microsoft400")
     $StrongNameDebug = $xml.CreateElement("StrongName", "http://schemas.microsoft.com/developer/msbuild/2003")
