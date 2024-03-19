@@ -36,6 +36,7 @@
   <PropertyGroup>
     <SignAssembly>true</SignAssembly>
     <DelaySign>true</DelaySign>
+    <AssemblyOriginatorKeyFile>$(EnlistmentRoot)FinalPublicKey.snk</AssemblyOriginatorKeyFile>
   </PropertyGroup>
   <ItemGroup>
     <FilesToLocalize Include="$(OutDir)\NewProjectWizard.dll">

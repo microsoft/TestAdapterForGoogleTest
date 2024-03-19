@@ -204,7 +204,7 @@ extends:
                 $xml = [xml](Get-Content $_)
                 $KeyFile = $xml.CreateElement("AssemblyOriginatorKeyFile", "http://schemas.microsoft.com/developer/msbuild/2003")
                 $KeyFile.set_InnerXML("`$(EnlistmentRoot)FinalPublicKey.snk")
-                $xml | ForEach-Object { $_.Project.PropertyGroup | ForEach-Object { if ($_.Condition -like '*(RealSign)'' == ''True''') { $_.AppendChild($KeyFile) } } }
+                $xml | ForEach-Object { $_.Project.PropertyGroup | ForEach-Object { $_.AppendChild($KeyFile) } }
                 $xml.Save("$pwd\$_")
               }
         - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
