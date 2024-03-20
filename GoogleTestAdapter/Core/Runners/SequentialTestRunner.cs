@@ -67,13 +67,14 @@ namespace GoogleTestAdapter.Runners
                             var key = Path.GetFullPath(testCase.Source) + ":" + testCase.FullyQualifiedName;
 
                             var testType = testCase.Traits.FirstOrDefault(t => t.Name.Equals(nameof(TestCaseDescriptor.TestType)));
+
                             // If it is a parameterized test, we should look for the "parent" key which doesn't have the suite or the id defined in the xml file. 
                             // The strategy for this can also be seen in the MethodSignatureCreate.cs file, going the other way.
-                            if (testType != null && testType.Value.Equals(TestCaseDescriptor.TestTypes.Parameterized))
+                            if (testType != null && Enum.TryParse(testType.Value, out TestCaseDescriptor.TestTypes type) && type == TestCaseDescriptor.TestTypes.Parameterized)
                             {
-                                int firstIndex = key.IndexOf("/");
-                                int lastIndex = key.LastIndexOf("/");
-                                key = string.Concat("*", key.Substring(firstIndex, lastIndex - firstIndex), "/*");
+                                int firstIndex = testCase.FullyQualifiedName.IndexOf("/");
+                                int lastIndex = testCase.FullyQualifiedName.LastIndexOf("/");
+                                key = string.Concat(Path.GetFullPath(testCase.Source), ":", "*", testCase.FullyQualifiedName.Substring(firstIndex, lastIndex - firstIndex), "/*");
                             }
 
                             ITestPropertySettings settings;
