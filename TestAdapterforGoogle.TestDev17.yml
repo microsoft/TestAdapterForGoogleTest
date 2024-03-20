@@ -294,6 +294,13 @@ extends:
             clean: true
             maximumCpuCount: true
             createLogFile: true
+        # Debug task for now.
+        - task: CopyFiles@2
+          displayName: 'Copy csproj files to drop directory'
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
+            Contents: '**/*.csproj'
+            TargetFolder: '$(Build.ArtifactStagingDirectory)/drop'
         - task: CopyFiles@2
           displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\drop'
           inputs:
