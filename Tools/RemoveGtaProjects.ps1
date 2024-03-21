@@ -5,7 +5,7 @@ $gta_guids = @(
   "4735D8CC-FA30-432D-854C-2984A7DA5DD2"
 )
 
-$sln = Get-Content .\TestAdapterForGoogleTest\GoogleTestAdapter\GoogleTestAdapter.sln
+$sln = Get-Content .\GoogleTestAdapter\GoogleTestAdapter.sln
 $is_gta_project = $false
 $gta_guids_regex = [string]::Join('|', $gta_guids)
 
@@ -22,4 +22,4 @@ $sln | ForEach-Object {
     # Add the line to the new sln file if it isn't related to GTA projects
     $_
   }
-} | Set-Content TestAdapterForGoogleTest\GoogleTestAdapter\GoogleTestAdapter.sln
+} | Set-Content GoogleTestAdapter\GoogleTestAdapter.sln

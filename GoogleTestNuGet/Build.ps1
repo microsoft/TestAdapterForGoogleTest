@@ -260,24 +260,24 @@ function Build-NuGet {
     $TargetsTTArgs += "/p:PathToBinaries=`"$PathToBinaries`""
     $TargetsTTArgs += "/p:ConfigurationType=`"$(Convert-DynamicLibraryLinkageToString $DynamicLibraryLinkage)`""
     $TargetsTTArgs += "/p:OutputFileName=`"$Dir\build\native\$PackageName.targets`""
-    $TargetsTTArgs += "TestAdapterForGoogleTest\GoogleTestNuGet\googletest.targets.tt.proj"
+    $TargetsTTArgs += "GoogleTestNuGet\googletest.targets.tt.proj"
     Invoke-Executable msbuild $TargetsTTArgs
 
     # Copy all the locale ID folders with the localized versions of googletest.propertiesui.xml
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1028" -Destination "$Dir\build\native\1028" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1029" -Destination "$Dir\build\native\1029" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1031" -Destination "$Dir\build\native\1031" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1033" -Destination "$Dir\build\native\1033" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1034" -Destination "$Dir\build\native\1034" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1036" -Destination "$Dir\build\native\1036" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1040" -Destination "$Dir\build\native\1040" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1041" -Destination "$Dir\build\native\1041" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1042" -Destination "$Dir\build\native\1042" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1045" -Destination "$Dir\build\native\1045" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1046" -Destination "$Dir\build\native\1046" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1049" -Destination "$Dir\build\native\1049" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\1055" -Destination "$Dir\build\native\1055" -Recurse
-    Copy-Item -Path "TestAdapterForGoogleTest\GoogleTestNuGet\2052" -Destination "$Dir\build\native\2052" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1028" -Destination "$Dir\build\native\1028" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1029" -Destination "$Dir\build\native\1029" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1031" -Destination "$Dir\build\native\1031" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1033" -Destination "$Dir\build\native\1033" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1034" -Destination "$Dir\build\native\1034" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1036" -Destination "$Dir\build\native\1036" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1040" -Destination "$Dir\build\native\1040" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1041" -Destination "$Dir\build\native\1041" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1042" -Destination "$Dir\build\native\1042" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1045" -Destination "$Dir\build\native\1045" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1046" -Destination "$Dir\build\native\1046" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1049" -Destination "$Dir\build\native\1049" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\1055" -Destination "$Dir\build\native\1055" -Recurse
+    Copy-Item -Path "GoogleTestNuGet\2052" -Destination "$Dir\build\native\2052" -Recurse
 
     Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
@@ -323,13 +323,13 @@ function Build-NuGet {
         }
     }
 
-    Copy-CreateItem -Recurse -Path "TestAdapterForGoogleTest\GoogleTestNuGet\license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
-    Copy-CreateItem -Recurse -Path "TestAdapterForGoogleTest\GoogleTestNuGet\ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
+    Copy-CreateItem -Recurse -Path "GoogleTestNuGet\license (MIT).txt"     -Destination "$Dir\license (MIT).txt"
+    Copy-CreateItem -Recurse -Path "GoogleTestNuGet\ThirdPartyNotices.txt" -Destination "$Dir\ThirdPartyNotices.txt"
 
     $NuspecTTArgs = @()
     $NuspecTTArgs += "/p:PackageName=`"$PackageName`""
     $NuspecTTArgs += "/p:OutputFileName=`"$Dir\googletest.nuspec`""
-    $NuspecTTArgs += "TestAdapterForGoogleTest\GoogleTestNuGet\googletest.nuspec.tt.proj"
+    $NuspecTTArgs += "GoogleTestNuGet\googletest.nuspec.tt.proj"
     Invoke-Executable msbuild $NuspecTTArgs
 
     $NugetPackArgs = @()
@@ -385,7 +385,7 @@ function Main {
     }
     Invoke-Executable nuget
 
-    $OutputDir = "TestAdapterForGoogleTest\GoogleTestAdapter\Packages"
+    $OutputDir = "GoogleTestAdapter\Packages"
 
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
