@@ -111,6 +111,7 @@ extends:
       binskim:
         enabled: true
         scanOutputDirectoryOnly: true
+        analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop\**\*.dll'
     customBuildTags:
     - ES365AIMigrationTooling
     stages:
