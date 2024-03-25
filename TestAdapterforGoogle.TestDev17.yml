@@ -347,11 +347,18 @@ extends:
             arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
-          displayName: 'PoliCheck'
+          displayName: 'PoliCheck on TestAdapterForGoogleTest repo'
           condition: eq (variables.QuickBuild, False)
           inputs:
             targetType: 'F'
-            targetArgument: '$(Build.SourcesDirectory)'
+            targetArgument: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: PoliCheck@2
+          displayName: 'PoliCheck on googletest repo'
+          condition: eq (variables.QuickBuild, False)
+          inputs:
+            targetType: 'F'
+            targetArgument: '$(Build.SourcesDirectory)/googletest'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
