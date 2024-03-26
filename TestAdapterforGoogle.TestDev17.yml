@@ -68,8 +68,8 @@ variables:
   # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
 - name: QuickBuild
   value: "$(TAfGTQuickBuild)"
-- name: RealSign
-  value: "$(TAfGTRealSign)"
+- name: TAfGTRealSign
+  value: "$(RealSign)"
 - name: RetainBuild
   value: "$(TAfGTRetainBuild)"
 - name: SignType
@@ -144,7 +144,7 @@ extends:
           persistCredentials: true
         - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@1
           displayName: Install Localization Plugin
-        - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@1
+        - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@4
           displayName: Install Signing Plugin
           inputs:
             signType: $(SignType)
