@@ -256,7 +256,7 @@ namespace GoogleTestAdapter.TestCases
         {
             if (location != null)
             {
-                var ns = GetTestSignatureNamespace(location.TestClassSignature);
+                var ns = GetTestSignatureNamespace(location.TestClassSignature, descriptor.TestType);
 
                 if (ns != string.Empty)
                     ns += ".";
@@ -279,9 +279,20 @@ namespace GoogleTestAdapter.TestCases
             return returnTest;
         }
 
-        internal static string GetTestSignatureNamespace(string signature)
+        internal static string GetTestSignatureNamespace(string signature, TestCaseDescriptor.TestTypes type)
         {
-            var namespaceEnd = signature.LastIndexOf("::", StringComparison.Ordinal);
+            var namespaceEnd = -1;
+
+            // Type Parameterized tests may contain multiple '::' so we use first index of to get namespace.
+            if (type == TestCaseDescriptor.TestTypes.TypeParameterized)
+            {
+                namespaceEnd = signature.IndexOf("::", StringComparison.Ordinal);
+            }
+            else
+            {
+                namespaceEnd = signature.LastIndexOf("::", StringComparison.Ordinal);
+            }
+
             if (namespaceEnd > 0)
             {
                 return signature.Substring(0, namespaceEnd);
