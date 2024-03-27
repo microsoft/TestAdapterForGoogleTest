@@ -107,7 +107,7 @@ extends:
         - repository: VCLS-Extensions
       tsa:
         enabled: true
-        configFile: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest\tsaoptions.json'
+        configFile: '$(Build.SourcesDirectory)\tsaoptions.json'
       binskim:
         enabled: true
         scanOutputDirectoryOnly: true
@@ -142,6 +142,12 @@ extends:
           clean: true
           fetchDepth: 1
           persistCredentials: true
+        # After checking out the TestAdapterForGoogleTest repo copy all files up one directory to avoid having to change all paths in scripts.
+        - task: CopyFiles@2
+          displayName: 'Copy TestAdapterForGoogleTest Files to: $(Build.SourcesDirectory)'
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)'
+            TargetFolder: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest'
         - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@1
           displayName: Install Localization Plugin
         - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@4
@@ -157,7 +163,7 @@ extends:
         - task: VSBuild@1
           displayName: Build ResolveTTs.proj
           inputs:
-            solution: 'TestAdapterForGoogleTest/ResolveTTs.proj'
+            solution: 'ResolveTTs.proj'
             vsVersion: '16.0'
             msbuildArgs: '-v:diag'
             platform: '$(BuildPlatform)'
@@ -166,25 +172,25 @@ extends:
           displayName: Generate TAfGT specific sln
           inputs:
             type: FilePath
-            scriptName: TestAdapterForGoogleTest\Tools\RemoveGtaProjects.ps1
+            scriptName: Tools\RemoveGtaProjects.ps1
         - task: NuGetCommand@2
           displayName: NuGet restore to sign packages
           inputs:
-            solution: TestAdapterForGoogleTest/GoogleTestNuget/packages.config
+            solution: GoogleTestNuget/packages.config
             selectOrConfig: config
-            nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
+            nugetConfigPath: NuGet.config
             packagesDirectory: packages
         - task: NuGetCommand@2
           displayName: NuGet restore for GoogleTestAdapter.sln
           inputs:
-            solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
+            solution: GoogleTestAdapter/GoogleTestAdapter.sln
             selectOrConfig: config
-            nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
+            nugetConfigPath: NuGet.config
         - task: PowerShell@2
           displayName: Set Version
           inputs:
             targetType: filePath
-            filePath: './TestAdapterForGoogleTest/GoogleTestAdapter/SetVersion.ps1'
+            filePath: './GoogleTestAdapter/SetVersion.ps1'
             arguments: '-version $(VersionNumber)'
         - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
           displayName: Add Keys for RealSign to TAfGT
@@ -192,14 +198,14 @@ extends:
             type: InlineScript
             script: |-
               $projects_to_sign = @(
-                "TestAdapterForGoogleTest\GoogleTestAdapter\Common\Common.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\Core\Core.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\DiaResolver\DiaResolver.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\NewProjectWizard\NewProjectWizard.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\TestAdapter\TestAdapter.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\VsPackage.TAfGT\VsPackage.TAfGT.csproj",
-                "TestAdapterForGoogleTest\GoogleTestAdapter\Packaging.TAfGT\Packaging.TAfGT.csproj"
+                "GoogleTestAdapter\Common\Common.csproj",
+                "GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
+                "GoogleTestAdapter\Core\Core.csproj",
+                "GoogleTestAdapter\DiaResolver\DiaResolver.csproj",
+                "GoogleTestAdapter\NewProjectWizard\NewProjectWizard.csproj",
+                "GoogleTestAdapter\TestAdapter\TestAdapter.csproj",
+                "GoogleTestAdapter\VsPackage.TAfGT\VsPackage.TAfGT.csproj",
+                "GoogleTestAdapter\Packaging.TAfGT\Packaging.TAfGT.csproj"
               )
               $projects_to_sign | ForEach-Object {
                 $xml = [xml](Get-Content $_)
@@ -213,7 +219,7 @@ extends:
           inputs:
             type: InlineScript
             script: |-
-              $build_script = 'TestAdapterForGoogleTest\GoogleTestNuGet\Build.ps1'
+              $build_script = 'GoogleTestNuGet\Build.ps1'
               $match_string = '*$DelaySign.set_InnerXML("true")*'
               (Get-Content $build_script) | ForEach-Object {
                 if ($_ -like $match_string) {
@@ -230,7 +236,7 @@ extends:
           inputs:
             type: InlineScript
             script: |-
-              $project_template = 'TestAdapterForGoogleTest\GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
+              $project_template = 'GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
               (Get-Content $project_template) | ForEach-Object {
                 $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
               } | Set-Content $project_template
@@ -239,17 +245,17 @@ extends:
           inputs:
             SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
             Contents: 'FinalPublicKey.snk'
-            TargetFolder: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
+            TargetFolder: '$(Build.SourcesDirectory)'
         - task: PowerShell@1
           displayName: Build GoogleTest NuGet packages
           inputs:
-            scriptName: TestAdapterForGoogleTest\GoogleTestNuGet\Build.ps1
+            scriptName: GoogleTestNuGet\Build.ps1
             arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages
           inputs:
-            solution: TestAdapterForGoogleTest\GoogleTestNuGet\googletest.SignNuGet.proj
+            solution: GoogleTestNuGet\googletest.SignNuGet.proj
         - task: BatchScript@1
           displayName: Set up developer command prompt environment
           inputs:
@@ -285,11 +291,11 @@ extends:
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm\msdia140.dll' -Destination '..\arm\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm64\msdia140.dll' -Destination '..\arm64\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.X86Files\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
-            workingDirectory: TestAdapterForGoogleTest/GoogleTestAdapter/DiaResolver/dia2
+            workingDirectory: GoogleTestAdapter/DiaResolver/dia2
         - task: VSBuild@1
           displayName: Build GoogleTestAdapter.sln
           inputs:
-            solution: TestAdapterForGoogleTest/GoogleTestAdapter/GoogleTestAdapter.sln
+            solution: GoogleTestAdapter/GoogleTestAdapter.sln
             platform: $(BuildPlatform)
             configuration: $(BuildConfiguration)
             clean: true
@@ -307,15 +313,15 @@ extends:
         - task: NuGetCommand@2
           displayName: NuGet restore vsmanproj
           inputs:
-            solution: TestAdapterForGoogleTest/swix/packages.config
+            solution: swix/packages.config
             selectOrConfig: config
-            nugetConfigPath: TestAdapterForGoogleTest/NuGet.config
+            nugetConfigPath: NuGet.config
             packagesDirectory: ..\NugetPackages
         - task: VSBuild@1
           displayName: 'Build core vsmanproj'
           continueOnError: true
           inputs:
-            solution: TestAdapterForGoogleTest/swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
+            solution: swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
             msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
@@ -323,19 +329,19 @@ extends:
         - task: PublishSymbols@1
           displayName: 'Publish Symbols Path'
           inputs:
-            SearchPattern: TestAdapterForGoogleTest\out\binaries\**\*.pdb
+            SearchPattern: out\binaries\**\*.pdb
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
           inputs:
-            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
+            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
             Contents: '*'
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy vsix to root
           inputs:
-            SourceFolder: TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
+            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
             Contents: Packaging.TAfGT.vsix
             TargetFolder: $(Build.ArtifactStagingDirectory)\drop
           continueOnError: true
@@ -343,7 +349,7 @@ extends:
         - task: PowerShell@2
           displayName: 'Copy Scannable Files to: $(Build.ArtifactStagingDirectory)\FilesToScanDrop'
           inputs:
-            filePath: './TestAdapterForGoogleTest/FilesToScan.ps1'
+            filePath: './FilesToScan.ps1'
             arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
@@ -384,7 +390,7 @@ extends:
           displayName: Run Tests
           inputs:
             testAssemblyVer2: |-
-              TestAdapterForGoogleTest\out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
+              out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
               **\*.Tests.Common.*dll
             vsTestVersion: 15.0
             runInParallel: false
