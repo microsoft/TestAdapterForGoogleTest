@@ -201,7 +201,7 @@ function Build-Binaries {
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
         -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage
 
-    $CMakeDir = "$pwd\..\googletest\googletest"
+    $CMakeDir = "$pwd\googletest\googletest"
 
     Push-Location $Dir
     try {
@@ -277,7 +277,7 @@ function Build-NuGet {
     Copy-Item -Path "1055" -Destination "$Dir\build\native\1055" -Recurse
     Copy-Item -Path "2052" -Destination "$Dir\build\native\2052" -Recurse
 
-    Copy-Item -Recurse -Path "..\googletest\googletest\include" -Destination "$Dir\build\native\include"
+    Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
     $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
