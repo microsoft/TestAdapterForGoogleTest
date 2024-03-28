@@ -1,33 +1,33 @@
 Param([parameter(Mandatory=$true)] [string] $version)
 
-$common_assembly_info = "Common\Properties\AssemblyInfo.cs"
+$common_assembly_info = "GoogleTestAdapter\Common\Properties\AssemblyInfo.cs"
 
-$common_dynamic_gta_assembly_info = "Common.Dynamic.GTA\Properties\AssemblyInfo.cs"
-$common_dynamic_tafgt_assembly_info = "Common.Dynamic.TAfGT\Properties\AssemblyInfo.cs"
+$common_dynamic_gta_assembly_info = "GoogleTestAdapter\Common.Dynamic.GTA\Properties\AssemblyInfo.cs"
+$common_dynamic_tafgt_assembly_info = "GoogleTestAdapter\Common.Dynamic.TAfGT\Properties\AssemblyInfo.cs"
 
-$core_assembly_info = "Core\Properties\AssemblyInfo.cs"
-$coretests_assembly_info = "Core.Tests\Properties\AssemblyInfo.cs"
+$core_assembly_info = "GoogleTestAdapter\Core\Properties\AssemblyInfo.cs"
+$coretests_assembly_info = "GoogleTestAdapter\Core.Tests\Properties\AssemblyInfo.cs"
 
-$dia_assembly_info = "DiaResolver\Properties\AssemblyInfo.cs"
-$diatests_assembly_info = "DiaResolver.Tests\Properties\AssemblyInfo.cs"
+$dia_assembly_info = "GoogleTestAdapter\DiaResolver\Properties\AssemblyInfo.cs"
+$diatests_assembly_info = "GoogleTestAdapter\DiaResolver.Tests\Properties\AssemblyInfo.cs"
 
-$packaging_gta_assembly_info = "Packaging.GTA\Properties\AssemblyInfo.cs"
-$packaging_tafgt_assembly_info = "Packaging.TAfGT\Properties\AssemblyInfo.cs"
-$projecttemplates_vstemplate = "GoogleTestProjectTemplate\GoogleTest.vstemplate"
+$packaging_gta_assembly_info = "GoogleTestAdapter\Packaging.GTA\Properties\AssemblyInfo.cs"
+$packaging_tafgt_assembly_info = "GoogleTestAdapter\Packaging.TAfGT\Properties\AssemblyInfo.cs"
+$projecttemplates_vstemplate = "GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate"
 
-$testadapter_assembly_info = "TestAdapter\Properties\AssemblyInfo.cs"
-$testadaptertests_assembly_info = "TestAdapter.Tests\Properties\AssemblyInfo.cs"
+$testadapter_assembly_info = "GoogleTestAdapter\TestAdapter\Properties\AssemblyInfo.cs"
+$testadaptertests_assembly_info = "GoogleTestAdapter\TestAdapter.Tests\Properties\AssemblyInfo.cs"
 
-$vspackage_gta_assembly_info = "VsPackage.GTA\Properties\AssemblyInfo.cs"
-$vspackage_gta_unittests_assembly_info = "VsPackage.GTA.Tests.Unit\Properties\AssemblyInfo.cs"
-$vspackage_tafgt_assembly_info = "VsPackage.TAfGT\Properties\AssemblyInfo.cs"
-$vspackagetests_assembly_info = "VsPackage.Tests\Properties\AssemblyInfo.cs"
-$vspackagegeneratedtests_assembly_info = "VsPackage.Tests.Generated\Properties\AssemblyInfo.cs"
+$vspackage_gta_assembly_info = "GoogleTestAdapter\VsPackage.GTA\Properties\AssemblyInfo.cs"
+$vspackage_gta_unittests_assembly_info = "GoogleTestAdapter\VsPackage.GTA.Tests.Unit\Properties\AssemblyInfo.cs"
+$vspackage_tafgt_assembly_info = "GoogleTestAdapter\VsPackage.TAfGT\Properties\AssemblyInfo.cs"
+$vspackagetests_assembly_info = "GoogleTestAdapter\VsPackage.Tests\Properties\AssemblyInfo.cs"
+$vspackagegeneratedtests_assembly_info = "GoogleTestAdapter\VsPackage.Tests.Generated\Properties\AssemblyInfo.cs"
 
-$vsix_manifest_gta = "Packaging.GTA\source.extension.vsixmanifest"
-$vsix_manifest_tafgt = "Packaging.TAfGT\source.extension.vsixmanifest"
+$vsix_manifest_gta = "GoogleTestAdapter\Packaging.GTA\source.extension.vsixmanifest"
+$vsix_manifest_tafgt = "GoogleTestAdapter\Packaging.TAfGT\source.extension.vsixmanifest"
 
-$wizard_assembly_info = "NewProjectWizard\Properties\AssemblyInfo.cs"
+$wizard_assembly_info = "GoogleTestAdapter\NewProjectWizard\Properties\AssemblyInfo.cs"
 
 (Get-Content $common_assembly_info) | ForEach-Object { $_ -replace "0.1.0.0", $version } | Set-Content $common_assembly_info
 
