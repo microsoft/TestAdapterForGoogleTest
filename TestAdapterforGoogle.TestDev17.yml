@@ -260,7 +260,7 @@ extends:
           displayName: Build GoogleTest NuGet packages
           inputs:
             scriptName: GoogleTestNuGet\Build.ps1
-            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
+            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages

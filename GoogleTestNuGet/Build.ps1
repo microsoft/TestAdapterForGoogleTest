@@ -135,7 +135,6 @@ function Add-Signing {
     $BuildGroup = $xml.CreateElement("ItemDefinitionGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
-DavidARaygoza marked this conversation as resolved.
     $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
     $ClCompile.AppendChild($AdditionalOptions) | Out-Null
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -377,7 +376,7 @@ function Main {
     }
     Invoke-Executable nuget
 
-    $OutputDir = "..\GoogleTestAdapter\Packages"
+    $OutputDir = "GoogleTestAdapter\Packages"
 
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
     Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
