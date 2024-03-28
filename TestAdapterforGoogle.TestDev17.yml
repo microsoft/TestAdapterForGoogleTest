@@ -7,12 +7,14 @@
 # The Task 'PublishBuildArtifacts@1' has been converted to an output named 'Publish Artifact: drop to pipelines' in the templateContext section.
 trigger:
 - refs/heads/dev17
+- refs/heads/dev15
 
 pr:
   autoCancel: true
   branches:
     include:
     - refs/heads/dev17
+    - refs/heads/dev15
     - dev/*
 schedules:
   - cron: "0 7 1 * *"
