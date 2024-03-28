@@ -1,0 +1,426 @@
+# This Yaml Document has been converted by ESAI Yaml Pipeline Conversion Tool.
+# Please make sure to check all the converted content, it is your team's responsibility to make sure that the pipeline is still valid and functions as expected.
+# The SBOM tasks have been removed because they are not required for the unofficial template.
+# You can manually enable SBOM in the unofficial template if needed, othewise its automatically enabled when using official template. https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/1es-pipeline-templates/features/sbom
+# This pipeline will be extended to the OneESPT template
+# If you are not using the E+D shared hosted pool with windows-2022, replace the pool section with your hosted pool, os, and image name. If you are using a Linux image, you must specify an additional windows image for SDL: https://eng.ms/docs/cloud-ai-platform/devdiv/one-engineering-system-1es/1es-docs/1es-pipeline-templates/features/sdlanalysis/overview#how-to-specify-a-windows-pool-for-the-sdl-source-analysis-stage
+# The Task 'PublishBuildArtifacts@1' has been converted to an output named 'Publish Artifact: drop to pipelines' in the templateContext section.
+trigger:
+- refs/heads/dev17
+- refs/heads/dev15
+
+pr:
+  autoCancel: true
+  branches:
+    include:
+    - refs/heads/dev17
+    - refs/heads/dev15
+    - dev/*
+schedules:
+  - cron: "0 7 1 * *"
+    displayName: Monthly Run
+    branches:
+      include:
+        - refs/heads/dev17
+    always: true
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: MicroBuildTemplate
+    type: git
+    name: 1ESPipelineTemplates/MicroBuildTemplate
+    ref: refs/tags/release
+  - repository: googletest
+    type: git
+    name: googletest
+    ref: refs/heads/main
+  - repository: VCLS-Extensions
+    type: git
+    name: VCLS-Extensions
+    ref: refs/heads/dev17
+variables:
+- name: ApiScanClientId
+  value: 1d6a3de7-4a6a-4b75-b15d-e305293c75af
+- name: ApiScanSecret
+  value: "$(TAfGTAPIScanSecret)"
+- name: ApiScanTenant
+  value: 72f988bf-86f1-41af-91ab-2d7cd011db47
+- name: ArtifactServices.Symbol.AccountName
+  value: microsoft
+- name: ArtifactServices.Symbol.PAT
+  value: "$(GoogleTestSymbolsPat)"
+- name: ArtifactServices.Symbol.UseAAD
+  value: False
+- name: BuildConfiguration
+  value: "$(TAfGTBuildConfiguration)"
+- name: BuildPlatform
+  value: Any CPU
+- name: CodeQL.Enabled
+  value: true
+- name: Codeql.Language
+  value: csharp
+- name: CodeQL.TSAEnabled
+  value: true
+- name: DiaNugetVersion
+  value: "$(TAfGTDiaNugetVersion)"
+- name: DropRoot
+  value: '\\cpvsbuild\drops'
+- name: NUGET_RESTORE_MSBUILD_ARGS
+  value: /p:Configuration="$(BuildConfiguration)"
+- name: Packaging.EnableSBOMSigning
+  value: "$(TAfGTEnableSBOMSigning)"
+- name: DropPAT
+  value: "$(TAfGTDropPAT)"
+- name: ProductComponent
+  value: "$(TAfGTProductComponent)"
+- name: Publish
+  value: "$(TAfGTPublish)"
+  # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
+- name: RunAdditionalComplianceChecks
+  value: "$(TAfGTRunAdditionalComplianceChecks)"
+- name: TAfGTRealSign
+  value: "$(RealSign)"
+- name: RetainBuild
+  value: "$(TAfGTRetainBuild)"
+- name: SignType
+  value: "$(TAfGTSignType)"
+- name: SYMBOLS_PAT
+  value: "$(GoogleTestSymbolsPat)"
+- name: smPassword
+  value: "$(TAfGTADOUserPassword)"
+- name: smUsername
+  value: davidraygoza
+- name: TeamName
+  value: VCLS
+- name: VersionNumber
+  value: "$(TAfGTVersionNumber)"
+extends:
+  template: azure-pipelines/MicroBuild.1ES.Official.yml@MicroBuildTemplate
+  parameters:
+    pool:
+      name: VSEngSS-MicroBuild2019-1ES
+      demands:
+      - vstest
+      - msbuild
+      - visualstudio
+      - DotNetFramework
+      - Cmd
+      - npm
+    sdl:
+      sourceAnalysisPool:
+        name: VSEngSS-MicroBuild2019-1ES
+      sourceRepositoriesToScan:
+        include:
+        - repository: googletest
+        exclude:
+        # No need to scan this source as we only use this repo to copy the public signing key.
+        - repository: VCLS-Extensions
+      tsa:
+        enabled: true
+        configFile: '$(Build.SourcesDirectory)\tsaoptions.json'
+      binskim:
+        enabled: true
+        scanOutputDirectoryOnly: true
+        analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop\**\*.dll'
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: stage
+      jobs:
+      - job: Phase_1
+        displayName: Phase 1
+        timeoutInMinutes: 0
+        cancelTimeoutInMinutes: 1
+        templateContext:
+          outputs:
+          - output: pipelineArtifact
+            displayName: 'Publish Artifact: drop'
+            targetPath: $(Build.ArtifactStagingDirectory)\drop
+        steps:
+        - checkout: self
+          displayName: 'Checkout TestAdapterForGoogleTest Git Repo'
+          clean: true
+          fetchDepth: 1
+          persistCredentials: true
+        - checkout: googletest
+          displayName: 'Checkout googletest ADO Repo'
+          clean: true
+          fetchDepth: 1
+          persistCredentials: true
+        - checkout: VCLS-Extensions
+          displayName: 'Checkout VCLS-Extensions ADO Repo to copy public key'
+          clean: true
+          fetchDepth: 1
+          persistCredentials: true
+        # After checking out the TestAdapterForGoogleTest repo copy all files up one directory to avoid having to change all paths in scripts.
+        - task: CopyFiles@2
+          displayName: 'Copy TestAdapterForGoogleTest Files to: $(Build.SourcesDirectory)'
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)\TestAdapterForGoogleTest'
+            TargetFolder: '$(Build.SourcesDirectory)'
+        - task: ms-vseng.MicroBuildTasks.a0262b21-fb8f-46f8-bb9a-60ed560d4a87.MicroBuildLocalizationPlugin@1
+          displayName: Install Localization Plugin
+        - task: ms-vseng.MicroBuildTasks.30666190-6959-11e5-9f96-f56098202fef.MicroBuildSigningPlugin@4
+          displayName: Install Signing Plugin
+          inputs:
+            signType: $(SignType)
+        - task: ms-vseng.MicroBuildTasks.32f78468-e895-4f47-962c-58a699361df8.MicroBuildSwixPlugin@4
+          displayName: Install Swix Plugin
+        - task: NuGetToolInstaller@1
+          displayName: Install NuGet
+          inputs:
+            versionSpec: 5.9.1
+        - task: VSBuild@1
+          displayName: Build ResolveTTs.proj
+          inputs:
+            solution: 'ResolveTTs.proj'
+            vsVersion: '16.0'
+            msbuildArgs: '-v:diag'
+            platform: '$(BuildPlatform)'
+            configuration: '$(BuildConfiguration)'
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+          displayName: Generate TAfGT specific sln
+          inputs:
+            type: FilePath
+            scriptName: Tools\RemoveGtaProjects.ps1
+        - task: NuGetCommand@2
+          displayName: NuGet restore to sign packages
+          inputs:
+            solution: GoogleTestNuget/packages.config
+            selectOrConfig: config
+            nugetConfigPath: NuGet.config
+            packagesDirectory: packages
+        - task: NuGetCommand@2
+          displayName: NuGet restore for GoogleTestAdapter.sln
+          inputs:
+            solution: GoogleTestAdapter/GoogleTestAdapter.sln
+            selectOrConfig: config
+            nugetConfigPath: NuGet.config
+        - task: PowerShell@2
+          displayName: Set Version
+          inputs:
+            targetType: filePath
+            filePath: './GoogleTestAdapter/SetVersion.ps1'
+            arguments: '-version $(VersionNumber)'
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+          displayName: Add Keys for RealSign to TAfGT
+          inputs:
+            type: InlineScript
+            script: |-
+              $projects_to_sign = @(
+                "GoogleTestAdapter\Common\Common.csproj",
+                "GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
+                "GoogleTestAdapter\Core\Core.csproj",
+                "GoogleTestAdapter\DiaResolver\DiaResolver.csproj",
+                "GoogleTestAdapter\NewProjectWizard\NewProjectWizard.csproj",
+                "GoogleTestAdapter\TestAdapter\TestAdapter.csproj",
+                "GoogleTestAdapter\VsPackage.TAfGT\VsPackage.TAfGT.csproj",
+                "GoogleTestAdapter\Packaging.TAfGT\Packaging.TAfGT.csproj"
+              )
+              $projects_to_sign | ForEach-Object {
+                $xml = [xml](Get-Content $_)
+                $KeyFile = $xml.CreateElement("AssemblyOriginatorKeyFile", "http://schemas.microsoft.com/developer/msbuild/2003")
+                $KeyFile.set_InnerXML("`$(EnlistmentRoot)FinalPublicKey.snk")
+                $xml | ForEach-Object { $_.Project.PropertyGroup | ForEach-Object { if ($_.Condition -like '*(RealSign)'' == ''True''') { $_.AppendChild($KeyFile) } } }
+                $xml.Save("$pwd\$_")
+              }
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+          displayName: Add Keys for RealSign to googletest
+          inputs:
+            type: InlineScript
+            script: |-
+              $build_script = 'GoogleTestNuGet\Build.ps1'
+              $match_string = '*$DelaySign.set_InnerXML("true")*'
+              (Get-Content $build_script) | ForEach-Object {
+                if ($_ -like $match_string) {
+                  $_ + '
+                  $KeyFile = $xml.CreateElement("AssemblyOriginatorKeyFile", "http://schemas.microsoft.com/developer/msbuild/2003")
+                  $KeyFile.set_InnerXML("`$(EnlistmentRoot)FinalPublicKey.snk")
+                  $RealSignGroup.AppendChild($KeyFile) | Out-Null'
+                } else {
+                  $_
+                }
+              } | Set-Content $build_script
+        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+          displayName: Update token for template
+          inputs:
+            type: InlineScript
+            script: |-
+              $project_template = 'GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
+              (Get-Content $project_template) | ForEach-Object {
+                $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
+              } | Set-Content $project_template
+        - task: CopyFiles@2
+          displayName: 'Copy FinalPublicKey.snk to TestAdapterForGoogleTest'
+          inputs:
+            SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
+            Contents: 'FinalPublicKey.snk'
+            TargetFolder: '$(Build.SourcesDirectory)'
+        - task: PowerShell@1
+          displayName: Build GoogleTest NuGet packages
+          inputs:
+            scriptName: GoogleTestNuGet\Build.ps1
+            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
+            failOnStandardError: false
+        - task: MSBuild@1
+          displayName: Sign NuGet packages
+          inputs:
+            solution: GoogleTestNuGet\googletest.SignNuGet.proj
+        - task: BatchScript@1
+          displayName: Set up developer command prompt environment
+          inputs:
+            filename: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
+            modifyEnvironment: true
+        - task: NuGetCommand@2
+          displayName: NuGet install dia amd64
+          inputs:
+            command: custom
+            arguments: install VS.Redist.Vctools.Amd64 -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
+        - task: NuGetCommand@2
+          displayName: NuGet install dia arm
+          inputs:
+            command: custom
+            arguments: install VS.Redist.Vctools.Arm -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
+        - task: NuGetCommand@2
+          displayName: NuGet install dia arm64
+          inputs:
+            command: custom
+            arguments: install VS.Redist.Vctools.Arm64 -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
+        - task: NuGetCommand@2
+          displayName: NuGet install dia x86
+          inputs:
+            command: custom
+            arguments: install VS.Redist.Vctools.X86Files -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
+        - task: PowerShell@2
+          displayName: Build and copy dia binaries
+          inputs:
+            targetType: inline
+            script: |-
+              .\compile_typelib.ps1
+              Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Amd64\msdia140.dll' -Destination '..\x64\msdia140.dll' -verbose
+              Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm\msdia140.dll' -Destination '..\arm\msdia140.dll' -verbose
+              Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm64\msdia140.dll' -Destination '..\arm64\msdia140.dll' -verbose
+              Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.X86Files\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
+            workingDirectory: GoogleTestAdapter/DiaResolver/dia2
+        - task: VSBuild@1
+          displayName: Build GoogleTestAdapter.sln
+          inputs:
+            solution: GoogleTestAdapter/GoogleTestAdapter.sln
+            platform: $(BuildPlatform)
+            configuration: $(BuildConfiguration)
+            clean: true
+            maximumCpuCount: true
+            createLogFile: true
+        - task: CopyFiles@2
+          displayName: 'Copy Files to: $(Build.ArtifactStagingDirectory)\drop'
+          inputs:
+            Contents: '**\out\binaries\**'
+            TargetFolder: $(Build.ArtifactStagingDirectory)\drop
+        - task: AzureArtifacts.manifest-generator-task.manifest-generator-task.ManifestGeneratorTask@0
+          displayName: 'Manifest Generator '
+          inputs:
+            BuildDropPath: '$(Build.ArtifactStagingDirectory)\drop'
+        - task: NuGetCommand@2
+          displayName: NuGet restore vsmanproj
+          inputs:
+            solution: swix/packages.config
+            selectOrConfig: config
+            nugetConfigPath: NuGet.config
+            packagesDirectory: ..\NugetPackages
+        - task: VSBuild@1
+          displayName: 'Build core vsmanproj'
+          continueOnError: true
+          inputs:
+            solution: swix/core/Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest.vsmanproj
+            msbuildArgs: /p:ArtifactsDir=$(Build.ArtifactStagingDirectory)
+            platform: '$(BuildPlatform)'
+            configuration: '$(BuildConfiguration)'
+            maximumCpuCount: true
+        - task: PublishSymbols@1
+          displayName: 'Publish Symbols Path'
+          inputs:
+            SearchPattern: out\binaries\**\*.pdb
+          continueOnError: true
+        - task: CopyFiles@2
+          displayName: Copy setup files to drop root
+          inputs:
+            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Microsoft.VisualStudio.VC.Ide.TestAdapterForGoogleTest
+            Contents: '*'
+            TargetFolder: $(Build.ArtifactStagingDirectory)\drop
+          continueOnError: true
+        - task: CopyFiles@2
+          displayName: Copy vsix to root
+          inputs:
+            SourceFolder: out\binaries\GoogleTestAdapter\$(BuildConfiguration)\Packaging.TAfGT
+            Contents: Packaging.TAfGT.vsix
+            TargetFolder: $(Build.ArtifactStagingDirectory)\drop
+          continueOnError: true
+        # Pull a list only of files we build and ship to be scanned in FilesToScanDrop.
+        - task: PowerShell@2
+          displayName: 'Copy Scannable Files to: $(Build.ArtifactStagingDirectory)\FilesToScanDrop'
+          inputs:
+            filePath: './FilesToScan.ps1'
+            arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: PoliCheck@2
+          displayName: 'PoliCheck on TestAdapterForGoogleTest repo'
+          condition: eq (variables.RunAdditionalComplianceChecks, True)
+          inputs:
+            targetType: 'F'
+            targetArgument: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: PoliCheck@2
+          displayName: 'PoliCheck on googletest repo'
+          condition: eq (variables.RunAdditionalComplianceChecks, True)
+          inputs:
+            targetType: 'F'
+            targetArgument: '$(Build.SourcesDirectory)/googletest'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
+          displayName: 'Run APIScan'
+          condition: eq (variables.RunAdditionalComplianceChecks, True)
+          inputs:
+            softwareFolder: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop'
+            softwareName: GoogleTest
+            softwareVersionNum: 1.0
+            isLargeApp: false
+            toolVersion: 'Latest'
+            verbosityLevel: silent
+            continueOnError: true
+          env:
+            AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId);TenantId=$(ApiScanTenant);AppKey=$(ApiScanSecret)
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
+          displayName: 'Publish Guardian Artifacts'
+          condition: eq (variables.RunAdditionalComplianceChecks, True)
+          inputs:
+            PublishProcessedResults: true
+          continueOnError: true
+        - task: VSTest@2
+          displayName: Run Tests
+          inputs:
+            testAssemblyVer2: |-
+              out\binaries\GoogleTestAdapter\Release\**\*.Tests.*dll
+              **\*.Tests.Common.*dll
+            vsTestVersion: 15.0
+            runInParallel: false
+            diagnosticsEnabled: True
+          continueOnError: true
+        - task: 1ES.MicroBuildVstsDrop@1
+          displayName: Upload VSTS Drop
+          inputs:
+            dropFolder: $(Build.ArtifactStagingDirectory)\drop
+            dropName: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
+            accessToken: $(DropPAT)
+            dropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
+            vsDropServiceUri: "https://vsdrop.corp.microsoft.com/file/v1"
+        - task: ms-vseng.MicroBuildShipTasks.4a4e1dc3-01d0-484f-94ac-f918aaf7d509.MicroBuildRetainVstsDrops@1
+          displayName: Retain VSTS Drops
+          condition: and(succeeded(), eq(variables['RetainBuild'], true))
+          inputs:
+            DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
+            AccessToken: $(DropPAT)
+            DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
+        - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+          displayName: Perform Cleanup Tasks
+          condition: always()
