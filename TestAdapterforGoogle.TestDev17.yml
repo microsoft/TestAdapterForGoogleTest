@@ -166,10 +166,6 @@ extends:
             signType: $(SignType)
         - task: ms-vseng.MicroBuildTasks.32f78468-e895-4f47-962c-58a699361df8.MicroBuildSwixPlugin@4
           displayName: Install Swix Plugin
-        - task: NuGetToolInstaller@1
-          displayName: Install NuGet
-          inputs:
-            versionSpec: 5.9.1
         - task: VSBuild@1
           displayName: Build ResolveTTs.proj
           inputs:
@@ -196,6 +192,8 @@ extends:
             solution: GoogleTestAdapter/GoogleTestAdapter.sln
             selectOrConfig: config
             nugetConfigPath: NuGet.config
+            packagesDirectory: ..\NugetPackages
+            searchPatternPush: $(Build.ArtifactStagingDirectory)/*.nupkg
         - task: PowerShell@2
           displayName: Set Version
           inputs:
@@ -206,17 +204,17 @@ extends:
           displayName: Add Keys for RealSign to TAfGT
           inputs:
             type: InlineScript
-            script: |-
+            script: >-
               $projects_to_sign = @(
-                "GoogleTestAdapter\Common\Common.csproj",
-                "GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
-                "GoogleTestAdapter\Core\Core.csproj",
-                "GoogleTestAdapter\DiaResolver\DiaResolver.csproj",
-                "GoogleTestAdapter\NewProjectWizard\NewProjectWizard.csproj",
-                "GoogleTestAdapter\TestAdapter\TestAdapter.csproj",
-                "GoogleTestAdapter\VsPackage.TAfGT\VsPackage.TAfGT.csproj",
-                "GoogleTestAdapter\Packaging.TAfGT\Packaging.TAfGT.csproj"
+              "GoogleTestAdapter\Common\Common.csproj",
+              "GoogleTestAdapter\Common.Dynamic.TAfGT\Common.Dynamic.TAfGT.csproj",
+              "GoogleTestAdapter\Core\Core.csproj",
+              "GoogleTestAdapter\DiaResolver\DiaResolver.csproj",
+              "GoogleTestAdapter\NewProjectWizard\NewProjectWizard.csproj",
+              "GoogleTestAdapter\TestAdapter\TestAdapter.csproj",
+              "GoogleTestAdapter\VsPackage.TAfGT\VsPackage.TAfGT.csproj"
               )
+
               $projects_to_sign | ForEach-Object {
                 $xml = [xml](Get-Content $_)
                 $KeyFile = $xml.CreateElement("AssemblyOriginatorKeyFile", "http://schemas.microsoft.com/developer/msbuild/2003")
@@ -228,9 +226,11 @@ extends:
           displayName: Add Keys for RealSign to googletest
           inputs:
             type: InlineScript
-            script: |-
+            script: >-
               $build_script = 'GoogleTestNuGet\Build.ps1'
+
               $match_string = '*$DelaySign.set_InnerXML("true")*'
+
               (Get-Content $build_script) | ForEach-Object {
                 if ($_ -like $match_string) {
                   $_ + '
@@ -245,8 +245,9 @@ extends:
           displayName: Update token for template
           inputs:
             type: InlineScript
-            script: |-
+            script: >-
               $project_template = 'GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
+
               (Get-Content $project_template) | ForEach-Object {
                 $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
               } | Set-Content $project_template
@@ -260,7 +261,7 @@ extends:
           displayName: Build GoogleTest NuGet packages
           inputs:
             scriptName: GoogleTestNuGet\Build.ps1
-            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\"
+            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages
@@ -271,15 +272,17 @@ extends:
           inputs:
             filename: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
             modifyEnvironment: true
-        - task: PowerShell@2
+        - task: PowerShell@1
           displayName: Build and copy dia binaries
           inputs:
-            targetType: inline
-            script: |-
+            scriptType: inlineScript
+            workingFolder: .\GoogleTestAdapter\DiaResolver\dia2
+            inlineScript: >-
               .\compile_typelib.ps1 2> $null
+
               Copy-Item -path 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\DIA SDK\bin\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
-              Copy-Item -path 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\DIA SDK\bin\amd64\msdia140.dll' -Destination '..\x64\msdia140.dll' -verbose      
-            workingDirectory: GoogleTestAdapter/DiaResolver/dia2
+
+              Copy-Item -path 'C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\DIA SDK\bin\amd64\msdia140.dll' -Destination '..\x64\msdia140.dll' -verbose
         - task: VSBuild@1
           displayName: Build GoogleTestAdapter.sln
           inputs:
@@ -305,6 +308,7 @@ extends:
             selectOrConfig: config
             nugetConfigPath: NuGet.config
             packagesDirectory: ..\NugetPackages
+            searchPatternPush: $(Build.ArtifactStagingDirectory)/*.nupkg
         - task: VSBuild@1
           displayName: 'Build core vsmanproj'
           continueOnError: true
