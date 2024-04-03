@@ -61,6 +61,8 @@ variables:
   value: csharp
 - name: CodeQL.TSAEnabled
   value: true
+- name: Codeql.TSAOptionsPath
+  value: $(Build.SourcesDirectory)\TestAdapterForGoogleTest\TSAOptions.json
 - name: DiaNugetVersion
   value: "$(TAfGTDiaNugetVersion)"
 - name: DropRoot
@@ -117,7 +119,7 @@ extends:
         - repository: VCLS-Extensions
       tsa:
         enabled: true
-        configFile: '$(Build.SourcesDirectory)\tsaoptions.json'
+        configFile: '$(Build.SourcesDirectory)\TSAOptions.json'
       binskim:
         enabled: true
         scanOutputDirectoryOnly: true
