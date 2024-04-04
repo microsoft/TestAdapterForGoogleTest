@@ -137,12 +137,21 @@ function Add-Signing {
     $BuildGroup = $xml.CreateElement("ItemDefinitionGroup", "http://schemas.microsoft.com/developer/msbuild/2003")
     $ClCompile = $xml.CreateElement("ClCompile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $AdditionalOptions.set_InnerXML("/Zi %(AdditionalOptions)");
+    $AdditionalOptions.set_InnerXML("/ZH:SHA_256 /guard:cf /Qspectre /Zi %(AdditionalOptions)");
     $ClCompile.AppendChild($AdditionalOptions) | Out-Null
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
     $Profile = $xml.CreateElement("Profile", "http://schemas.microsoft.com/developer/msbuild/2003")
     $Profile.set_InnerXML("true");
+    $guard = $xml.CreateElement("guard", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $guard.set_InnerXML("cf");
+    $DYNAMICBASE = $xml.CreateElement("DYNAMICBASE", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $DYNAMICBASE.set_InnerXML("true");
+    $CETCOMPAT = $xml.CreateElement("CETCOMPAT", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $CETCOMPAT.set_InnerXML("true");
     $Link.AppendChild($Profile) | Out-Null
+    $Link.AppendChild($guard) | Out-Null
+    $Link.AppendChild($DYNAMICBASE) | Out-Null
+    $Link.AppendChild($CETCOMPAT) | Out-Null
     $BuildGroup.AppendChild($ClCompile) | Out-Null
     $BuildGroup.AppendChild($Link) | Out-Null
 
