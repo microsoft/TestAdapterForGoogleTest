@@ -139,10 +139,10 @@ function Add-Signing {
     $AdditionalOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
     $AdditionalOptions.set_InnerXML("/ZH:SHA_256 /guard:cf /Qspectre /Zi %(AdditionalOptions)");
     $ClCompile.AppendChild($AdditionalOptions) | Out-Null
-    $LinkOptions = $xml.CreateElement("LinkOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $LinkOptions.set_InnerXML("/Profile /guard:cf /DYNAMICBASE /CETCOMPAT %(LinkOptions)");
+    $AdditionalLinkOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
+    $AdditionalLinkOptions.set_InnerXML("/Profile /guard:cf /DYNAMICBASE /CETCOMPAT %(AdditionalOptions)");
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $Link.AppendChild($LinkOptions) | Out-Null
+    $Link.AppendChild($AdditionalLinkOptions) | Out-Null
     $BuildGroup.AppendChild($ClCompile) | Out-Null
     $BuildGroup.AppendChild($Link) | Out-Null
 
