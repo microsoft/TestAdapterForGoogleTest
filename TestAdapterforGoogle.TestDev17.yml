@@ -58,7 +58,7 @@ variables:
 - name: CodeQL.Enabled
   value: true
 - name: Codeql.Language
-  value: csharp
+  value: csharp,cpp,python,java
 - name: CodeQL.TSAEnabled
   value: true
 - name: Codeql.TSAOptionsPath
