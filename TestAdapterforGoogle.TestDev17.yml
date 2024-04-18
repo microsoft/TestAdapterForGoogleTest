@@ -363,6 +363,13 @@ extends:
           inputs:
             filePath: './FilesToScan.ps1'
             arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
+        - task: ms.vss-governance-buildtask.governance-build-task-component-detection.ComponentGovernanceComponentDetection@0
+          displayName: Detect components for googletest repo
+          inputs:
+            sourceScanPath: '$(Build.SourcesDirectory)/googletest'
+            scanType: 'Register'
+            verbosity: 'Verbose'
+            alertWarningLevel: 'High'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
           displayName: 'PoliCheck on TestAdapterForGoogleTest repo'
