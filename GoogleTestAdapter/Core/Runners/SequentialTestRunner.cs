@@ -142,7 +142,7 @@ namespace GoogleTestAdapter.Runners
                     break;
                 }
 
-                arguments.CommandLine += " --gtest_print_utf8=1";
+                arguments.CommandLine += " --gtest_print_utf8=1 --gtest_output=xml:DavidsGoogleTestResults.xml";
                 var streamingParser = new StreamingStandardOutputTestResultParser(arguments.TestCases, _logger, _frameworkReporter);
                 var results = RunTests(executable, workingDir, envVars, isBeingDebugged, debuggedLauncher, arguments, executor, streamingParser).ToArray();
 
