@@ -108,11 +108,11 @@ extends:
       sourceAnalysisPool:
         name: VSEngSS-MicroBuild2022-1ES
       sourceRepositoriesToScan:
-        include:
-        - repository: googletest
         exclude:
-        # No need to scan this source as we only use this repo to copy the public signing key.
+        # No need to scan VCLS-Extensions source as we only use this repo to copy the public signing key.
         - repository: VCLS-Extensions
+        # No need to scan googletest source here as it is scanned in its own independent pipeline.
+        - repository: googletest
       tsa:
         enabled: true
         configFile: '$(Build.SourcesDirectory)\TSAOptions.json'
@@ -366,13 +366,6 @@ extends:
           inputs:
             targetType: 'F'
             targetArgument: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
-        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
-        - task: PoliCheck@2
-          displayName: 'PoliCheck on googletest repo'
-          condition: eq (variables.RunAdditionalComplianceChecks, True)
-          inputs:
-            targetType: 'F'
-            targetArgument: '$(Build.SourcesDirectory)/googletest'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
