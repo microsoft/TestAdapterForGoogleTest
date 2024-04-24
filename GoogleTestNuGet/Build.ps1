@@ -207,7 +207,7 @@ function Build-Binaries {
     Push-Location $Dir
     try {
         $CMakeArgs = @()
-        $CMakeArgs += "-G", "Visual Studio 16 2019"
+        $CMakeArgs += "-G", "Visual Studio 17 2022"
         $CMakeArgs += "-T", $BuildToolset
         $CMakeArgs += "-A", $Platform
         $CMakeArgs += "-D", "BUILD_SHARED_LIBS=$(Convert-BooleanToOnOff $DynamicLibraryLinkage)"

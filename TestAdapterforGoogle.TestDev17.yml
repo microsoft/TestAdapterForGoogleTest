@@ -96,7 +96,7 @@ extends:
   template: azure-pipelines/MicroBuild.1ES.Official.yml@MicroBuildTemplate
   parameters:
     pool:
-      name: VSEngSS-MicroBuild2019-1ES
+      name: VSEngSS-MicroBuild2022-1ES
       demands:
       - vstest
       - msbuild
@@ -106,13 +106,13 @@ extends:
       - npm
     sdl:
       sourceAnalysisPool:
-        name: VSEngSS-MicroBuild2019-1ES
+        name: VSEngSS-MicroBuild2022-1ES
       sourceRepositoriesToScan:
-        include:
-        - repository: googletest
         exclude:
-        # No need to scan this source as we only use this repo to copy the public signing key.
+        # No need to scan VCLS-Extensions source as we only use this repo to copy the public signing key.
         - repository: VCLS-Extensions
+        # No need to scan googletest source here as it is scanned in its own independent pipeline.
+        - repository: googletest
       tsa:
         enabled: true
         configFile: '$(Build.SourcesDirectory)\TSAOptions.json'
@@ -258,7 +258,7 @@ extends:
           displayName: Build GoogleTest NuGet packages
           inputs:
             scriptName: GoogleTestNuGet\Build.ps1
-            arguments: -Verbose -VSPath "C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\"
+            arguments: -Verbose -VSPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
           displayName: Sign NuGet packages
@@ -267,7 +267,7 @@ extends:
         - task: BatchScript@1
           displayName: Set up developer command prompt environment
           inputs:
-            filename: C:\Program Files (x86)\Microsoft Visual Studio\2019\Enterprise\Common7\Tools\VsDevCmd.bat
+            filename: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat
             modifyEnvironment: true
         - task: NuGetCommand@2
           displayName: NuGet install dia amd64
@@ -366,13 +366,6 @@ extends:
           inputs:
             targetType: 'F'
             targetArgument: '$(Build.SourcesDirectory)/TestAdapterForGoogleTest'
-        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
-        - task: PoliCheck@2
-          displayName: 'PoliCheck on googletest repo'
-          condition: eq (variables.RunAdditionalComplianceChecks, True)
-          inputs:
-            targetType: 'F'
-            targetArgument: '$(Build.SourcesDirectory)/googletest'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-apiscan.APIScan@2
           displayName: 'Run APIScan'
