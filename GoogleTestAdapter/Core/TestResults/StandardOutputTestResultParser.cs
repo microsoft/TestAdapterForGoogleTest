@@ -81,6 +81,15 @@ namespace GoogleTestAdapter.TestResults
             string errorMsg = "";
             while (!(IsFailedLine(line) || IsPassedLine(line)) && currentLineIndex <= _consoleOutput.Count)
             {
+                // Parse in XML so we can get the error message and stack trace in UTF8 since console output does not support this by default.
+                var xmlParser = new XmlTestResultParser(_testCasesRun, "C:\\Users\\davidraygoza\\source\\repos\\TAfGTTestingMatrix\\x64\\Debug\\XMLGoogleTestResults.xml", _logger);
+                var xmlResults = xmlParser.GetTestResults();
+                foreach (var xmlResult in xmlResults)
+                {
+                    _logger.DebugError(xmlResult.ErrorMessage);
+                    _logger.DebugError(xmlResult.ErrorStackTrace);
+                }
+
                 errorMsg += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 SplitLineIfNecessary(ref line, currentLineIndex);
