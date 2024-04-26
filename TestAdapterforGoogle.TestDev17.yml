@@ -360,6 +360,17 @@ extends:
             filePath: './FilesToScan.ps1'
             arguments: '-buildArtifactStagingDirectory $(Build.ArtifactStagingDirectory) -directoryToSearch $(Build.ArtifactStagingDirectory)\drop'
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
+        - task: SDLNativeRules@3
+          displayName: 'Run the PREfast SDL Native Rules for MSBuild'
+          condition: eq (variables.RunAdditionalComplianceChecks, True)
+          env:
+            SYSTEM_ACCESSTOKEN: $(System.AccessToken)
+          inputs:
+            publishXML: true
+            userProvideBuildInfo: auto
+            rulesetName: Recommended
+            setupCommandlinePicker: 'vs2022'
+        # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: PoliCheck@2
           displayName: 'PoliCheck on TestAdapterForGoogleTest repo'
           condition: eq (variables.RunAdditionalComplianceChecks, True)
