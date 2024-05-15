@@ -5,5 +5,5 @@ int main()
 {
 	std::cout << "Test output before crashing";
 	int* pointer = 0;
-    return *pointer;
+	return (pointer != nullptr) ? *pointer : 0;
 }
