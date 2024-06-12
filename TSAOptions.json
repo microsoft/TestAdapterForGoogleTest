@@ -14,7 +14,7 @@
     ],
     "instanceUrl": "https://devdiv.visualstudio.com",
     "projectName": "DevDiv",
-    "areaPath": "DevDiv\\Cpp Developer Experience\\Apogee\\Google Test and Boost Test integration",
+    "areaPath": "DevDiv\\Cpp Developer Experience\\IntelliSense\\Google Test and Boost Test integration",
     "iterationPath": "DevDiv",
     "alltools": true,
     "repositoryName": "VCLS-Extensions"
