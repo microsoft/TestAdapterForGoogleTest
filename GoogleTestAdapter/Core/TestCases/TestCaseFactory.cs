@@ -236,7 +236,7 @@ namespace GoogleTestAdapter.TestCases
             testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, new List<Trait>()));
 
             // Add the TestType for use in the executor when constructing the test key.
-            testCase.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
+            testCase.Traits.Add(new Trait(TestCaseDescriptor.TestTypeTraitName, descriptor.TestType.ToString()));
             return testCase;
         }
 
@@ -266,7 +266,7 @@ namespace GoogleTestAdapter.TestCases
                 testCase.Traits.AddRange(GetFinalTraits(descriptor.DisplayName, location.Traits));
 
                 // Add the TestType for use in the executor when constructing the test key.
-                testCase.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
+                testCase.Traits.Add(new Trait(TestCaseDescriptor.TestTypeTraitName, descriptor.TestType.ToString()));
                 return testCase;
             }
 
@@ -274,7 +274,7 @@ namespace GoogleTestAdapter.TestCases
                 descriptor.FullyQualifiedName, descriptor.FullyQualifiedName, _executable, descriptor.DisplayName, "", 0);
 
             // Add the TestType for use in the executor when constructing the test key.
-            returnTest.Traits.Add(new Trait(nameof(TestCaseDescriptor.TestType), descriptor.TestType.ToString()));
+            returnTest.Traits.Add(new Trait(TestCaseDescriptor.TestTypeTraitName, descriptor.TestType.ToString()));
             _logger.LogWarning(String.Format(Resources.LocationNotFoundError, descriptor.FullyQualifiedName));
             return returnTest;
         }
