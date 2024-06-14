@@ -11,6 +11,8 @@
         public string DisplayName { get; }
         public TestTypes TestType { get; }
 
+        internal const string TestTypeTraitName = "GoogleTestAdapter.TestType";
+
         internal TestCaseDescriptor(string suite, string name, string fullyQualifiedName, string displayName, TestTypes testType)
         {
             Suite = suite;
