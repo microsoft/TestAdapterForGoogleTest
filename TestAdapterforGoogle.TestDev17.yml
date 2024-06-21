@@ -33,7 +33,7 @@ resources:
   - repository: googletest
     type: git
     name: googletest
-    ref: refs/heads/main
+    ref: refs/heads/dev/davidraygoza/TAfGTRegression
   - repository: VCLS-Extensions
     type: git
     name: VCLS-Extensions
