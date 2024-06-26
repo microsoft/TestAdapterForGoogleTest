@@ -2,6 +2,8 @@
 {
     public class TestCaseDescriptor
     {
+        public static string TestTypeTraitName = "GoogleTestAdapterTestType";
+
         public enum TestTypes { Simple, Parameterized, TypeParameterized }
 
         public string Suite { get; }
@@ -10,8 +12,6 @@
         public string FullyQualifiedName { get; }
         public string DisplayName { get; }
         public TestTypes TestType { get; }
-
-        internal const string TestTypeTraitName = "GoogleTestAdapter.TestType";
 
         internal TestCaseDescriptor(string suite, string name, string fullyQualifiedName, string displayName, TestTypes testType)
         {
