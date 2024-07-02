@@ -334,11 +334,14 @@ extends:
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
-        - task: PublishSymbols@1
+        - task: PublishSymbols@2
           displayName: 'Publish Symbols Path'
           inputs:
-            SearchPattern: out\binaries\**\*.pdb
-          continueOnError: true
+            inputs:
+            SymbolsFolder: $(Build.ArtifactStagingDirectory)\drop
+            SearchPattern: '**/*.pdb'
+            SymbolServerType: 'TeamServices'
+            TreatNotIndexedAsWarning: true
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
           inputs:
