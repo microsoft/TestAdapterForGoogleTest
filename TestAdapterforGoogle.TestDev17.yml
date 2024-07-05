@@ -172,7 +172,7 @@ extends:
           displayName: Build ResolveTTs.proj
           inputs:
             solution: 'ResolveTTs.proj'
-            vsVersion: '16.0'
+            vsVersion: 'latest'
             msbuildArgs: '-v:diag'
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
