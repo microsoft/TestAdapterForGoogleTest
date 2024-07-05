@@ -176,11 +176,11 @@ extends:
             msbuildArgs: '-v:diag'
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
-        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+        - task: PowerShell@2
           displayName: Generate TAfGT specific sln
           inputs:
-            type: FilePath
-            scriptName: Tools\RemoveGtaProjects.ps1
+            targetType: filePath
+            filePath: Tools\RemoveGtaProjects.ps1
         - task: NuGetCommand@2
           displayName: NuGet restore to sign packages
           inputs:
@@ -200,10 +200,10 @@ extends:
             targetType: filePath
             filePath: './GoogleTestAdapter/SetVersion.ps1'
             arguments: '-version $(VersionNumber)'
-        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+        - task: PowerShell@2
           displayName: Add Keys for RealSign to TAfGT
           inputs:
-            type: InlineScript
+            targetType: inline
             script: |-
               $projects_to_sign = @(
                 "GoogleTestAdapter\Common\Common.csproj",
@@ -222,10 +222,10 @@ extends:
                 $xml | ForEach-Object { $_.Project.PropertyGroup | ForEach-Object { if ($_.Condition -like '*(RealSign)'' == ''True''') { $_.AppendChild($KeyFile) } } }
                 $xml.Save("$pwd\$_")
               }
-        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+        - task: PowerShell@2
           displayName: Add Keys for RealSign to googletest
           inputs:
-            type: InlineScript
+            targetType: inline
             script: |-
               $build_script = 'GoogleTestNuGet\Build.ps1'
               $match_string = '*$DelaySign.set_InnerXML("true")*'
@@ -239,10 +239,10 @@ extends:
                   $_
                 }
               } | Set-Content $build_script
-        - task: ms-devlabs.utilitytasks.task-PSpp.Powershellpp@0
+        - task: PowerShell@2
           displayName: Update token for template
           inputs:
-            type: InlineScript
+            targetType: inline
             script: |-
               $project_template = 'GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
               (Get-Content $project_template) | ForEach-Object {
@@ -254,10 +254,11 @@ extends:
             SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
             Contents: 'FinalPublicKey.snk'
             TargetFolder: '$(Build.SourcesDirectory)'
-        - task: PowerShell@1
+        - task: PowerShell@2
           displayName: Build GoogleTest NuGet packages
           inputs:
-            scriptName: GoogleTestNuGet\Build.ps1
+            targetType: filePath
+            filePath: GoogleTestNuGet\Build.ps1
             arguments: -Verbose -VSPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\"
             failOnStandardError: false
         - task: MSBuild@1
