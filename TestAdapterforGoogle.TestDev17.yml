@@ -120,6 +120,8 @@ extends:
         enabled: true
         scanOutputDirectoryOnly: true
         analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop\**\*.dll'
+      codeSignValidation:
+        additionalTargetsGlobPattern: +|$(Build.ArtifactStagingDirectory)\FilesToScanDrop\** # Include only the files we own, build, and ship (located in /FilesToScanDrop). All other dependency binaries shipped in the .vsix are already signed by Microsoft directly.
     customBuildTags:
     - ES365AIMigrationTooling
     stages:
