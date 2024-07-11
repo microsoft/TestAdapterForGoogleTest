@@ -122,6 +122,10 @@ extends:
         analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop\**\*.dll'
       codeSignValidation:
         additionalTargetsGlobPattern: +|$(Build.ArtifactStagingDirectory)\FilesToScanDrop\** # Include only the files we own, build, and ship (located in /FilesToScanDrop). All other dependency binaries shipped in the .vsix are already signed by Microsoft directly.
+      codeql:
+        compiled:
+          enabled: false
+          justificationForDisabling: 'There is a bug in the 1ES template that auto injects multiple CodeQL Initialize tasks when checking out multiple repos. This causes an endless CodeQL hang during pipeline builds.'
     customBuildTags:
     - ES365AIMigrationTooling
     stages:
@@ -170,6 +174,9 @@ extends:
           displayName: Install NuGet
           inputs:
             versionSpec: 5.9.1
+        # Have to use manual CodeQL Init task for now because the 1ES template auto injected CodeQL contains bug that hangs during pipeline builds.
+        - task: MS-CST-E.codeql-3000-release.init-task.CodeQL3000Init@0
+          displayName: CodeQL 3000 Init
         - task: VSBuild@1
           displayName: Build ResolveTTs.proj
           inputs:
@@ -397,6 +404,9 @@ extends:
             continueOnError: true
           env:
             AzureServicesAuthConnectionString: runAs=App;AppId=$(ApiScanClientId)
+        # Have to use manual CodeQL Init task for now because the 1ES template auto injected CodeQL contains bug that hangs during pipeline builds.
+        - task: MS-CST-E.codeql-3000-release.finalize-task.CodeQL3000Finalize@0
+          displayName: CodeQL 3000 Finalize
         # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
         - task: securedevelopmentteam.vss-secure-development-tools.build-task-publishsecurityanalysislogs.PublishSecurityAnalysisLogs@3
           displayName: 'Publish Guardian Artifacts'
