@@ -121,7 +121,7 @@ extends:
         scanOutputDirectoryOnly: true
         analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\FilesToScanDrop\**\*.dll'
       codeSignValidation:
-        additionalTargetsGlobPattern: +|$(Build.ArtifactStagingDirectory)\FilesToScanDrop\** # Include only the files we own, build, and ship (located in /FilesToScanDrop). All other dependency binaries shipped in the .vsix are already signed by Microsoft directly.
+        additionalTargetsGlobPattern: -:f|$(Build.ArtifactStagingDirectory)\drop\** # Include only the files we own, build, and ship (located in /FilesToScanDrop). All other dependency binaries shipped in the .vsix are already signed by Microsoft directly.
       codeql:
         compiled:
           enabled: false
