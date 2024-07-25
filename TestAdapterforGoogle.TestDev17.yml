@@ -41,6 +41,8 @@ resources:
 variables:
 - name: ApiScanClientId
   value: d318cba7-db4d-4fb3-99e1-01879cb74e91
+- name: ArchiveSymbols
+  value: "$(TAfGTArchiveSymbols)"
 - name: ArtifactServices.Symbol.AccountName
   value: microsoft
 - name: ArtifactServices.Symbol.PAT
@@ -73,7 +75,7 @@ variables:
   value: "$(TAfGTProductComponent)"
 - name: Publish
   value: "$(TAfGTPublish)"
-  # Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
+# Quick build is used to skip some compliance tasks to quickly generate a .vsix for testing.
 - name: RunAdditionalComplianceChecks
   value: "$(TAfGTRunAdditionalComplianceChecks)"
 - name: TAfGTRealSign
@@ -140,6 +142,7 @@ extends:
           - output: pipelineArtifact
             displayName: 'Publish Artifact: drop'
             targetPath: $(Build.ArtifactStagingDirectory)\drop
+            artifactName: drop
           mb:
             signing:
               enabled: true
@@ -436,6 +439,16 @@ extends:
             DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
             AccessToken: $(DropPAT)
             DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
+        - task: ms-vseng.MicroBuildShipTasks.0ffdda1d-8c7b-40da-b8b1-061660eaeea3.MicroBuildArchiveSymbols@5
+          displayName: 'Archive TestAdapterForGoogleTest on Symweb'
+          condition: eq (variables.ArchiveSymbols, True)
+          inputs:
+            SymbolsFeatureName: TestAdapterForGoogleTest
+            SymbolsProject: VS
+            SymbolsAgentPath: '$(Build.ArtifactStagingDirectory)\drop'
+        - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
+          displayName: 'Send Telemetry'
+          condition: eq (variables.ArchiveSymbols, True)
         - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
           displayName: Perform Cleanup Tasks
           condition: always()
