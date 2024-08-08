@@ -128,6 +128,10 @@ namespace GoogleTestAdapter.Runners
                 {
                     break;
                 }
+
+                // Enable UTF-8 output for Google Test.
+                arguments.CommandLine += " --gtest_print_utf8=1";
+
                 var streamingParser = new StreamingStandardOutputTestResultParser(arguments.TestCases, _logger, _frameworkReporter);
                 var results = RunTests(executable, workingDir, envVars, isBeingDebugged, debuggedLauncher, arguments, executor, streamingParser).ToArray();
 

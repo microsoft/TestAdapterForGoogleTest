@@ -18,6 +18,7 @@ namespace GoogleTestAdapter
         public const string NrOfRepetitionsOption = " --gtest_repeat";
         public const string CatchExceptions = " --gtest_catch_exceptions";
         public const string BreakOnFailure = " --gtest_break_on_failure";
+        public const string Utf8OutputOption = " --gtest_print_utf8=1";
 
         public const int ShuffleTestsSeedDefaultValue = 0;
         public const string ShuffleTestsSeedMaxValueAsString = "99999";

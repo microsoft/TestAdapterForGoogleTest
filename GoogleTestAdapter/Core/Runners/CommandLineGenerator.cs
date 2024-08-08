@@ -15,7 +15,7 @@ namespace GoogleTestAdapter.Runners
         public class Args
         {
             public IList<TestCase> TestCases { get; }
-            public string CommandLine { get; }
+            public string CommandLine { get; set; }
 
             internal Args(IList<TestCase> testCases, string commandLine)
             {

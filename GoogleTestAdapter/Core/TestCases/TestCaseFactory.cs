@@ -135,7 +135,7 @@ namespace GoogleTestAdapter.TestCases
                 parser.ReportLine(s);
             };
 
-            string cmdLine = GoogleTestConstants.ListTestsOption;
+            string cmdLine = GoogleTestConstants.ListTestsOption + GoogleTestContants.Utf8OutputOption;
             if (!string.IsNullOrEmpty(_settings.AdditionalTestDiscoveryParam))
             {
                 cmdLine = string.Format("{0} {1}", _settings.AdditionalTestDiscoveryParam, cmdLine);
