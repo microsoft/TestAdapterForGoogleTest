@@ -103,7 +103,7 @@ namespace GoogleTestAdapter.TestAdapter.Framework
         {
             var process = Process.GetCurrentProcess();
             string executable = Path.GetFileName(process.MainModule.FileName).Trim().ToUpperInvariant();
-            while (executable != null && executable != "DEVENV.EXE" && executable != "VSTEST.CONSOLE.EXE")
+            while (executable != null && executable != "DEVENV.EXE" && executable != "VSTEST.CONSOLE.EXE" && executable != "VSTEST.CONSOLE.ARM64.EXE")
             {
                 process = ParentProcessUtils.GetParentProcess(process.Id);
                 executable = process != null
