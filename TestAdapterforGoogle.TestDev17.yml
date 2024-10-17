@@ -99,6 +99,7 @@ extends:
   parameters:
     pool:
       name: VSEngSS-MicroBuild2022-1ES
+      vmImage: 'windows-latest'
       demands:
       - vstest
       - msbuild
@@ -165,7 +166,10 @@ extends:
           clean: true
           fetchDepth: 1
           persistCredentials: true
-        # After checking out the TestAdapterForGoogleTest repo copy all files up one directory to avoid having to change all paths in scripts.
+        - task: UseWindowsVersion@0
+          inputs:
+            version: '10.0.26100.0'
+          # After checking out the TestAdapterForGoogleTest repo copy all files up one directory to avoid having to change all paths in scripts.
         - task: CopyFiles@2
           displayName: 'Copy TestAdapterForGoogleTest Files to: $(Build.SourcesDirectory)'
           inputs:
