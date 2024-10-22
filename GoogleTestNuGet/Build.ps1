@@ -388,9 +388,9 @@ function Main {
 
     $OutputDir = "GoogleTestAdapter\Packages"
 
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v143" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v143" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v143" -BuildToolset "v143" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
 
     "Success"
 }
