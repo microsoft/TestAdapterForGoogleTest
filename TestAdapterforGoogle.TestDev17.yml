@@ -100,7 +100,6 @@ extends:
     pool:
       name: VSEngSS-MicroBuild2022-1ES
       demands:
-      - ImageOverride -equals server2022-microbuildvs2022-TEMP
       - vstest
       - msbuild
       - visualstudio
