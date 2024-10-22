@@ -177,6 +177,14 @@ extends:
           displayName: Install NuGet
           inputs:
             versionSpec: 5.9.1
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: vswhere
+        - task: PowerShell@2
+          inputs:
+            targetType: 'inline'
+            script: Get-VSSetupInstance
         - task: VSBuild@1
           displayName: Build ResolveTTs.proj
           inputs:
