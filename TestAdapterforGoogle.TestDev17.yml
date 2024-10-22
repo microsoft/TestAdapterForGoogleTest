@@ -177,9 +177,6 @@ extends:
           displayName: Install NuGet
           inputs:
             versionSpec: 5.9.1
-        # Have to use manual CodeQL Init task for now because the 1ES template auto injected CodeQL contains bug that hangs during pipeline builds.
-        - task: MS-CST-E.codeql-3000-release.init-task.CodeQL3000Init@0
-          displayName: CodeQL 3000 Init
         - task: VSBuild@1
           displayName: Build ResolveTTs.proj
           inputs:
@@ -266,6 +263,11 @@ extends:
             SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
             Contents: 'FinalPublicKey.snk'
             TargetFolder: '$(Build.SourcesDirectory)'
+        - task: BatchScript@1
+          displayName: Set up developer command prompt environment
+          inputs:
+            filename: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat
+            modifyEnvironment: true
         - task: PowerShell@2
           displayName: Build GoogleTest NuGet packages
           inputs:
@@ -277,11 +279,6 @@ extends:
           displayName: Sign NuGet packages
           inputs:
             solution: GoogleTestNuGet\googletest.SignNuGet.proj
-        - task: BatchScript@1
-          displayName: Set up developer command prompt environment
-          inputs:
-            filename: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat
-            modifyEnvironment: true
         - task: NuGetCommand@2
           displayName: NuGet install dia amd64
           inputs:
