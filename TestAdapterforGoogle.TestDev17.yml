@@ -295,11 +295,6 @@ extends:
             command: custom
             arguments: install VS.Redist.Vctools.Amd64 -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
         - task: NuGetCommand@2
-          displayName: NuGet install dia arm
-          inputs:
-            command: custom
-            arguments: install VS.Redist.Vctools.Arm -Version $(DiaNugetVersion) -OutputDirectory vctools -ExcludeVersion -Source https://pkgs.dev.azure.com/devdiv/_packaging/VS-CoreXtFeeds/nuget/v3/index.json -NoCache -DirectDownload -Verbosity Detailed -NonInteractive
-        - task: NuGetCommand@2
           displayName: NuGet install dia arm64
           inputs:
             command: custom
@@ -316,7 +311,6 @@ extends:
             script: |-
               .\compile_typelib.ps1
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Amd64\msdia140.dll' -Destination '..\x64\msdia140.dll' -verbose
-              Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm\msdia140.dll' -Destination '..\arm\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.Arm64\msdia140.dll' -Destination '..\arm64\msdia140.dll' -verbose
               Copy-Item -path '$(Build.Repository.LocalPath)\vctools\VS.Redist.Vctools.X86Files\msdia140.dll' -Destination '..\x86\msdia140.dll' -verbose
             workingDirectory: GoogleTestAdapter/DiaResolver/dia2
