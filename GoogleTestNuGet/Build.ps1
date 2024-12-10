@@ -232,9 +232,6 @@ function Build-Binaries {
 
 function Build-NuGet {
     param(
-        [String]$BuildDir32,
-        [String]$BuildDir64,
-        [String]$BuildDirARM64,
         [String]$ToolsetName,
         [String]$BuildToolset,
         [Boolean]$DynamicLibraryLinkage,
@@ -282,11 +279,8 @@ function Build-NuGet {
     Copy-Item -Recurse -Path "googletest\googletest\include" -Destination "$Dir\build\native\include"
 
     $BuildToDestinationPath = @()
-    $BuildToDestinationPath += ,@($BuildDirARM64, "$Dir\$PathToBinaries\arm64")
-    $BuildToDestinationPath += ,@($BuildDir32, "$Dir\$PathToBinaries\x86")
 
     # Build x64 last to ensure that the supported x64 binaries are copied to the drop folder for scanning.
-    $BuildToDestinationPath += ,@($BuildDir64, "$Dir\$PathToBinaries\x64")
     $BuildToDestinationPath | ForEach-Object {
         $BuildPath = $_[0]
         $DestinationPath = $_[1]
@@ -347,13 +341,7 @@ function Build-BinariesAndNuGet {
         [String]$OutputDir
     )
 
-    $BuildDir32 = Build-Binaries -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform "Win32" -DynamicLibraryLinkage $DynamicLibraryLinkage `
-        -DynamicCRTLinkage $DynamicCRTLinkage
-    $BuildDir64 = Build-Binaries -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform "x64"   -DynamicLibraryLinkage $DynamicLibraryLinkage `
-        -DynamicCRTLinkage $DynamicCRTLinkage
-    $BuildDirARM64 = Build-Binaries -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform "arm64"   -DynamicLibraryLinkage $DynamicLibraryLinkage `
-        -DynamicCRTLinkage $DynamicCRTLinkage
-    Build-NuGet -BuildDir32 $BuildDir32 -BuildDir64 $BuildDir64 -BuildDirARM64 $BuildDirARM64 -ToolsetName $ToolsetName `
+    Build-NuGet -ToolsetName $ToolsetName `
         -BuildToolset $BuildToolset -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage -OutputDir $OutputDir | Out-Null
 }
 
