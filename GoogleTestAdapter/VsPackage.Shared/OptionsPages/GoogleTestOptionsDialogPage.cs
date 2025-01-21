@@ -59,7 +59,7 @@ namespace GoogleTestAdapter.VsPackage.OptionsPages
         }
         private int _nrOfTestRepetitions = SettingsWrapper.OptionNrOfTestRepetitionsDefaultValue;
 
-        [LocalizedCategory("CategoryTestExecutionName")]
+        [LocalizedCategory("CategoryMiscName")]
         [LocalizedDisplayName("OptionShowFixtureMethodNode")]
         [LocalizedDescription("OptionShowFixtureMethodNodeDescription")]
         public bool ShowFixtureMethodNode
