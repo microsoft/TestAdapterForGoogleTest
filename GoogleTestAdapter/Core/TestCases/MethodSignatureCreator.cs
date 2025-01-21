@@ -20,6 +20,8 @@ namespace GoogleTestAdapter.TestCases
                     return GetParameterizedTestMethodSignature(descriptor).Yield();
                 case TestCaseDescriptor.TestTypes.Simple:
                     return GetTestMethodSignature(descriptor.Suite, descriptor.Name).Yield();
+                case TestCaseDescriptor.TestTypes.Fixture:
+                    return GetTestMethodSignature(descriptor.Suite, descriptor.Name, "<.+>").Yield(); // TODO: specialize 
                 default:
                     throw new InvalidOperationException(String.Format(Resources.UnknownLiteral, descriptor.TestType));
             }

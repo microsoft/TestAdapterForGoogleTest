@@ -276,6 +276,9 @@
     <value>No Google Test indicator file found for executable {0}</value>
     <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
+  <data name="FixtureMethodDisplayName" xml:space="preserve">
+    <value>FixtureMethods</value>
+  </data>
   <data name="FoundTestMethod" xml:space="preserve">
     <value>Found {0} test method symbols and {1} trait symbols in binary {2}</value>
     <comment>{0} represents a number (e.g. 5), {1} represents a number (e.g. 5), {2} represents an unlocalized binary name (e.g notepad.exe)</comment>
@@ -434,6 +437,12 @@ Placeholders:</value>
     <value>If true, all (selected) tests will be run, even if they have been disabled.
 Google Test option: {0}</value>
     <comment>{0} represents a command-line flag.</comment>
+  </data>
+  <data name="OptionShowFixtureMethodNode" xml:space="preserve">
+    <value>Show fixture method node</value>
+  </data>
+  <data name="OptionShowFixtureMethodNodeDescription" xml:space="preserve">
+    <value>Show node in test explorer representing fixture methods </value>
   </data>
   <data name="OptionShowReleaseNotes" xml:space="preserve">
     <value>Show release notes after update</value>

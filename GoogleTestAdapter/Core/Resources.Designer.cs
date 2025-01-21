@@ -431,6 +431,15 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to FixtureMethods.
+        /// </summary>
+        internal static string FixtureMethodDisplayName {
+            get {
+                return ResourceManager.GetString("FixtureMethodDisplayName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Found {0} test method symbols and {1} trait symbols in binary {2}.
         /// </summary>
         internal static string FoundTestMethod {
@@ -830,6 +839,24 @@ namespace GoogleTestAdapter {
         internal static string OptionRunDisabledTestsDescription {
             get {
                 return ResourceManager.GetString("OptionRunDisabledTestsDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show fixture method node.
+        /// </summary>
+        internal static string OptionShowFixtureMethodNode {
+            get {
+                return ResourceManager.GetString("OptionShowFixtureMethodNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show node in test explorer representing fixture methods .
+        /// </summary>
+        internal static string OptionShowFixtureMethodNodeDescription {
+            get {
+                return ResourceManager.GetString("OptionShowFixtureMethodNodeDescription", resourceCulture);
             }
         }
         

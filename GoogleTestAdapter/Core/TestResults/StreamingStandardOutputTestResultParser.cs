@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GoogleTestAdapter.Common;
@@ -26,6 +27,8 @@ namespace GoogleTestAdapter.TestResults
 
         static StreamingStandardOutputTestResultParser()
         {
+            Debugger.Launch();
+            Debugger.Break();
             string passedMarker = Regex.Escape(StandardOutputTestResultParser.Passed);
             string failedMarker = Regex.Escape(StandardOutputTestResultParser.Failed);
             PrefixedLineRegex = new Regex($"(.+)((?:{passedMarker}|{failedMarker}).*)", RegexOptions.Compiled);
@@ -34,6 +37,8 @@ namespace GoogleTestAdapter.TestResults
         public StreamingStandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun,
                 ILogger logger, ITestFrameworkReporter reporter)
         {
+            Debugger.Launch();
+            Debugger.Break();
             _testCasesRun = testCasesRun.ToList();
             _logger = logger;
             _reporter = reporter;

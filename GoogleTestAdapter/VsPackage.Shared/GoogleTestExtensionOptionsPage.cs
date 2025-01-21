@@ -195,6 +195,7 @@ namespace GoogleTestAdapter.VsPackage
                 CatchExceptions = _googleTestOptions.CatchExceptions,
                 BreakOnFailure = _googleTestOptions.BreakOnFailure,
                 RunDisabledTests = _googleTestOptions.RunDisabledTests,
+                ShowFixtureMethodNode = _googleTestOptions.ShowFixtureMethodNode,
                 NrOfTestRepetitions = _googleTestOptions.NrOfTestRepetitions,
                 ShuffleTests = _googleTestOptions.ShuffleTests,
                 ShuffleTestsSeed = _googleTestOptions.ShuffleTestsSeed,

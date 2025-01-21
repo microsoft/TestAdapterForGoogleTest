@@ -9,6 +9,7 @@ using GoogleTestAdapter.Runners;
 using GoogleTestAdapter.Framework;
 using GoogleTestAdapter.Scheduling;
 using GoogleTestAdapter.Settings;
+using System.Diagnostics;
 
 namespace GoogleTestAdapter
 {
@@ -33,6 +34,8 @@ namespace GoogleTestAdapter
 
         public void RunTests(IEnumerable<TestCase> testCasesToRun, ITestFrameworkReporter reporter, IDebuggedProcessLauncher launcher, bool isBeingDebugged, string solutionDirectory, IProcessExecutor executor)
         {
+            Debugger.Launch();
+            Debugger.Break();
             TestCase[] testCasesToRunAsArray = testCasesToRun as TestCase[] ?? testCasesToRun.ToArray();
             _logger.LogInfo(String.Format(Resources.NumberOfTestsRunningMessage, testCasesToRunAsArray.Length));
 

@@ -47,6 +47,10 @@ namespace GoogleTestAdapter.Settings
         public virtual int? NrOfTestRepetitions { get; set; }
         public bool ShouldSerializeNrOfTestRepetitions() { return NrOfTestRepetitions != null; }
 
+        public virtual bool? ShowFixtureMethodNode { get; set; }
+        public bool ShouldSerializeShowFixtureMethodNode() { return ShowFixtureMethodNode != null; }
+
+
         public virtual bool? ShuffleTests { get; set; }
         public bool ShouldSerializeShuffleTests() { return ShuffleTests != null; }
 

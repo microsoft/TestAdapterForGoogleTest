@@ -2,6 +2,7 @@
 
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -27,6 +28,7 @@ namespace GoogleTestAdapter.TestCases
         public TestCaseFactory(string executable, ILogger logger, SettingsWrapper settings,
             IDiaResolverFactory diaResolverFactory)
         {
+            Debugger.Launch();
             _logger = logger;
             _settings = settings;
             _executable = executable;
