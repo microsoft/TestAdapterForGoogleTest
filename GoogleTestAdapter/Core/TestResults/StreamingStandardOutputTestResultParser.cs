@@ -111,11 +111,14 @@ namespace GoogleTestAdapter.TestResults
             string suite = FixtureMethodResultRegex.Match(line).Groups[1].Value;
             string qualifiedTestName = $"{suite}.{Resources.FixtureMethodDisplayName}";
             TestCase testCase = StandardOutputTestResultParser.FindTestcase(qualifiedTestName, _testCasesRun);
-            TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0),"","");
-            if (result != null)
+            if(testCase != null)
             {
-                _reporter.ReportTestResults(result.Yield());
-                TestResults.Add(result);
+                TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0),"","");
+                if (result != null)
+                {
+                    _reporter.ReportTestResults(result.Yield());
+                    TestResults.Add(result);
+                }
             }
         }
 

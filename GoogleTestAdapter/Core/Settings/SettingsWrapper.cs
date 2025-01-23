@@ -476,10 +476,10 @@ namespace GoogleTestAdapter.Settings
         }
 
         public static readonly string OptionShowFixtureMethodNode = Resources.OptionShowFixtureMethodNode;
-        public const bool OptionShowFixtureMethodNodeDefaultValue = true;
+        public const bool OptionShowFixtureMethodNodeDefaultValue = false; // TODO set to false 
         public static readonly string OptionShowFixtureMethodNodeDescription = Resources.OptionShowFixtureMethodNodeDescription;
 
-        public virtual bool ShowFixtureMethodNode => OptionShowFixtureMethodNodeDefaultValue; // todo add in modification
+        public virtual bool ShowFixtureMethodNode => _currentSettings.ShowFixtureMethodNode ?? OptionShowFixtureMethodNodeDefaultValue;
 
 
         public static readonly string OptionShuffleTests = Resources.OptionShuffleTests;

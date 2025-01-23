@@ -19,12 +19,6 @@ namespace GoogleTestAdapter.TestCases
         private string _currentSuite = "";
         private bool _fixtureMethodPending = false;
 
-        public StreamingListTestsParser(string testNameSeparator)
-        {
-            _testNameSeparator = testNameSeparator;
-            _showFixtureMethodNodes = false; // TODO review
-        }
-
         public StreamingListTestsParser(string testNameSeparator, bool showFixtureMethodNodes)
         {
             _testNameSeparator = testNameSeparator;
