@@ -15,6 +15,7 @@ namespace GoogleTestAdapter.TestResults
     public class StreamingStandardOutputTestResultParser
     {
         public static readonly Regex PrefixedLineRegex;
+        public static readonly Regex FixtureMethodResultRegex;
 
         public TestCase CrashedTestCase { get; private set; }
         public IList<TestResult> TestResults { get; } = new List<TestResult>();
@@ -27,18 +28,15 @@ namespace GoogleTestAdapter.TestResults
 
         static StreamingStandardOutputTestResultParser()
         {
-            Debugger.Launch();
-            Debugger.Break();
             string passedMarker = Regex.Escape(StandardOutputTestResultParser.Passed);
             string failedMarker = Regex.Escape(StandardOutputTestResultParser.Failed);
             PrefixedLineRegex = new Regex($"(.+)((?:{passedMarker}|{failedMarker}).*)", RegexOptions.Compiled);
+            FixtureMethodResultRegex = new Regex($@"(?:{failedMarker}\s*)(\w+):(?:\s+SetUpTestSuite or TearDownTestSuite)", RegexOptions.Compiled);
         }
 
         public StreamingStandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun,
                 ILogger logger, ITestFrameworkReporter reporter)
         {
-            Debugger.Launch();
-            Debugger.Break();
             _testCasesRun = testCasesRun.ToList();
             _logger = logger;
             _reporter = reporter;
@@ -73,6 +71,11 @@ namespace GoogleTestAdapter.TestResults
                 }
                 ReportTestStart(line);
             }
+            else if (StandardOutputTestResultParser.IsFailedLine(line) && line.Contains("TearDownTestSuite"))
+            {
+                ReportFixtureMethodFailure(line);
+            }
+
             _consoleOutput.Add(line);
         }
 
@@ -96,6 +99,19 @@ namespace GoogleTestAdapter.TestResults
         private void ReportTestResult()
         {
             TestResult result = CreateTestResult();
+            if (result != null)
+            {
+                _reporter.ReportTestResults(result.Yield());
+                TestResults.Add(result);
+            }
+        }
+
+        private void ReportFixtureMethodFailure(string line)
+        {
+            string suite = FixtureMethodResultRegex.Match(line).Groups[1].Value;
+            string qualifiedTestName = $"{suite}.{Resources.FixtureMethodDisplayName}";
+            TestCase testCase = StandardOutputTestResultParser.FindTestcase(qualifiedTestName, _testCasesRun);
+            TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0),"","");
             if (result != null)
             {
                 _reporter.ReportTestResults(result.Yield());

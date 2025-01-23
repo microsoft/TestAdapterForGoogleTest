@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using GoogleTestAdapter.Common;
+using GoogleTestAdapter.Helpers;
 using GoogleTestAdapter.Model;
 using GoogleTestAdapter.TestResults;
 
@@ -23,9 +24,21 @@ namespace GoogleTestAdapter.Runners
         public List<TestResult> CollectTestResults(IEnumerable<TestCase> testCasesRun, List<string> consoleOutput, TestCase crashedTestCase)
         {
             var testResults = new List<TestResult>();
-            TestCase[] arrTestCasesRun = testCasesRun as TestCase[] ?? testCasesRun.ToArray();
+
+            bool isFixtureMethodCase(TestCase tc)
+            {
+                var testType = tc.Traits.FirstOrDefault(t => t.Name.Equals(TestCases.TestCaseDescriptor.TestTypeTraitName));
+                return testType != null && Enum.TryParse(testType.Value, out TestCases.TestCaseDescriptor.TestTypes type) && type == TestCases.TestCaseDescriptor.TestTypes.Fixture;
+            }
+
+            (var fixtureMethods, var remainingCases) = testCasesRun.Partition(isFixtureMethodCase);
+            TestCase[] arrTestCasesRun = remainingCases as TestCase[] ?? remainingCases.ToArray();
+            TestCase[] arrFixtureMethods = fixtureMethods as TestCase[] ?? fixtureMethods.ToArray();
+
+            CreateFixtureMethodResults(arrFixtureMethods, testResults);
 
             var consoleParser = new StandardOutputTestResultParser(arrTestCasesRun, consoleOutput, _logger);
+
             if (testResults.Count < arrTestCasesRun.Length)
                 CollectResultsFromConsoleOutput(consoleParser, testResults);
 
@@ -81,11 +94,20 @@ namespace GoogleTestAdapter.Runners
                 _logger.DebugInfo(String.Format(Resources.CreatedTestResults, _threadName, testCases.Length));
         }
 
+        private void CreateFixtureMethodResults(TestCase[] testCases, List<TestResult> testResults)
+        {
+            foreach (TestCase testCase in testCases)
+            {
+                testResults.Add(StandardOutputTestResultParser.CreatePassedTestResult(testCase, TimeSpan.FromMilliseconds(0)));
+            }
+        }
+
         private void ReportSuspiciousTestCases(TestCase[] testCases)
         {
             string testCasesAsString = string.Join(Environment.NewLine, testCases.Select(tc => tc.DisplayName));
             _logger.DebugWarning(String.Format(Resources.TestCaseNotRun, _threadName, testCases.Length, Environment.NewLine, testCasesAsString));
         }
+
 
     }
 }

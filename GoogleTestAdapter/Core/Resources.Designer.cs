@@ -431,7 +431,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to FixtureMethods.
+        ///   Looks up a localized string similar to SetUpOrTearDownTestSuite.
         /// </summary>
         internal static string FixtureMethodDisplayName {
             get {
@@ -852,7 +852,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show node in test explorer representing fixture methods .
+        ///   Looks up a localized string similar to Show placeholder node in test explorer representing status of fixture methods. .
         /// </summary>
         internal static string OptionShowFixtureMethodNodeDescription {
             get {

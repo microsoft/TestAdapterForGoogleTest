@@ -14,6 +14,7 @@ namespace GoogleTestAdapter.TestCases
         private static readonly Regex IsParamRegex = new Regex(@"(\w+/)?\w+/\d+", RegexOptions.Compiled);
 
         private readonly string _testNameSeparator;
+        private readonly bool _showFixtureMethodNodes;
 
         private string _currentSuite = "";
         private bool _fixtureMethodPending = false;
@@ -21,6 +22,13 @@ namespace GoogleTestAdapter.TestCases
         public StreamingListTestsParser(string testNameSeparator)
         {
             _testNameSeparator = testNameSeparator;
+            _showFixtureMethodNodes = false; // TODO review
+        }
+
+        public StreamingListTestsParser(string testNameSeparator, bool showFixtureMethodNodes)
+        {
+            _testNameSeparator = testNameSeparator;
+            _showFixtureMethodNodes = showFixtureMethodNodes;
         }
 
         public class TestCaseDescriptorCreatedEventArgs : EventArgs
@@ -36,8 +44,8 @@ namespace GoogleTestAdapter.TestCases
             string trimmedLine = line.Trim('.', '\n', '\r');
             if (trimmedLine.StartsWith("  ", StringComparison.Ordinal))
             {
-                // If first test case in suite, add fixture method node. TODO: later add ability to turn on/off
-                if (_fixtureMethodPending)
+                // If first test case in suite, add fixture method node.
+                if (_showFixtureMethodNodes && _fixtureMethodPending)
                 {
                     TestCaseDescriptor fixtureNode = CreateFixtureMethodNode(_currentSuite);
                     TestCaseDescriptorCreated?.Invoke(this,

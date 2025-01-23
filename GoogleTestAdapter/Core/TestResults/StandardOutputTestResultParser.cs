@@ -33,8 +33,6 @@ namespace GoogleTestAdapter.TestResults
 
         public StandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun, IEnumerable<string> consoleOutput, ILogger logger)
         {
-            Debugger.Launch();
-            Debugger.Break();
             _consoleOutput = consoleOutput.ToList();
             _testCasesRun = testCasesRun.ToList();
             _logger = logger;
@@ -59,8 +57,6 @@ namespace GoogleTestAdapter.TestResults
 
         private TestResult CreateTestResult(int indexOfTestcase)
         {
-            Debugger.Launch();
-            Debugger.Break();
             int currentLineIndex = indexOfTestcase;
 
             string line = _consoleOutput[currentLineIndex++];

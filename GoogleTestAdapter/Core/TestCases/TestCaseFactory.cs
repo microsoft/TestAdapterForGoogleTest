@@ -28,7 +28,6 @@ namespace GoogleTestAdapter.TestCases
         public TestCaseFactory(string executable, ILogger logger, SettingsWrapper settings,
             IDiaResolverFactory diaResolverFactory)
         {
-            Debugger.Launch();
             _logger = logger;
             _settings = settings;
             _executable = executable;
@@ -108,7 +107,7 @@ namespace GoogleTestAdapter.TestCases
                 _logger);
 
             var suite2TestCases = new Dictionary<string, ISet<TestCase>>();
-            var parser = new StreamingListTestsParser(_settings.TestNameSeparator);
+            var parser = new StreamingListTestsParser(_settings.TestNameSeparator, _settings.ShowFixtureMethodNode);
             parser.TestCaseDescriptorCreated += (sender, args) =>
             {
                 TestCase testCase;

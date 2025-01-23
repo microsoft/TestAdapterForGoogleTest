@@ -154,9 +154,6 @@
   <data name="CategoryRuntimeBehaviorName" xml:space="preserve">
     <value>Runtime behavior</value>
   </data>
-  <data name="CategoryTestExecutionName" xml:space="preserve">
-    <value>Test execution</value>
-  </data>
   <data name="CategoryTraitsName" xml:space="preserve">
     <value>Regexes for trait assignment</value>
   </data>
@@ -277,7 +274,7 @@
     <comment>{0} represents an unlocalized name of executable (e.g. cmd.exe) file</comment>
   </data>
   <data name="FixtureMethodDisplayName" xml:space="preserve">
-    <value>FixtureMethods</value>
+    <value>SetUpOrTearDownTestSuite</value>
   </data>
   <data name="FoundTestMethod" xml:space="preserve">
     <value>Found {0} test method symbols and {1} trait symbols in binary {2}</value>
@@ -442,7 +439,7 @@ Google Test option: {0}</value>
     <value>Show fixture method node</value>
   </data>
   <data name="OptionShowFixtureMethodNodeDescription" xml:space="preserve">
-    <value>Show node in test explorer representing fixture methods </value>
+    <value>Show placeholder node in test explorer representing status of fixture methods. </value>
   </data>
   <data name="OptionShowReleaseNotes" xml:space="preserve">
     <value>Show release notes after update</value>
@@ -664,5 +661,8 @@ Placeholders:</value>
   <data name="XmlNodeParse" xml:space="preserve">
     <value>XmlNode could not be parsed: '{0}'. Exception message: {1}</value>
     <comment>{0} represents an unlocalized name of an XML node, {1} represents localized exception message (e.g. "Cannot load file")</comment>
+  </data>
+  <data name="CategoryTestExecutionName" xml:space="preserve">
+    <value>Test execution</value>
   </data>
 </root>
