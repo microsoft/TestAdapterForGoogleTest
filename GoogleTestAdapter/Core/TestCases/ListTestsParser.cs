@@ -19,7 +19,7 @@ namespace GoogleTestAdapter.TestCases
         {
             var testCaseDescriptors = new List<TestCaseDescriptor>();
 
-            var actualParser = new StreamingListTestsParser(_testNameSeparator, _showFixtureMethodNode);
+            var actualParser = new StreamingListTestsParser(_testNameSeparator);
             actualParser.TestCaseDescriptorCreated += (sender, args) => testCaseDescriptors.Add(args.TestCaseDescriptor);
 
             foreach (string line in consoleOutput)

@@ -6,7 +6,6 @@ using System.Xml.Linq;
 
 namespace GoogleTestAdapter.TestCases
 {
-
     public class StreamingListTestsParser
     {
         private static readonly Regex SuiteRegex = new Regex($@"(([^.\s]*(?:\.[\S]+)*)|([\w\/]*(?:\.[\w\/]+)*))(?:{Regex.Escape(GoogleTestConstants.TypedTestMarker)}(.*))?", RegexOptions.Compiled);
@@ -14,15 +13,12 @@ namespace GoogleTestAdapter.TestCases
         private static readonly Regex IsParamRegex = new Regex(@"(\w+/)?\w+/\d+", RegexOptions.Compiled);
 
         private readonly string _testNameSeparator;
-        private readonly bool _showFixtureMethodNodes;
 
         private string _currentSuite = "";
-        private bool _fixtureMethodPending = false;
 
-        public StreamingListTestsParser(string testNameSeparator, bool showFixtureMethodNodes)
+        public StreamingListTestsParser(string testNameSeparator)
         {
             _testNameSeparator = testNameSeparator;
-            _showFixtureMethodNodes = showFixtureMethodNodes;
         }
 
         public class TestCaseDescriptorCreatedEventArgs : EventArgs
@@ -38,15 +34,6 @@ namespace GoogleTestAdapter.TestCases
             string trimmedLine = line.Trim('.', '\n', '\r');
             if (trimmedLine.StartsWith("  ", StringComparison.Ordinal))
             {
-                // If first test case in suite, add fixture method node.
-                if (_showFixtureMethodNodes && _fixtureMethodPending)
-                {
-                    TestCaseDescriptor fixtureNode = CreateFixtureMethodNode(_currentSuite);
-                    TestCaseDescriptorCreated?.Invoke(this,
-                        new TestCaseDescriptorCreatedEventArgs { TestCaseDescriptor = fixtureNode });
-                    _fixtureMethodPending = false;
-                }
-
                 TestCaseDescriptor descriptor = CreateDescriptor(_currentSuite, trimmedLine.Substring(2));
                 TestCaseDescriptorCreated?.Invoke(this,
                     new TestCaseDescriptorCreatedEventArgs {TestCaseDescriptor = descriptor});
@@ -54,20 +41,7 @@ namespace GoogleTestAdapter.TestCases
             else
             {
                 _currentSuite = trimmedLine;
-                _fixtureMethodPending = true;
             }
-        }
-
-        private TestCaseDescriptor CreateFixtureMethodNode(string suiteLine)
-        {
-            Match suiteMatch = SuiteRegex.Match(suiteLine);
-            string suite = suiteMatch.Groups[1].Value;
-
-            string name = Resources.FixtureMethodDisplayName;
-
-            string fullyQualifiedName = $"{suite}.{name}";
-
-            return new TestCaseDescriptor(suite, name, fullyQualifiedName, Resources.FixtureMethodDisplayName, TestCaseDescriptor.TestTypes.Fixture);
         }
 
         private TestCaseDescriptor CreateDescriptor(string suiteLine, string testCaseLine)

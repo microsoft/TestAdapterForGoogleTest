@@ -110,7 +110,7 @@ namespace GoogleTestAdapter.TestCases
                 _logger);
 
             var suite2TestCases = new Dictionary<string, ISet<TestCase>>();
-            var parser = new StreamingListTestsParser(_settings.TestNameSeparator, _settings.ShowFixtureMethodNode);
+            var parser = new StreamingListTestsParser(_settings.TestNameSeparator);
             parser.TestCaseDescriptorCreated += (sender, args) =>
             {
                 TestCase testCase;
@@ -129,7 +129,27 @@ namespace GoogleTestAdapter.TestCases
 
                 ISet<TestCase> testCasesOfSuite;
                 if (!suite2TestCases.TryGetValue(args.TestCaseDescriptor.Suite, out testCasesOfSuite))
+                {
                     suite2TestCases.Add(args.TestCaseDescriptor.Suite, testCasesOfSuite = new HashSet<TestCase>());
+                    if (_settings.ShowFixtureMethodNode)
+                    {
+                        string fullyQualifiedNameWithNamespace;
+                        string fullyQualifiedName = $"{args.TestCaseDescriptor.Suite}.{Resources.FixtureMethodDisplayName}";
+                        if (testCase.FullyQualifiedName.Equals(testCase.FullyQualifiedNameWithNamespace))
+                        {
+                            fullyQualifiedNameWithNamespace = fullyQualifiedName;
+                        }
+                        else
+                        {
+                            string ns = testCase.FullyQualifiedNameWithNamespace.Substring(0, testCase.FullyQualifiedNameWithNamespace.IndexOf('.'));
+                            fullyQualifiedNameWithNamespace = $"{ns}.{fullyQualifiedName}";
+                        }
+
+                        var test = new TestCase(fullyQualifiedName, fullyQualifiedNameWithNamespace, _executable, Resources.FixtureMethodDisplayName, "", 0);
+                        test.Traits.Add(new Trait(TestCaseDescriptor.TestTypeTraitName, TestCaseDescriptor.TestTypes.Fixture.ToString()));
+                        testCasesOfSuite.Add(test);
+                    }
+                }
                 testCasesOfSuite.Add(testCase);
             };
 
