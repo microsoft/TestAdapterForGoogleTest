@@ -9,7 +9,6 @@ using GoogleTestAdapter.Runners;
 using GoogleTestAdapter.Framework;
 using GoogleTestAdapter.Scheduling;
 using GoogleTestAdapter.Settings;
-using System.Diagnostics;
 
 namespace GoogleTestAdapter
 {
