@@ -476,7 +476,7 @@ namespace GoogleTestAdapter.Settings
         }
 
         public static readonly string OptionShowFixtureMethodNode = Resources.OptionShowFixtureMethodNode;
-        public const bool OptionShowFixtureMethodNodeDefaultValue = false; // TODO set to false 
+        public const bool OptionShowFixtureMethodNodeDefaultValue = false;
         public static readonly string OptionShowFixtureMethodNodeDescription = Resources.OptionShowFixtureMethodNodeDescription;
 
         public virtual bool ShowFixtureMethodNode => _currentSettings.ShowFixtureMethodNode ?? OptionShowFixtureMethodNodeDefaultValue;

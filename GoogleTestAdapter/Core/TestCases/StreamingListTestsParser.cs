@@ -2,10 +2,10 @@
 
 using System;
 using System.Text.RegularExpressions;
-using System.Xml.Linq;
 
 namespace GoogleTestAdapter.TestCases
 {
+
     public class StreamingListTestsParser
     {
         private static readonly Regex SuiteRegex = new Regex($@"(([^.\s]*(?:\.[\S]+)*)|([\w\/]*(?:\.[\w\/]+)*))(?:{Regex.Escape(GoogleTestConstants.TypedTestMarker)}(.*))?", RegexOptions.Compiled);

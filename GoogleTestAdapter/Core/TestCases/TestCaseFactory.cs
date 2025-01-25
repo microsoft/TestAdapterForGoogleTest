@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -28,7 +27,6 @@ namespace GoogleTestAdapter.TestCases
         public TestCaseFactory(string executable, ILogger logger, SettingsWrapper settings,
             IDiaResolverFactory diaResolverFactory)
         {
-            Debugger.Launch();
             _logger = logger;
             _settings = settings;
             _executable = executable;
@@ -37,7 +35,6 @@ namespace GoogleTestAdapter.TestCases
 
         public IList<TestCase> CreateTestCases(Action<TestCase> reportTestCase = null)
         {
-            Debugger.Launch();
             List<string> standardOutput = new List<string>();
             if (_settings.UseNewTestExecutionFramework)
             {
@@ -69,7 +66,7 @@ namespace GoogleTestAdapter.TestCases
                 return new List<TestCase>();
             }
 
-            IList<TestCaseDescriptor> testCaseDescriptors = new ListTestsParser(_settings.TestNameSeparator, _settings.ShowFixtureMethodNode).ParseListTestsOutput(standardOutput);
+            IList<TestCaseDescriptor> testCaseDescriptors = new ListTestsParser(_settings.TestNameSeparator).ParseListTestsOutput(standardOutput);
             var testCaseLocations = GetTestCaseLocations(testCaseDescriptors, _settings.GetPathExtension(_executable));
 
             IList<TestCase> testCases = new List<TestCase>();
@@ -99,7 +96,6 @@ namespace GoogleTestAdapter.TestCases
 
         private IList<TestCase> NewCreateTestcases(Action<TestCase> reportTestCase, List<string> standardOutput)
         {
-            Debugger.Launch();
             var testCases = new List<TestCase>();
 
             var resolver = new NewTestCaseResolver(

@@ -17,6 +17,7 @@
         <ParallelTestExecution>false</ParallelTestExecution>
         <PrintTestOutput>true</PrintTestOutput>
         <RunDisabledTests>false</RunDisabledTests>
+        <ShowFixtureMethodNode>false</ShowFixtureMethodNode>
         <ShuffleTests>false</ShuffleTests>
         <ShuffleTestsSeed>0</ShuffleTestsSeed>
         <TestDiscoveryRegex>.*Tests.*.exe</TestDiscoveryRegex>

@@ -7,12 +7,10 @@ namespace GoogleTestAdapter.TestCases
     public class ListTestsParser
     {
         private readonly string _testNameSeparator;
-        private readonly bool _showFixtureMethodNode;
 
-        public ListTestsParser(string testNameSeparator, bool showFixtureMethodNode)
+        public ListTestsParser(string testNameSeparator)
         {
             _testNameSeparator = testNameSeparator;
-            _showFixtureMethodNode = showFixtureMethodNode;
         }
 
         public IList<TestCaseDescriptor> ParseListTestsOutput(IEnumerable<string> consoleOutput)

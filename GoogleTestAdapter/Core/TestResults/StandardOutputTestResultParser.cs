@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -16,6 +15,7 @@ namespace GoogleTestAdapter.TestResults
         private const string Run = "[ RUN      ]";
         public const string Failed = "[  FAILED  ]";
         public const string Passed = "[       OK ]";
+        public const string FailedFixture = "SetUpTestSuite or TearDownTestSuite";
 
         public static readonly string CrashText = Resources.CrashText;
 

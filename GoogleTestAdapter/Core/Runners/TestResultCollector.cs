@@ -38,7 +38,6 @@ namespace GoogleTestAdapter.Runners
             CreateFixtureMethodResults(arrFixtureMethods, testResults);
 
             var consoleParser = new StandardOutputTestResultParser(arrTestCasesRun, consoleOutput, _logger);
-
             if (testResults.Count < arrTestCasesRun.Length)
                 CollectResultsFromConsoleOutput(consoleParser, testResults);
 

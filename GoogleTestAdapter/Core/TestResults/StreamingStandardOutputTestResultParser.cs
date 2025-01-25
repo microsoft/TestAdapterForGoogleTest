@@ -2,7 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text.RegularExpressions;
 using GoogleTestAdapter.Common;
@@ -31,7 +30,7 @@ namespace GoogleTestAdapter.TestResults
             string passedMarker = Regex.Escape(StandardOutputTestResultParser.Passed);
             string failedMarker = Regex.Escape(StandardOutputTestResultParser.Failed);
             PrefixedLineRegex = new Regex($"(.+)((?:{passedMarker}|{failedMarker}).*)", RegexOptions.Compiled);
-            FixtureMethodResultRegex = new Regex($@"(?:{failedMarker}\s*)(\w+):(?:\s+SetUpTestSuite or TearDownTestSuite)", RegexOptions.Compiled);
+            FixtureMethodResultRegex = new Regex($@"(?:{failedMarker}\s*)(\w+):(?:\s+{StandardOutputTestResultParser.FailedFixture})", RegexOptions.Compiled);
         }
 
         public StreamingStandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun,
@@ -71,7 +70,7 @@ namespace GoogleTestAdapter.TestResults
                 }
                 ReportTestStart(line);
             }
-            else if (StandardOutputTestResultParser.IsFailedLine(line) && line.Contains("TearDownTestSuite"))
+            else if (StandardOutputTestResultParser.IsFailedLine(line) && line.Contains(StandardOutputTestResultParser.FailedFixture))
             {
                 ReportFixtureMethodFailure(line);
             }

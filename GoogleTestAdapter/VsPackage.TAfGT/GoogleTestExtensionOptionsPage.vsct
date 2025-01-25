@@ -44,7 +44,6 @@
 
       <Button guid="guidGoogleTestExtensionOptionsPageCmdSet" id="SwitchShowFixtureNodeOptionCommandId" priority="0x0103" type="Button">
         <Parent guid="guidGoogleTestExtensionOptionsPageCmdSet" id="ToolbarGroup" />
-        <!--<Icon guid="toolbaricons" id="show_fixture_node" />-->
         <CommandFlag>DefaultInvisible</CommandFlag>
         <CommandFlag>DynamicVisibility</CommandFlag>
         <Strings>
