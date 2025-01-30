@@ -400,7 +400,7 @@ namespace GoogleTestAdapter.TestResults
             var testCases = new GoogleTestDiscoverer(MockLogger.Object, MockOptions.Object, new DefaultDiaResolverFactory())
                 .GetTestsFromExecutable(TestResources.Tests_ReleaseX64);
 
-            var parser = new StreamingStandardOutputTestResultParser(testCases, MockLogger.Object, MockFrameworkReporter.Object);
+            var parser = new StreamingStandardOutputTestResultParser(testCases, MockLogger.Object, MockFrameworkReporter.Object, String.Empty);
             CompleteStandardOutput.ForEach(parser.ReportLine);
             parser.Flush();
 
@@ -420,7 +420,7 @@ namespace GoogleTestAdapter.TestResults
                     @"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp")
             };
 
-            var parser = new StreamingStandardOutputTestResultParser(cases, MockLogger.Object, MockFrameworkReporter.Object);
+            var parser = new StreamingStandardOutputTestResultParser(cases, MockLogger.Object, MockFrameworkReporter.Object, String.Empty);
             consoleOutput.ForEach(parser.ReportLine);
             parser.Flush();
 

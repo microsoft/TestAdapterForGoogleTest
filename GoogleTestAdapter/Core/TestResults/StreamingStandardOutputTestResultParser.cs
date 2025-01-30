@@ -1,6 +1,7 @@
 ﻿// This file has been modified by Microsoft on 9/2017.
 
 using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text.RegularExpressions;
@@ -17,12 +18,16 @@ namespace GoogleTestAdapter.TestResults
 
         public TestCase CrashedTestCase { get; private set; }
         public IList<TestResult> TestResults { get; } = new List<TestResult>();
+        public List<TestResult> XmlTestResults { get; set; } = new List<TestResult>();
 
+        // Used so that we only get the XML results once per test run.
+        private bool doXMLResultsExist = false;
         private readonly List<TestCase> _testCasesRun;
         private readonly ILogger _logger;
         private readonly ITestFrameworkReporter _reporter;
 
         private readonly List<string> _consoleOutput = new List<string>();
+        private readonly string _executable;
 
         static StreamingStandardOutputTestResultParser()
         {
@@ -32,11 +37,21 @@ namespace GoogleTestAdapter.TestResults
         }
 
         public StreamingStandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun,
-                ILogger logger, ITestFrameworkReporter reporter)
+                ILogger logger, ITestFrameworkReporter reporter, string executable)
         {
             _testCasesRun = testCasesRun.ToList();
             _logger = logger;
             _reporter = reporter;
+            _executable = executable;
+        }
+
+        public List<TestResult> GetXMLResults(IEnumerable<TestCase> testCasesRun)
+        {
+            // Parse in XML so we can get the error message and stack trace in UTF8 since console output does not support this by default.
+            string xmlResultFilePath = Path.Combine(Path.GetDirectoryName(_executable), "XMLGoogleTestResults.xml");
+            var xmlParser = new XmlTestResultParser(testCasesRun, xmlResultFilePath, _logger);
+            var xmlTestResults = xmlParser.GetTestResults();
+            return xmlTestResults;
         }
 
         public void ReportLine(string line)
@@ -141,13 +156,42 @@ namespace GoogleTestAdapter.TestResults
             }
             if (StandardOutputTestResultParser.IsFailedLine(line))
             {
-                ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
-                parser.Parse();
+                string testResultErrorMessage = String.Empty;
+                string testResultErrorStackTrace = String.Empty;
+                string xmlErrorMessage = String.Empty;
+                string xmlErrorStackTrace = String.Empty;
+
+                // Map and extract error messages from xml parser to inject into this test failed result. This allows support for UTF8 error messages. Bug 1951549.
+                //  Console output does not always support UTF8 output by default, but XML results do.
+                if (!doXMLResultsExist)
+                {
+                    XmlTestResults = GetXMLResults(_testCasesRun.AsEnumerable());
+                    doXMLResultsExist = true;
+                }
+
+                foreach (var xmlTestResult in XmlTestResults)
+                {
+                    if (xmlTestResult.TestCase.FullyQualifiedNameWithNamespace == testCase.FullyQualifiedNameWithNamespace)
+                    {
+                        testResultErrorMessage = xmlTestResult.ErrorMessage;
+                        testResultErrorStackTrace = xmlTestResult.ErrorStackTrace;
+                    }
+                }
+
+                // If we did not find the error message or stack trace in the XML parser, then parse the error message from the console output.
+                if (testResultErrorMessage == String.Empty || testResultErrorStackTrace == String.Empty)
+                {
+                    ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
+                    parser.Parse();
+                    testResultErrorMessage = parser.ErrorMessage;
+                    testResultErrorStackTrace = parser.ErrorStackTrace;
+                }
+
                 return StandardOutputTestResultParser.CreateFailedTestResult(
                     testCase,
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
-                    parser.ErrorMessage,
-                    parser.ErrorStackTrace);
+                    testResultErrorMessage,
+                    testResultErrorStackTrace);
             }
             if (StandardOutputTestResultParser.IsPassedLine(line))
             {

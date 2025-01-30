@@ -47,6 +47,10 @@ namespace GoogleTestAdapter.Runners
         public IEnumerable<Args> GetCommandLines()
         {
             string baseCommandLine = string.Empty;
+
+            // Also generates the google test results in XML format for when we need to parse the error messages to support UTF8.
+            baseCommandLine += GoogleTestConstants.XMLOutput;
+
             baseCommandLine += GetCatchExceptionsParameter();
             baseCommandLine += GetBreakOnFailureParameter();
             baseCommandLine += GetAlsoRunDisabledTestsParameter();

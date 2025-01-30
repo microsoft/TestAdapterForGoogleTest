@@ -141,7 +141,8 @@ namespace GoogleTestAdapter.Runners
                 {
                     break;
                 }
-                var streamingParser = new StreamingStandardOutputTestResultParser(arguments.TestCases, _logger, _frameworkReporter);
+
+                var streamingParser = new StreamingStandardOutputTestResultParser(arguments.TestCases, _logger, _frameworkReporter, executable);
                 var results = RunTests(executable, workingDir, envVars, isBeingDebugged, debuggedLauncher, arguments, executor, streamingParser).ToArray();
 
                 try
