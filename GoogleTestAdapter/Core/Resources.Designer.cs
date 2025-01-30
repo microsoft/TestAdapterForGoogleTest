@@ -431,15 +431,6 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to SetUpOrTearDownTestSuite.
-        /// </summary>
-        internal static string FixtureMethodDisplayName {
-            get {
-                return ResourceManager.GetString("FixtureMethodDisplayName", resourceCulture);
-            }
-        }
-        
-        /// <summary>
         ///   Looks up a localized string similar to Found {0} test method symbols and {1} trait symbols in binary {2}.
         /// </summary>
         internal static string FoundTestMethod {
@@ -852,7 +843,7 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Show placeholder node in test explorer representing status of fixture methods. .
+        ///   Looks up a localized string similar to Show placeholder nodes in test explorer representing status of fixture methods. .
         /// </summary>
         internal static string OptionShowFixtureMethodNodeDescription {
             get {

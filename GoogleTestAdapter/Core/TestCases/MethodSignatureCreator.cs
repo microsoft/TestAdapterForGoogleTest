@@ -19,8 +19,9 @@ namespace GoogleTestAdapter.TestCases
                 case TestCaseDescriptor.TestTypes.Parameterized:
                     return GetParameterizedTestMethodSignature(descriptor).Yield();
                 case TestCaseDescriptor.TestTypes.Simple:
+                    return GetTestMethodSignature(descriptor.Suite, descriptor.Name).Yield();
                 case TestCaseDescriptor.TestTypes.Fixture:
-                    return GetTestMethodSignature(descriptor.Suite, descriptor.Name).Yield(); 
+                    return GetFixtureMethodSignature(descriptor.Suite, descriptor.Name).Yield();
                 default:
                     throw new InvalidOperationException(String.Format(Resources.UnknownLiteral, descriptor.TestType));
             }
@@ -68,6 +69,11 @@ namespace GoogleTestAdapter.TestCases
         private string GetTestMethodSignature(string suite, string testCase, string typeParam = "")
         {
             return suite + "_" + testCase + "_Test" + typeParam + GoogleTestConstants.TestBodySignature;
+        }
+
+        private string GetFixtureMethodSignature(string suite, string testCase)
+        {
+            return suite + "::" + testCase;
         }
 
     }
