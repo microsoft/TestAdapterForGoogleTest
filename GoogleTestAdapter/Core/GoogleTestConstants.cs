@@ -30,6 +30,8 @@ namespace GoogleTestAdapter
         public const string FilterOption = " --gtest_filter=";
 
         public const string TestBodySignature = "::TestBody";
+        public const string SetUpFixtureMethod = "SetUpTestSuite";
+        public const string TearDownFixtureMethod = "TearDownTestSuite";
         public const string ParameterizedTestMarker = "  # GetParam() = ";
         public const string TypedTestMarker = ".  # TypeParam = ";
 

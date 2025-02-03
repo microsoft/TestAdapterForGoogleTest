@@ -834,6 +834,24 @@ namespace GoogleTestAdapter {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Show fixture method node.
+        /// </summary>
+        internal static string OptionShowFixtureMethodNode {
+            get {
+                return ResourceManager.GetString("OptionShowFixtureMethodNode", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Show placeholder nodes in test explorer representing status of fixture methods. .
+        /// </summary>
+        internal static string OptionShowFixtureMethodNodeDescription {
+            get {
+                return ResourceManager.GetString("OptionShowFixtureMethodNodeDescription", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Show release notes after update.
         /// </summary>
         internal static string OptionShowReleaseNotes {

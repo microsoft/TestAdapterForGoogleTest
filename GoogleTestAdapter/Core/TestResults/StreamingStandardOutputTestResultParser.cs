@@ -15,6 +15,7 @@ namespace GoogleTestAdapter.TestResults
     public class StreamingStandardOutputTestResultParser
     {
         public static readonly Regex PrefixedLineRegex;
+        public static readonly Regex FixtureMethodResultRegex;
 
         public TestCase CrashedTestCase { get; private set; }
         public IList<TestResult> TestResults { get; } = new List<TestResult>();
@@ -34,6 +35,7 @@ namespace GoogleTestAdapter.TestResults
             string passedMarker = Regex.Escape(StandardOutputTestResultParser.Passed);
             string failedMarker = Regex.Escape(StandardOutputTestResultParser.Failed);
             PrefixedLineRegex = new Regex($"(.+)((?:{passedMarker}|{failedMarker}).*)", RegexOptions.Compiled);
+            FixtureMethodResultRegex = new Regex($@"(?:{failedMarker}\s*)(\w+):(?:\s+{StandardOutputTestResultParser.FailedFixture})", RegexOptions.Compiled);
         }
 
         public StreamingStandardOutputTestResultParser(IEnumerable<TestCase> testCasesRun,
@@ -83,6 +85,11 @@ namespace GoogleTestAdapter.TestResults
                 }
                 ReportTestStart(line);
             }
+            else if (StandardOutputTestResultParser.IsFailedLine(line) && line.Contains(StandardOutputTestResultParser.FailedFixture))
+            {
+                ReportFixtureMethodFailure(line);
+            }
+
             _consoleOutput.Add(line);
         }
 
@@ -110,6 +117,29 @@ namespace GoogleTestAdapter.TestResults
             {
                 _reporter.ReportTestResults(result.Yield());
                 TestResults.Add(result);
+            }
+        }
+
+        private void ReportFixtureMethodFailure(string line)
+        {
+            // Google test reports fixture method failures ambiguously with the output:
+            // [  FAILED  ] TestMe: SetUpTestSuite or TearDownTestSuite
+            // For V1, we fail both SetUp and TearDown nodes if a failure is reported.
+            string suite = FixtureMethodResultRegex.Match(line).Groups[1].Value;
+            string[] supportedFixtureMethods = { GoogleTestConstants.SetUpFixtureMethod, GoogleTestConstants.TearDownFixtureMethod };
+            foreach (string fixtureMethodName in supportedFixtureMethods)
+            {
+                string qualifiedTestName = $"{suite}.{fixtureMethodName}";
+                TestCase testCase = StandardOutputTestResultParser.FindTestcase(qualifiedTestName, _testCasesRun);
+                if(testCase != null)
+                {
+                    TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0),"","");
+                    if (result != null)
+                    {
+                        _reporter.ReportTestResults(result.Yield());
+                        TestResults.Add(result);
+                    }
+                }
             }
         }
 

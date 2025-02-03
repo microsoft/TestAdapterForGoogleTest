@@ -42,6 +42,15 @@
         </Strings>
       </Button>
 
+      <Button guid="guidGoogleTestExtensionOptionsPageCmdSet" id="SwitchShowFixtureNodeOptionCommandId" priority="0x0103" type="Button">
+        <Parent guid="guidGoogleTestExtensionOptionsPageCmdSet" id="ToolbarGroup" />
+        <CommandFlag>DefaultInvisible</CommandFlag>
+        <CommandFlag>DynamicVisibility</CommandFlag>
+        <Strings>
+          <ButtonText>Show Fixture Node</ButtonText>
+        </Strings>
+      </Button>
+
       <Button guid="guidGoogleTestExtensionOptionsPageCmdSet" id="SwitchParallelExecutionOptionCommandId" priority="0x0100" type="Button">
         <Parent guid="guidGoogleTestExtensionOptionsPageCmdSet" id="ToolbarGroup" />
         <Icon guid="toolbaricons" id="parallel_test_execution" />
@@ -106,6 +115,7 @@
       <IDSymbol name="SwitchBreakOnFailureOptionCommandId" value="0x0101" />
       <IDSymbol name="SwitchParallelExecutionOptionCommandId" value="0x0102" />
       <IDSymbol name="SwitchPrintTestOutputOptionCommandId" value="0x0103" />
+      <IDSymbol name="SwitchShowFixtureNodeOptionCommandId" value="0x0104" />
       <IDSymbol name="Toolbar" value="0x1000" />
       <IDSymbol name="ToolbarGroup" value="0x1050" />
     </GuidSymbol>
@@ -115,6 +125,7 @@
       <IDSymbol name="parallel_test_execution" value="2" />
       <IDSymbol name="break_on_failure" value="3" />
       <IDSymbol name="print_test_output" value="4" />
+      <IDSymbol name="show_fixture_node" value="5" />
     </GuidSymbol>
 
   </Symbols>

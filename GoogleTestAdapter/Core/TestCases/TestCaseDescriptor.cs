@@ -4,7 +4,7 @@
     {
         public static string TestTypeTraitName = "GoogleTestAdapterTestType";
 
-        public enum TestTypes { Simple, Parameterized, TypeParameterized }
+        public enum TestTypes { Simple, Parameterized, TypeParameterized, Fixture }
 
         public string Suite { get; }
         public string Name { get; }

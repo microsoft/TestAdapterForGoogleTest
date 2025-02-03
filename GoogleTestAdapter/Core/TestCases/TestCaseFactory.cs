@@ -125,7 +125,15 @@ namespace GoogleTestAdapter.TestCases
 
                 ISet<TestCase> testCasesOfSuite;
                 if (!suite2TestCases.TryGetValue(args.TestCaseDescriptor.Suite, out testCasesOfSuite))
+                {
                     suite2TestCases.Add(args.TestCaseDescriptor.Suite, testCasesOfSuite = new HashSet<TestCase>());
+                    if (_settings.ShowFixtureMethodNode)
+                    {
+                        AddFixtureMethodTestCases(
+                            new string[] {GoogleTestConstants.SetUpFixtureMethod, GoogleTestConstants.TearDownFixtureMethod },
+                        args.TestCaseDescriptor.Suite, testCase, testCasesOfSuite, resolver);
+                    }
+                }
                 testCasesOfSuite.Add(testCase);
             };
 
@@ -227,6 +235,34 @@ namespace GoogleTestAdapter.TestCases
             string filterString = "*" + GoogleTestConstants.TestBodySignature;
             var resolver = new TestCaseResolver(_diaResolverFactory, _logger);
             return resolver.ResolveAllTestCases(_executable, testMethodSignatures, filterString, pathExtension);
+        }
+
+        private void AddFixtureMethodTestCases(string[] methodNames, string suite, TestCase testCase, ISet<TestCase> testCasesOfSuite, NewTestCaseResolver resolver)
+        {
+            string nameSpace = "";
+            if (!testCase.FullyQualifiedName.Equals(testCase.FullyQualifiedNameWithNamespace))
+            {
+                nameSpace = testCase.FullyQualifiedNameWithNamespace.Substring(0, testCase.FullyQualifiedNameWithNamespace.IndexOf('.'));
+            }
+
+            foreach(string name in methodNames)
+            {
+                string fullyQualifiedName = $"{suite}.{name}";
+                string fullyQualifiedNameWithNamespace = string.IsNullOrEmpty(nameSpace) ? fullyQualifiedName : $"{nameSpace}.{fullyQualifiedName}";
+                var location = resolver.FindTestCaseLocation(new List<string> { fullyQualifiedNameWithNamespace.Replace(".", "::") });
+                TestCase testCaseToAdd;
+                if(location != null)
+                {
+                    testCaseToAdd = new TestCase(fullyQualifiedName, fullyQualifiedNameWithNamespace, _executable, name, location.Sourcefile, (int)location.Line);
+                }
+                else
+                {
+                    testCaseToAdd = new TestCase(fullyQualifiedName, fullyQualifiedNameWithNamespace, _executable, name, "", 0);
+
+                }
+                testCaseToAdd.Traits.Add(new Trait(TestCaseDescriptor.TestTypeTraitName, TestCaseDescriptor.TestTypes.Fixture.ToString()));
+                testCasesOfSuite.Add(testCaseToAdd);
+            }
         }
 
         private TestCase CreateTestCase(TestCaseDescriptor descriptor)

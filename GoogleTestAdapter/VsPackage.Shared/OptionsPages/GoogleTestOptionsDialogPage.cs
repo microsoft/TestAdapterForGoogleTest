@@ -59,6 +59,16 @@ namespace GoogleTestAdapter.VsPackage.OptionsPages
         }
         private int _nrOfTestRepetitions = SettingsWrapper.OptionNrOfTestRepetitionsDefaultValue;
 
+        [LocalizedCategory("CategoryMiscName")]
+        [LocalizedDisplayName("OptionShowFixtureMethodNode")]
+        [LocalizedDescription("OptionShowFixtureMethodNodeDescription")]
+        public bool ShowFixtureMethodNode
+        {
+            get { return _showFixtureMethodNode; }
+            set { SetAndNotify(ref _showFixtureMethodNode, value); }
+        }
+        private bool _showFixtureMethodNode = SettingsWrapper.OptionShowFixtureMethodNodeDefaultValue;
+
         [LocalizedCategory("CategoryTestExecutionName")]
         [LocalizedDisplayName("OptionShuffleTests")]
         [LocalizedDescription("OptionShuffleTestsDescription")]

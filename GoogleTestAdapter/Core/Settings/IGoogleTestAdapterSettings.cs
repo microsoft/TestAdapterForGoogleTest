@@ -27,6 +27,7 @@ namespace GoogleTestAdapter.Settings
         bool? ParallelTestExecution { get; set; }
         bool? PrintTestOutput { get; set; }
         bool? RunDisabledTests { get; set; }
+        bool? ShowFixtureMethodNode { get; set; }
         bool? ShuffleTests { get; set; }
         int? ShuffleTestsSeed { get; set; }
         string TestDiscoveryRegex { get; set; }
@@ -79,6 +80,7 @@ namespace GoogleTestAdapter.Settings
             self.TimestampOutput = self.TimestampOutput ?? other.TimestampOutput;
             self.ShowReleaseNotes = self.ShowReleaseNotes ?? other.ShowReleaseNotes;
             self.KillProcessesOnCancel = self.KillProcessesOnCancel ?? other.KillProcessesOnCancel;
+            self.ShowFixtureMethodNode = self.ShowFixtureMethodNode ?? other.ShowFixtureMethodNode;
 
             self.UseNewTestExecutionFramework = self.UseNewTestExecutionFramework ?? other.UseNewTestExecutionFramework;
 

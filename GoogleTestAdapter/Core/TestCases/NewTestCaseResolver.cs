@@ -51,7 +51,7 @@ namespace GoogleTestAdapter.TestCases
                 result = DoFindTestCaseLocation(testMethodSignatures);
             }
             return result;
-        }
+        } 
 
         private void LoadSymbolsFromImports()
         {
@@ -73,6 +73,8 @@ namespace GoogleTestAdapter.TestCases
                 try
                 {
                     _allTestMethodSymbols.AddRange(diaResolver.GetFunctions("*" + GoogleTestConstants.TestBodySignature));
+                    _allTestMethodSymbols.AddRange(diaResolver.GetFunctions("*::" + GoogleTestConstants.SetUpFixtureMethod));
+                    _allTestMethodSymbols.AddRange(diaResolver.GetFunctions("*::" + GoogleTestConstants.TearDownFixtureMethod));
                     _allTraitSymbols.AddRange(diaResolver.GetFunctions("*" + TraitAppendix));
 
                     _logger.DebugInfo(String.Format(Resources.FoundTestMethod, _allTestMethodSymbols.Count, _allTraitSymbols.Count, binary));
