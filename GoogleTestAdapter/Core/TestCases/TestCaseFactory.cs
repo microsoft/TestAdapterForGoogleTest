@@ -8,6 +8,7 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using GoogleTestAdapter.Common;
 using GoogleTestAdapter.DiaResolver;
+using GoogleTestAdapter.Framework;
 using GoogleTestAdapter.Helpers;
 using GoogleTestAdapter.Model;
 using GoogleTestAdapter.Runners;
@@ -33,68 +34,20 @@ namespace GoogleTestAdapter.TestCases
             _diaResolverFactory = diaResolverFactory;
         }
 
-        public IList<TestCase> CreateTestCases(Action<TestCase> reportTestCase = null)
+        public IList<TestCase> CreateTestCases(Action<TestCase> reportTestCase = null, ITestFrameworkReporter reporter = null)
         {
             List<string> standardOutput = new List<string>();
             if (_settings.UseNewTestExecutionFramework)
             {
-                return NewCreateTestcases(reportTestCase, standardOutput);
+                return NewCreateTestcases(reportTestCase, standardOutput, reporter);
             }
-
-            try
+            else
             {
-                var launcher = new ProcessLauncher(_logger, _settings.GetPathExtension(_executable), null);
-                int processExitCode;
-                string workingDir = new FileInfo(_executable).DirectoryName;
-
-                string cmdLine = GoogleTestConstants.ListTestsOption;
-                if (!string.IsNullOrEmpty(_settings.AdditionalTestDiscoveryParam))
-                {
-                    cmdLine = string.Format("{0} {1}", _settings.AdditionalTestDiscoveryParam, cmdLine);
-                }
-
-                standardOutput = launcher.GetOutputOfCommand(workingDir, null, _executable, cmdLine,
-                    false, false, out processExitCode);
-
-                if (!CheckProcessExitCode(processExitCode, standardOutput))
-                    return new List<TestCase>();
+                return OldCreateTestCases(standardOutput);
             }
-            catch (Exception e)
-            {
-                SequentialTestRunner.LogExecutionError(_logger, _executable, Path.GetFullPath(""),
-                    GoogleTestConstants.ListTestsOption, e);
-                return new List<TestCase>();
-            }
-
-            IList<TestCaseDescriptor> testCaseDescriptors = new ListTestsParser(_settings.TestNameSeparator).ParseListTestsOutput(standardOutput);
-            var testCaseLocations = GetTestCaseLocations(testCaseDescriptors, _settings.GetPathExtension(_executable));
-
-            IList<TestCase> testCases = new List<TestCase>();
-            IDictionary<string, ISet<TestCase>> suite2TestCases = new Dictionary<string, ISet<TestCase>>();
-            foreach (var descriptor in testCaseDescriptors)
-            {
-                var testCase = _settings.ParseSymbolInformation 
-                    ? CreateTestCase(descriptor, testCaseLocations) 
-                    : CreateTestCase(descriptor);
-                ISet<TestCase> testCasesInSuite;
-                if (!suite2TestCases.TryGetValue(descriptor.Suite, out testCasesInSuite))
-                    suite2TestCases.Add(descriptor.Suite, testCasesInSuite = new HashSet<TestCase>());
-                testCasesInSuite.Add(testCase);
-                testCases.Add(testCase);
-            }
-
-            foreach (var suiteTestCasesPair in suite2TestCases)
-            {
-                foreach (var testCase in suiteTestCasesPair.Value)
-                {
-                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
-                }
-            }
-
-            return testCases;
         }
 
-        private IList<TestCase> NewCreateTestcases(Action<TestCase> reportTestCase, List<string> standardOutput)
+        private IList<TestCase> NewCreateTestcases(Action<TestCase> reportTestCase, List<string> standardOutput, ITestFrameworkReporter reporter = null)
         {
             var testCases = new List<TestCase>();
 
@@ -195,12 +148,76 @@ namespace GoogleTestAdapter.TestCases
                 if (!CheckProcessExitCode(processExitCode, standardOutput))
                     return new List<TestCase>();
             }
+
+            catch (Exception e)
+            {
+                // If a crash happened with new framework, then try using old framework before reporting empty results.
+                standardOutput = new List<string>();
+                return OldCreateTestCases(standardOutput, reporter);
+            }
+
+            return testCases;
+        }
+
+        private IList<TestCase> OldCreateTestCases(List<string> standardOutput, ITestFrameworkReporter reporter = null)
+        {
+            try
+            {
+                var launcher = new ProcessLauncher(_logger, _settings.GetPathExtension(_executable), null);
+                int processExitCode;
+                string workingDir = new FileInfo(_executable).DirectoryName;
+
+                string cmdLine = GoogleTestConstants.ListTestsOption;
+                if (!string.IsNullOrEmpty(_settings.AdditionalTestDiscoveryParam))
+                {
+                    cmdLine = string.Format("{0} {1}", _settings.AdditionalTestDiscoveryParam, cmdLine);
+                }
+
+                standardOutput = launcher.GetOutputOfCommand(workingDir, null, _executable, cmdLine,
+                    false, false, out processExitCode);
+
+                if (!CheckProcessExitCode(processExitCode, standardOutput))
+                    return new List<TestCase>();
+            }
             catch (Exception e)
             {
                 SequentialTestRunner.LogExecutionError(_logger, _executable, Path.GetFullPath(""),
-                    cmdLine, e);
+                    GoogleTestConstants.ListTestsOption, e);
                 return new List<TestCase>();
             }
+
+            IList<TestCaseDescriptor> testCaseDescriptors = new ListTestsParser(_settings.TestNameSeparator).ParseListTestsOutput(standardOutput);
+            var testCaseLocations = GetTestCaseLocations(testCaseDescriptors, _settings.GetPathExtension(_executable));
+
+            IList<TestCase> testCases = new List<TestCase>();
+            IDictionary<string, ISet<TestCase>> suite2TestCases = new Dictionary<string, ISet<TestCase>>();
+            foreach (var descriptor in testCaseDescriptors)
+            {
+                var testCase = _settings.ParseSymbolInformation
+                    ? CreateTestCase(descriptor, testCaseLocations)
+                    : CreateTestCase(descriptor);
+                ISet<TestCase> testCasesInSuite;
+                if (!suite2TestCases.TryGetValue(descriptor.Suite, out testCasesInSuite))
+                    suite2TestCases.Add(descriptor.Suite, testCasesInSuite = new HashSet<TestCase>());
+                testCasesInSuite.Add(testCase);
+                testCases.Add(testCase);
+            }
+
+            foreach (var suiteTestCasesPair in suite2TestCases)
+            {
+                foreach (var testCase in suiteTestCasesPair.Value)
+                {
+                    testCase.Properties.Add(new TestCaseMetaDataProperty(suiteTestCasesPair.Value.Count, testCases.Count, testCase.FullyQualifiedName));
+                }
+            }
+
+            // Only report the test cases if we are manually passing the reporter.
+            //  This can be due to a previous crash with the new framework so we manually invoke the old framework to report results.
+            if (reporter != null)
+            {
+                reporter.ReportTestsFound(testCases);
+            }
+
             return testCases;
         }
 
