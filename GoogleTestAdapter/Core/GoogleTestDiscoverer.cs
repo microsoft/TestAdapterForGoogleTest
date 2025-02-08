@@ -74,7 +74,7 @@ namespace GoogleTestAdapter
                     nrOfTestCases++;
                 };
                 var factory = new TestCaseFactory(executable, logger, settings, diaResolverFactory);
-                factory.CreateTestCases(reportTestCases);
+                factory.CreateTestCases(reportTestCases, reporter);
                 logger.LogInfo(String.Format(Resources.NumberOfTestsMessage, nrOfTestCases, executable));
             }, logger);
         }
