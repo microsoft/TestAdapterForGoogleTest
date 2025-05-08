@@ -341,7 +341,7 @@ Expected: true
                     @"c:\users\chris\documents\visual studio 2015\projects\consoleapplication1\consoleapplication1tests\source.cpp")
             };
 
-            var parser = new StreamingStandardOutputTestResultParser(cases, TestEnvironment.Logger, MockFrameworkReporter.Object);
+            var parser = new StreamingStandardOutputTestResultParser(cases, MockLogger.Object, MockFrameworkReporter.Object, String.Empty);
             ConsoleOutputWithPrefixingTest.ToList().ForEach(parser.ReportLine);
             parser.Flush();
             var results = parser.TestResults;
@@ -364,7 +364,7 @@ Expected: true
                 TestDataCreator.ToTestCase("Test.Fail", TestDataCreator.DummyExecutable, @"c:\somepath\source.cpp"),
             };
 
-            var parser = new StreamingStandardOutputTestResultParser(cases, TestEnvironment.Logger, MockFrameworkReporter.Object);
+            var parser = new StreamingStandardOutputTestResultParser(cases, MockLogger.Object, MockFrameworkReporter.Object, String.Empty);
             ConsoleOutputWithSkippedTest.ToList().ForEach(parser.ReportLine);
             parser.Flush();
             var results = parser.TestResults;
