@@ -147,6 +147,8 @@ extends:
             signing:
               enabled: true
               signType: $(SignType)
+              ${{ if or(eq(variables['SignType'], 'real'), eq(variables['SignType'], 'Real')) }}:
+                signWithProd: true    
             localization:
               enabled: true
         steps:
