@@ -38,6 +38,10 @@ resources:
     type: git
     name: VCLS-Extensions
     ref: refs/heads/dev17
+parameters:
+- name: SignType
+  type: string
+  default: 'real'
 variables:
 - name: ApiScanClientId
   value: d318cba7-db4d-4fb3-99e1-01879cb74e91
@@ -69,8 +73,6 @@ variables:
   value: /p:Configuration="$(BuildConfiguration)"
 - name: Packaging.EnableSBOMSigning
   value: "$(TAfGTEnableSBOMSigning)"
-- name: DropPAT
-  value: "$(TAfGTDropPAT)"
 - name: ProductComponent
   value: "$(TAfGTProductComponent)"
 - name: Publish
@@ -82,8 +84,6 @@ variables:
   value: "$(RealSign)"
 - name: RetainBuild
   value: "$(TAfGTRetainBuild)"
-- name: SignType
-  value: "$(TAfGTSignType)"
 - name: SYMBOLS_PAT
   value: "$(GoogleTestSymbolsPat)"
 - name: smPassword
@@ -146,9 +146,9 @@ extends:
           mb:
             signing:
               enabled: true
-              signType: $(SignType)
-              ${{ if or(eq(variables['SignType'], 'real'), eq(variables['SignType'], 'Real')) }}:
-                signWithProd: true    
+              signType: '${{ parameters.SignType }}'
+              ${{ if eq(parameters.SignType, 'real') }}:
+                signWithProd: true   
             localization:
               enabled: true
         steps:
@@ -425,7 +425,7 @@ extends:
           inputs:
             dropFolder: $(Build.ArtifactStagingDirectory)\drop
             dropName: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
-            accessToken: $(DropPAT)
+            accessToken: $(System.AccessToken)
             dropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
             vsDropServiceUri: "https://vsdrop.corp.microsoft.com/file/v1"
         - task: ms-vseng.MicroBuildShipTasks.4a4e1dc3-01d0-484f-94ac-f918aaf7d509.MicroBuildRetainVstsDrops@1
@@ -433,7 +433,7 @@ extends:
           condition: and(succeeded(), eq(variables['RetainBuild'], true))
           inputs:
             DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
-            AccessToken: $(DropPAT)
+            AccessToken: $(System.AccessToken)
             DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
         - task: ms-vseng.MicroBuildShipTasks.0ffdda1d-8c7b-40da-b8b1-061660eaeea3.MicroBuildArchiveSymbols@5
           displayName: 'Archive TestAdapterForGoogleTest on Symweb'
