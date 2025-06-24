@@ -4,7 +4,7 @@
 [![NuGet downloads](https://img.shields.io/nuget/dt/GoogleTestAdapter.svg?colorB=0c7dbe&label=nuget)](https://www.nuget.org/packages/GoogleTestAdapter) 
 
 
-### Google Test Adapter / Test Adapter for Google Test
+### Google Test Adapter / Test Adapter for Google Test *trivial change*
 
 This README details the ‘Google Test Adapter’ [GTA](https://github.com/csoltenborn/GoogleTestAdapter) and the ‘Test Adapter for Google Test’ [TAfGT](https://github.com/Microsoft/TestAdapterForGoogleTest), and . These test adapters are Visual Studio extensions that provide test discovery and execution of C++ tests written with the [Google Test](https://github.com/google/googletest) framework. 
 
