@@ -41,7 +41,7 @@ resources:
 parameters:
 - name: SignType
   type: string
-  default: 'real'
+  default: 'test'
 variables:
 - name: ApiScanClientId
   value: d318cba7-db4d-4fb3-99e1-01879cb74e91
