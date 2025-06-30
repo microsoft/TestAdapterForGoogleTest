@@ -47,12 +47,6 @@ variables:
   value: d318cba7-db4d-4fb3-99e1-01879cb74e91
 - name: ArchiveSymbols
   value: "$(TAfGTArchiveSymbols)"
-- name: ArtifactServices.Symbol.AccountName
-  value: microsoft
-- name: ArtifactServices.Symbol.PAT
-  value: "$(GoogleTestSymbolsPat)"
-- name: ArtifactServices.Symbol.UseAAD
-  value: False
 - name: BuildConfiguration
   value: "$(TAfGTBuildConfiguration)"
 - name: BuildPlatform
@@ -84,8 +78,6 @@ variables:
   value: "$(RealSign)"
 - name: RetainBuild
   value: "$(TAfGTRetainBuild)"
-- name: SYMBOLS_PAT
-  value: "$(GoogleTestSymbolsPat)"
 - name: smPassword
   value: "$(TAfGTADOUserPassword)"
 - name: smUsername
@@ -343,10 +335,13 @@ extends:
             platform: '$(BuildPlatform)'
             configuration: '$(BuildConfiguration)'
             maximumCpuCount: true
-        - task: PublishSymbols@1
-          displayName: 'Publish Symbols Path'
+        - task: PublishSymbols@2
+          displayName: 'Enable Source Server'
           inputs:
-            SearchPattern: out\binaries\**\*.pdb
+            SearchPattern: 'out\binaries\**\*.pdb'
+            # We use the MicroBuild Archive Symbols task so we need to publish the symbols here.
+            # See the following for more info: https://devdiv.visualstudio.com/DevDiv/_wiki/wikis/DevDiv.wiki/34299/Handling-Symbols
+            PublishSymbols: false
           continueOnError: true
         - task: CopyFiles@2
           displayName: Copy setup files to drop root
