@@ -27,6 +27,7 @@
   <WizardData>
     <packages repository="extension" repositoryId="GoogleTestAdapterVSIX.d3b8e668-8582-4be9-ab42-aaf872704ef3">
       <package id="$nugetpackage$" version="1.8.1.7" />
+      <package id="$nugetpackage2$" version="1.8.1.7" />
     </packages>
   </WizardData>
 </VSTemplate>

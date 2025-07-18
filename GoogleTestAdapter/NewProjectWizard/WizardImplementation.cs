@@ -131,11 +131,13 @@ namespace Microsoft.NewProjectWizard
             string consumeGTestAs = configurationData.IsGTestStatic ? "static" : "dyn";
             string runtimeLibs = configurationData.IsRuntimeStatic ? "static" : "dyn";
             string nugetPackage = "Microsoft.googletest.v140.windesktop.msvcstl." + consumeGTestAs + ".rt-" + runtimeLibs;
+            string nugetPackage2 = "Microsoft.googletest.v145.windesktop.msvcstl." + consumeGTestAs + ".rt-" + runtimeLibs;
 
             // Work around so we can choose the package for the nuget wizard
             string tmpWizardData = Path.GetTempFileName();
             File.AppendAllText(tmpWizardData, "<VSTemplate Version=\"3.0.0\" xmlns=\"http://schemas.microsoft.com/developer/vstemplate/2005\" Type=\"Project\"><WizardData>");
             File.AppendAllText(tmpWizardData, replacementsDictionary[WizardData].Replace("$nugetpackage$", nugetPackage));
+            File.AppendAllText(tmpWizardData, replacementsDictionary[WizardData].Replace("$nugetpackage2$", nugetPackage2));
             File.AppendAllText(tmpWizardData, "</WizardData></VSTemplate>");
             customParams[0] = tmpWizardData;
 
