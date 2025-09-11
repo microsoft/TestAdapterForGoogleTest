@@ -1,0 +1,69 @@
+trigger:
+- refs/heads/dev17
+- refs/heads/dev15
+schedules:
+  - cron: "0 7 1 * *"
+    displayName: Monthly Run
+    branches:
+      include:
+        - refs/heads/dev17
+    always: true
+name: $(date:yyyyMMdd)$(rev:.r)
+resources:
+  repositories:
+  - repository: MicroBuildTemplate
+    type: git
+    name: 1ESPipelineTemplates/MicroBuildTemplate
+    ref: refs/tags/release
+  - repository: googletest
+    type: git
+    name: googletest
+    ref: refs/heads/main
+  - repository: VCLS-Extensions
+    type: git
+    name: VCLS-Extensions
+    ref: refs/heads/dev17
+extends:
+  template: azure-pipelines/MicroBuild.1ES.Official.yml@MicroBuildTemplate
+  parameters:
+    featureFlags:
+      branchValidation: enforceInAllJobs
+    pool:
+      name: VSEngSS-MicroBuild2022-1ES
+      demands:
+      - vstest
+      - msbuild
+      - visualstudio
+      - DotNetFramework
+      - Cmd
+      - npm
+    sdl:
+      sourceAnalysisPool:
+        name: VSEngSS-MicroBuild2022-1ES
+      sourceRepositoriesToScan:
+        exclude:
+        # No need to scan VCLS-Extensions source as we only use this repo to copy the public signing key.
+        - repository: VCLS-Extensions
+        # No need to scan googletest source here as it is scanned in its own independent pipeline.
+        - repository: googletest
+      tsa:
+        enabled: true
+        configFile: '$(Build.SourcesDirectory)\TSAOptions.json'
+      binskim:
+        enabled: true
+        scanOutputDirectoryOnly: true
+        analyzeTargetGlob: '$(Build.ArtifactStagingDirectory)\drop\FilesToScanDrop\**\*.dll'
+      codeSignValidation:
+        additionalTargetsGlobPattern: -:f|$(Build.ArtifactStagingDirectory)\drop\out\**;-:f|$(Build.ArtifactStagingDirectory)\drop\_manifest\**;-:f|$(Build.ArtifactStagingDirectory)\drop\gdn-Packaging.TAfGT.vsix\**;-:f|$(Build.ArtifactStagingDirectory)\drop\*.dll # Include only the files we own, build, and ship (located in /FilesToScanDrop). All other dependency binaries shipped in the .vsix are already signed by Microsoft directly.
+      codeql:
+        compiled:
+          enabled: false
+          justificationForDisabling: 'There is a bug in the 1ES template that auto injects multiple CodeQL Initialize tasks when checking out multiple repos. This causes an endless CodeQL hang during pipeline builds.'
+    customBuildTags:
+    - ES365AIMigrationTooling
+    stages:
+    - stage: stage
+      jobs:
+      - template: /pipeline/common.yml@self
+        parameters:
+          IsProd: true
