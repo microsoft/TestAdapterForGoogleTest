@@ -356,13 +356,16 @@ jobs:
       DropNames: Products/$(System.TeamProject)/$(Build.Repository.Name)/$(Build.SourceBranchName)/$(Build.BuildNumber)
       AccessToken: $(System.AccessToken)
       DropServiceUri: https://devdiv.artifacts.visualstudio.com/DefaultCollection
-  - task: ms-vseng.MicroBuildShipTasks.0ffdda1d-8c7b-40da-b8b1-061660eaeea3.MicroBuildArchiveSymbols@5
+  - task: ms-vseng.MicroBuildShipTasks.0ffdda1d-8c7b-40da-b8b1-061660eaeea3.MicroBuildArchiveSymbols@6
     displayName: 'Archive TestAdapterForGoogleTest on Symweb'
     condition: eq (variables.ArchiveSymbols, True)
     inputs:
+      azureSubscription: 'VSEng-SymbolsUpload'
       SymbolsFeatureName: TestAdapterForGoogleTest
       SymbolsProject: VS
       SymbolsAgentPath: '$(Build.ArtifactStagingDirectory)\drop'
+    env:
+      SYSTEM_ACCESSTOKEN: $(System.AccessToken)
   - task: ms-vseng.MicroBuildTasks.521a94ea-9e68-468a-8167-6dcf361ea776.MicroBuildCleanup@1
     displayName: 'Send Telemetry'
     condition: eq (variables.ArchiveSymbols, True)
