@@ -38,6 +38,7 @@ extends:
         name: VSEngSS-MicroBuild2022-1ES
       sourceRepositoriesToScan:
         exclude:
+        # test comment.
         # No need to scan VCLS-Extensions source as we only use this repo to copy the public signing key.
         - repository: VCLS-Extensions
         # No need to scan googletest source here as it is scanned in its own independent pipeline.
