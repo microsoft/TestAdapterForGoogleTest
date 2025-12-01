@@ -16,7 +16,7 @@ namespace GoogleTestAdapter.TestAdapter.Framework
     [SuppressMessage("ReSharper", "InconsistentNaming")]
     public enum VsVersion
     {
-        Unknown = -1, VS2012 = 0, VS2012_1 = 11, VS2013 = 12, VS2015 = 14, VS2017 = 15, VS2019 = 16, VS2022 = 17
+        Unknown = -1, VS2012 = 0, VS2012_1 = 11, VS2013 = 12, VS2015 = 14, VS2017 = 15, VS2019 = 16, VS2022 = 17, VS2026 = 18
     }
 
     public static class VsVersionExtensions
@@ -40,6 +40,8 @@ namespace GoogleTestAdapter.TestAdapter.Framework
                     return 2019;
                 case VsVersion.VS2022:
                     return 2022;
+                case VsVersion.VS2026:
+                    return 2026;
                 default:
                     throw new InvalidOperationException();
             }
