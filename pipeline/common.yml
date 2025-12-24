@@ -48,7 +48,6 @@ jobs:
   templateContext:
     outputs:
     - output: pipelineArtifact
-      condition: eq('${{ parameters.IsProd }}', true)
       displayName: 'Publish Artifact: drop'
       targetPath: $(Build.ArtifactStagingDirectory)\drop
       artifactName: drop
