@@ -775,6 +775,24 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[픽스처 메서드 노드 보여주기]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[픽스처 메서드 상태를 나타내는 자리 표시자 노드를 테스트 탐색기에 보여줍니다. ]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";OptionShowReleaseNotes" ItemType="0" PsrId="211" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[Show release notes after update]]></Val>
@@ -905,7 +923,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Allows to override/add traits for testcases matching a regex. Traits are build up in 3 phases. First, traits are assigned to tests according to the 'Traits before' option. Next, the tests' traits (defined via the macros in GTA_Traits.h) are added to the tests, overriding traits from phase 1 with new values. Finally, the 'Traits after' option is evaluated, again in an overriding manner.]D;]A;Syntax: {0} separates the regex from the traits, the trait's name and value are separated by {1} and each pair of regex and trait is separated by {2}.]D;]A;Example: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Regex와 일치하는 테스트 사례에 대해 특성을 재정의/추가할 수 있습니다. 특성은 3단계로 작성됩니다. 먼저 특성은 '특성 이전' 옵션에 따라 테스트에 할당됩니다. 그다음으로 테스트의 특성(GTA_Traits.h의 매크로를 통해 정의됨)은 테스트에 추가되어 1단계의 특성이 새 값으로 재정의됩니다. 마지막으로 다시 재정의 방식으로 '특성 이후' 옵션이 평가됩니다.]D;]A;구문: {0}은(는) regex를 특성과 구분하고, 특성의 이름 및 값은 {1}(으)로 구분되며, 각 regex와 특성 쌍은 {2}(으)로 구분됩니다.]D;]A;예: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
+            <Val><![CDATA[Regex와 일치하는 테스트 사례에 대해 특성을 재정의/추가할 수 있습니다. 특성은 3단계로 구성됩니다. 먼저 특성은 '이전 특성' 옵션에 따라 테스트에 할당됩니다. 그다음으로 테스트의 특성(GTA_Traits.h의 매크로를 통해 정의됨)은 테스트에 추가되어 1단계의 특성이 새 값으로 재정의됩니다. 마지막으로 다시 재정의 방식으로 '이후 특성' 옵션이 평가됩니다.]D;]A;구문: {0}은(는) regex를 특성과 구분하고, 특성의 이름 및 값은 {1}(으)로 구분되며, 각 regex와 특성 쌍은 {2}(으)로 구분됩니다.]D;]A;예: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />

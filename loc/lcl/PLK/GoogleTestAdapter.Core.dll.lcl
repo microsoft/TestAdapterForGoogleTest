@@ -590,7 +590,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If enabled, a potentially attached debugger will catch assertion failures and automatically drop into interactive mode.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Jeśli ta opcja jest włączona, potencjalnie dołączony debuger będzie przechwytywać błędy potwierdzenia i automatycznie przechodzić do trybu interaktywnego.]D;]A;Opcja biblioteki Google Test: {0}]]></Val>
+            <Val><![CDATA[Jeśli ta opcja jest włączona, potencjalnie dołączony debuger będzie przechwytywać błędy potwierdzenia i automatycznie przechodzić do trybu interaktywnego.]D;]A;Opcja platformy Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -608,7 +608,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Google Test catches exceptions by default; the according test fails and test execution continues. Choosing false lets exceptions pass through, allowing the debugger to catch them.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Biblioteka Google Test domyślnie przechwytuje wyjątki, odpowiedni test kończy się niepowodzeniem i wykonywanie testów jest kontynuowane. Wybranie ustawienia false pozwala przepuszczać wyjątki, umożliwiając debugerowi ich przechwycenie.]D;]A;Opcja biblioteki Google Test: {0}]]></Val>
+            <Val><![CDATA[Platforma Google Test domyślnie przechwytuje wyjątki, odpowiedni test kończy się niepowodzeniem i wykonywanie testów jest kontynuowane. Wybranie ustawienia false pozwala przepuszczać wyjątki, umożliwiając debugerowi ich przechwycenie.]D;]A;Opcja platformy Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -698,7 +698,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Tests will be run for the selected number of times (-1: infinite).]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Testy zostaną uruchomione wybraną liczbę razy (-1: nieskończona).]D;]A;Opcja biblioteki Google Test: {0}]]></Val>
+            <Val><![CDATA[Testy zostaną uruchomione wybraną liczbę razy (-1: nieskończona).]D;]A;Opcja platformy Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -770,7 +770,25 @@
         <Str Cat="Text">
           <Val><![CDATA[If true, all (selected) tests will be run, even if they have been disabled.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Jeśli ta opcja ma wartość true, wszystkie testy (zaznaczone) zostaną uruchomione, nawet jeśli zostały wyłączone.]D;]A;Opcja biblioteki Google Test: {0}]]></Val>
+            <Val><![CDATA[Jeśli ta opcja ma wartość true, wszystkie testy (zaznaczone) zostaną uruchomione, nawet jeśli zostały wyłączone.]D;]A;Opcja platformy Google Test: {0}]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Pokaż węzeł metody warunków początkowych]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Pokaż węzły zastępcze w eksploratorze testów reprezentujące status metod warunków początkowych. ]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -806,7 +824,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If true, tests will be executed in random order. Note that a true randomized order is only given when executing all tests in non-parallel fashion. Otherwise, the test excutables will most likely be executed more than once - random order is than restricted to the according executions.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[W przypadku wartości true testy będą wykonywane w kolejności losowej. Należy zauważyć, że prawdziwie losowa kolejność jest podawana tylko podczas wykonywania wszystkich testów w sposób nierównoległy. W przeciwnym razie pliki wykonywalne testów najprawdopodobniej będą wykonywane więcej niż jeden raz — kolejność losowa jest wtedy ograniczona zgodnie z wykonaniami.]D;]A;Opcja biblioteki Google Test: {0}]]></Val>
+            <Val><![CDATA[W przypadku wartości true testy będą wykonywane w kolejności losowej. Należy zauważyć, że prawdziwie losowa kolejność jest podawana tylko podczas wykonywania wszystkich testów w sposób nierównoległy. W przeciwnym razie pliki wykonywalne testów najprawdopodobniej będą wykonywane więcej niż jeden raz — kolejność losowa jest wtedy ograniczona zgodnie z wykonaniami.]D;]A;Opcja platformy Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -842,7 +860,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If non-empty, this regex will be used to discover the Google Test executables containing your tests.]D;]A;Default regex: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Jeśli nie jest puste, to wyrażenie regularne będzie używane do odnajdywania plików wykonywalnych biblioteki Google Test zawierających Twoje testy.]D;]A;Domyślne wyrażenie regularne: {0}]]></Val>
+            <Val><![CDATA[Jeśli nie jest puste, to wyrażenie regularne będzie używane do odnajdywania plików wykonywalnych platformy Google Test zawierających Twoje testy.]D;]A;Domyślne wyrażenie regularne: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
