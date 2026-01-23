@@ -698,7 +698,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Tests will be run for the selected number of times (-1: infinite).]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Spuštění testů se zopakuje tolikrát, kolikrát se určí (-1: neomezeně).]D;]A;Možnost Google Test: {0}]]></Val>
+            <Val><![CDATA[Spuštění testů se zopakuje tolikrát, kolikrát se určí (-1: neomezeně).]D;]A;Možnost Google Testu: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -772,6 +772,18 @@
           <Tgt Cat="Text" Stat="Loc" Orig="New">
             <Val><![CDATA[Pokud se tato možnost nastaví na true, spustí se všechny (vybrané) testy, a to i v případě, že se zakázaly.]D;]A;Možnost Google Testu: {0}]]></Val>
           </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
         </Str>
         <Disp Icon="Str" />
       </Item>

@@ -716,7 +716,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Parse debug symbol information for test executables to obtain source location information and traits (defined via the macros in GTA_Traits.h).]D;]A;If this is set to false, step 2 of traits discovery will be left out and only traits regexes will be effective.]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Kaynak konumu bilgilerini ve nitelikleri (GTA_Traits.h içindeki makrolar aracılığıyla tanımlanır) almak için test yürütülebilir dosyalarında hata ayıklama sembolü bilgilerini ayrıştırır.]D;]A;False olarak ayarlanırsa, nitelik bulmanın 2. adımı atlanır ve yalnızca traits normal ifadeleri geçerli olur.]]></Val>
+            <Val><![CDATA[Kaynak konumu bilgilerini ve nitelikleri (GTA_Traits.h içindeki makrolar aracılığıyla tanımlanır) almak için test yürütülebilir dosyalarında hata ayıklama sembolü bilgilerini ayrıştırır.]D;]A;False olarak ayarlanırsa, nitelik bulmanın 2. adımı atlanır ve yalnızca nitelik normal ifadeleri geçerli olur.]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -772,6 +772,18 @@
           <Tgt Cat="Text" Stat="Loc" Orig="New">
             <Val><![CDATA[True olarak ayarlanırsa, devre dışı bırakılanlar dahil tüm testler (seçili olanlar) çalıştırılır.]D;]A;Google Test seçeneği: {0}]]></Val>
           </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
         </Str>
         <Disp Icon="Str" />
       </Item>

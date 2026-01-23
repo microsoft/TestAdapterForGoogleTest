@@ -716,7 +716,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Parse debug symbol information for test executables to obtain source location information and traits (defined via the macros in GTA_Traits.h).]D;]A;If this is set to false, step 2 of traits discovery will be left out and only traits regexes will be effective.]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Analizar la información de símbolos de depuración para los archivos ejecutables de prueba a fin de obtener la información y los rasgos de la ubicación de origen (definidos a través de las macros en GTA_Traits.h).]D;]A;Si se establece en false, se descartará el paso 2 de la detección y solo será efectivo regexes.]]></Val>
+            <Val><![CDATA[Analiza la información de símbolos de depuración para los archivos ejecutables de prueba a fin de obtener la información y los rasgos de la ubicación de origen (definidos mediante las macros en GTA_Traits.h).]D;]A;Si se establece en false, se descartará el paso 2 de la detección y solo serán efectivas las expresiones regulares de rasgos.]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -772,6 +772,18 @@
           <Tgt Cat="Text" Stat="Loc" Orig="New">
             <Val><![CDATA[Si es true, se ejecutarán todas las pruebas (seleccionadas), incluso si se han deshabilitado.]D;]A;Opción de Google Test: {0}]]></Val>
           </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
         </Str>
         <Disp Icon="Str" />
       </Item>
@@ -905,7 +917,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Allows to override/add traits for testcases matching a regex. Traits are build up in 3 phases. First, traits are assigned to tests according to the 'Traits before' option. Next, the tests' traits (defined via the macros in GTA_Traits.h) are added to the tests, overriding traits from phase 1 with new values. Finally, the 'Traits after' option is evaluated, again in an overriding manner.]D;]A;Syntax: {0} separates the regex from the traits, the trait's name and value are separated by {1} and each pair of regex and trait is separated by {2}.]D;]A;Example: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Permite agregar o reemplazar rasgos para los casos de prueba que coinciden con una expresión regular. Lso rasgos se generan en 3 fases. En primer lugar, se asignan rasgos a pruebas de acuerdo con la opción "Traits before". A continuación, los rasgos de las pruebas (definidos a través de las macros en GTA_Traits.h) se agregan a las pruebas, reemplazando los rasgos de la fase 1 por nuevos valores. Por último, se comparan con la opción "Traits after", de nuevo reemplazando.]D;]A;Sintaxis: {0} separa el regex de los rasgos, el nombre del rasgo y el valor están separados por {1} y cada par de regex y rasgo está separado por {2}.]D;]A;Ejemplo: MySuite\. *{0}tipo{1}Small{2}MySuite2\. * | MySuite3\. *{0}Tipo{1}Medio]]></Val>
+            <Val><![CDATA[Permite agregar o reemplazar rasgos para los casos de prueba que coinciden con una expresión regular. Los rasgos se generan en 3 fases. En primer lugar, se asignan rasgos a pruebas de acuerdo con la opción "Traits before". A continuación, los rasgos de las pruebas (definidos mediante las macros en GTA_Traits.h) se agregan a las pruebas, reemplazando los rasgos de la fase 1 por nuevos valores. Por último, se comparan con la opción "Traits after", de nuevo con sustitución.]D;]A;Sintaxis: {0} separa la regex de los rasgos, el nombre del rasgo y el valor están separados por {1} y cada par de regex y rasgo está separado por {2}.]D;]A;Ejemplo: MySuite\. *{0}tipo{1}Small{2}MySuite2\. * | MySuite3\. *{0}Tipo{1}Medio]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
