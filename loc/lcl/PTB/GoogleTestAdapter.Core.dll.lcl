@@ -590,7 +590,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If enabled, a potentially attached debugger will catch assertion failures and automatically drop into interactive mode.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Se habilitado, um depurador potencialmente anexado detectará falhas de declaração e cairá automaticamente no modo interativo.]D;]A;Opção do Teste do Google: {0}]]></Val>
+            <Val><![CDATA[Se habilitado, um depurador potencialmente anexado detectará falhas de declaração e cairá automaticamente no modo interativo.]D;]A;Opção do Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -608,7 +608,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Google Test catches exceptions by default; the according test fails and test execution continues. Choosing false lets exceptions pass through, allowing the debugger to catch them.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[O Teste do Google detecta exceções por padrão; o teste de acordo falha e a execução do teste continua. Optar por falso permite que as exceções passem, permitindo que o depurador detecte-as.]D;]A;Opção do Teste do Google: {0}]]></Val>
+            <Val><![CDATA[O Google Test detecta exceções por padrão; o teste de acordo falha e a execução do teste continua. Optar por falso permite que as exceções passem, permitindo que o depurador detecte-as.]D;]A;Opção do Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -698,7 +698,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Tests will be run for the selected number of times (-1: infinite).]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Os testes serão executados para o número selecionado de vezes (-1: infinito).]D;]A;Opção do Teste do Google: {0}]]></Val>
+            <Val><![CDATA[Os testes serão executados para o número selecionado de vezes (-1: infinito).]D;]A;Opção do Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -734,7 +734,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If non-empty, the content will be appended to the PATH variable of the test execution and discovery processes.]D;]A;Example: C:\MyBins;{0}\MyOtherBins;]D;]A;Placeholders:]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Se não vazio, o conteúdo será anexado à variável CAMINHO da execução do teste e dos processos de descoberta.]D;]A;Exemplo: C:\MyBins; {0}\MyOtherBins;]D;]A;Espaços reservados:]]></Val>
+            <Val><![CDATA[Se não estiver vazio, o conteúdo será anexado à variável PATH da execução do teste e dos processos de descoberta.]D;]A;Exemplo: C:\MyBins; {0}\MyOtherBins;]D;]A;Espaços reservados:]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -770,7 +770,25 @@
         <Str Cat="Text">
           <Val><![CDATA[If true, all (selected) tests will be run, even if they have been disabled.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Se verdadeiro, todos os testes (selecionados) serão executados, mesmo se eles estiverem desabilitados.]D;]A;Opção do Teste do Google: {0}]]></Val>
+            <Val><![CDATA[Se verdadeiro, todos os testes (selecionados) serão executados, mesmo se eles estiverem desabilitados.]D;]A;Opção do Google Test: {0}]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Exibir nó do método de configuração]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Exibir nós de espaço reservado no explorador de testes representando o status dos métodos de configuração. ]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -806,7 +824,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If true, tests will be executed in random order. Note that a true randomized order is only given when executing all tests in non-parallel fashion. Otherwise, the test excutables will most likely be executed more than once - random order is than restricted to the according executions.]D;]A;Google Test option: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Se verdadeiro, os testes serão executadas em ordem aleatória. Observe que uma ordem aleatória verdadeira é dada apenas ao executar todos os testes de forma não paralela. Caso contrário, os executáveis de teste provavelmente serão executados mais de uma vez – a ordem aleatória é restrita às execuções de acordo.]D;]A;Opção do Teste do Google: {0}]]></Val>
+            <Val><![CDATA[Se verdadeiro, os testes serão executadas em ordem aleatória. Observe que uma ordem aleatória verdadeira é dada apenas ao executar todos os testes de forma não paralela. Caso contrário, os executáveis de teste provavelmente serão executados mais de uma vez – a ordem aleatória é restrita às execuções de acordo.]D;]A;Opção do Google Test: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -842,7 +860,7 @@
         <Str Cat="Text">
           <Val><![CDATA[If non-empty, this regex will be used to discover the Google Test executables containing your tests.]D;]A;Default regex: {0}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Se não vazia, essa regex será usada para descobrir os executáveis do Teste do Google contendo seus testes.]D;]A;Regex padrão: {0}]]></Val>
+            <Val><![CDATA[Se não vazia, essa regex será usada para descobrir os executáveis do Google Test contendo seus testes.]D;]A;Regex padrão: {0}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
