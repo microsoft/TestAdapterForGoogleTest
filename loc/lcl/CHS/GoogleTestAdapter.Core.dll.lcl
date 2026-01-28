@@ -775,6 +775,24 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[显示固定例程方法节点]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[在测试资源管理器中显示表示固定例程方法状态的占位符节点。]]></Val>
+          </Tgt>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";OptionShowReleaseNotes" ItemType="0" PsrId="211" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[Show release notes after update]]></Val>
@@ -824,7 +842,7 @@
         <Str Cat="Text">
           <Val><![CDATA[0: Seed is computed from system time, 1<=n<={0}: The given seed is used. See note of option '{1}'.]D;]A;Google Test option: {2}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[0: 从系统时间计算种子，1<= n<={0}: 使用给定的种子。请参阅选项“{1}”的说明。]D;]A;Google Test 选项: {2}]]></Val>
+            <Val><![CDATA[0: 从系统时间计算种子，1<=n<={0}: 使用给定的种子。请参阅选项“{1}”的说明。]D;]A;Google Test 选项: {2}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
@@ -905,7 +923,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Allows to override/add traits for testcases matching a regex. Traits are build up in 3 phases. First, traits are assigned to tests according to the 'Traits before' option. Next, the tests' traits (defined via the macros in GTA_Traits.h) are added to the tests, overriding traits from phase 1 with new values. Finally, the 'Traits after' option is evaluated, again in an overriding manner.]D;]A;Syntax: {0} separates the regex from the traits, the trait's name and value are separated by {1} and each pair of regex and trait is separated by {2}.]D;]A;Example: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[允许替代/添加匹配正则表达式的测试用例的特征。特征由 3 个阶段构成。首先，根据“之前的特征”选项将特征分配给测试。然后，将测试的特征(在 GTA_Traits.h 中通过宏定义的)添加到测试中，使用新值从第 1 阶段替代特征。最后，再次以替代的方式评估“之后的特征”选项。]D;]A;语法: {0} 将正则表达式与特征分隔开，特征名称和值由 {1} 分隔，每对正则表达式和特征由 {2} 分隔。]D;]A;例如: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
+            <Val><![CDATA[允许替代/添加匹配正则表达式的测试用例的特征。特征通过 3 个阶段生成。首先，根据“之前的特征”选项将特征分配给测试。然后，将测试的特征(在 GTA_Traits.h 中通过宏定义)添加到测试中，使用新值替代第 1 阶段的特征。最后，再次以替代的方式评估“之后的特征”选项。]D;]A;语法: {0} 将正则表达式与特征分隔开，特征名称和值由 {1} 分隔，每对正则表达式和特征由 {2} 分隔。]D;]A;例如: MySuite\.*{0}Type{1}Small{2}MySuite2\.*|MySuite3\.*{0}Type{1}Medium]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
