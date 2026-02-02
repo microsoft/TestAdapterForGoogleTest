@@ -75,6 +75,9 @@
         <Item ItemId=";{e0d9835f-9c16-4d27-a9ad-4df7568650f7},260" ItemType=";Button" PsrId="240" Leaf="true">
           <Str Cat="Button">
             <Val><![CDATA[Show Fixture Node]]></Val>
+            <Tgt Cat="Button" Stat="Loc" Orig="New">
+              <Val><![CDATA[Fixtureknoten anzeigen]]></Val>
+            </Tgt>
           </Str>
           <Disp Icon="Str" Expand="true" />
         </Item>

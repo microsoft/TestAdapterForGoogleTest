@@ -98,7 +98,7 @@
         <Str Cat="Text">
           <Val><![CDATA[Windows SDK not found.]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[Das Windows-SDK wurde nicht gefunden.]]></Val>
+            <Val><![CDATA[Windows SDK wurde nicht gefunden.]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
