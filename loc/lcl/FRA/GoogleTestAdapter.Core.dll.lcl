@@ -778,12 +778,18 @@
       <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[Show fixture method node]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Afficher le nœud de la méthode fixture]]></Val>
+          </Tgt>
         </Str>
         <Disp Icon="Str" />
       </Item>
       <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+          <Tgt Cat="Text" Stat="Loc" Orig="New">
+            <Val><![CDATA[Afficher les nœuds d’espace réservé dans l’Explorateur de tests représentant le statut des méthodes fixture. ]]></Val>
+          </Tgt>
         </Str>
         <Disp Icon="Str" />
       </Item>
