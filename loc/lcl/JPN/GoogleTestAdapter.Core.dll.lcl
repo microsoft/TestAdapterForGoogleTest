@@ -842,7 +842,7 @@
         <Str Cat="Text">
           <Val><![CDATA[0: Seed is computed from system time, 1<=n<={0}: The given seed is used. See note of option '{1}'.]D;]A;Google Test option: {2}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[0: シードは、システム時間から計算されます。<1<=n<={0}: 指定したシードが使用されます。オプション '{1}' の注を参照してください。]D;]A;Google Test オプション: {2}]]></Val>
+            <Val><![CDATA[0: シードは、システム時間から計算されます。1<=n<={0}: 指定したシードが使用されます。オプション '{1}' の注を参照してください。]D;]A;Google Test オプション: {2}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />

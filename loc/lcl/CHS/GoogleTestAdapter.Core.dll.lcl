@@ -842,7 +842,7 @@
         <Str Cat="Text">
           <Val><![CDATA[0: Seed is computed from system time, 1<=n<={0}: The given seed is used. See note of option '{1}'.]D;]A;Google Test option: {2}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[0: 从系统时间计算种子，1<= n<={0}: 使用给定的种子。请参阅选项“{1}”的说明。]D;]A;Google Test 选项: {2}]]></Val>
+            <Val><![CDATA[0: 从系统时间计算种子，1<=n<={0}: 使用给定的种子。请参阅选项“{1}”的说明。]D;]A;Google Test 选项: {2}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />

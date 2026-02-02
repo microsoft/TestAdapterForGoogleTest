@@ -842,7 +842,7 @@
         <Str Cat="Text">
           <Val><![CDATA[0: Seed is computed from system time, 1<=n<={0}: The given seed is used. See note of option '{1}'.]D;]A;Google Test option: {2}]]></Val>
           <Tgt Cat="Text" Stat="Loc" Orig="New">
-            <Val><![CDATA[0: el valor de inicialización se calcula a partir de la hora del sistema, 1<=n<={0}: se utiliza el valor de inicialización dado. Consulte la nota de la opción "{1}".]D;]A;Opción de Google Test: {2}]]></Val>
+            <Val><![CDATA[0: el valor de inicialización se calcula a partir de la hora del sistema, 1<=n<={0}: se usa el valor de inicialización dado. Consulte la nota de la opción "{1}".]D;]A;Opción de Google Test: {2}]]></Val>
           </Tgt>
         </Str>
         <Disp Icon="Str" />
