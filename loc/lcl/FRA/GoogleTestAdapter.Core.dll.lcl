@@ -775,6 +775,18 @@
         </Str>
         <Disp Icon="Str" />
       </Item>
+      <Item ItemId=";OptionShowFixtureMethodNode" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show fixture method node]]></Val>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
+      <Item ItemId=";OptionShowFixtureMethodNodeDescription" ItemType="0" PsrId="211" Leaf="true">
+        <Str Cat="Text">
+          <Val><![CDATA[Show placeholder nodes in test explorer representing status of fixture methods. ]]></Val>
+        </Str>
+        <Disp Icon="Str" />
+      </Item>
       <Item ItemId=";OptionShowReleaseNotes" ItemType="0" PsrId="211" Leaf="true">
         <Str Cat="Text">
           <Val><![CDATA[Show release notes after update]]></Val>

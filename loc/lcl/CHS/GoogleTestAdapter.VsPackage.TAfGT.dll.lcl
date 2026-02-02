@@ -70,6 +70,15 @@
           <Disp Icon="Str" Expand="true" />
         </Item>
       </Item>
+      <Item ItemId=";{e0d9835f-9c16-4d27-a9ad-4df7568650f7},260" ItemType="0" PsrId="240" Leaf="false">
+        <Disp Icon="Menu" Expand="true" Disp="true" LocTbl="false" />
+        <Item ItemId=";{e0d9835f-9c16-4d27-a9ad-4df7568650f7},260" ItemType=";Button" PsrId="240" Leaf="true">
+          <Str Cat="Button">
+            <Val><![CDATA[Show Fixture Node]]></Val>
+          </Str>
+          <Disp Icon="Str" Expand="true" />
+        </Item>
+      </Item>
       <Item ItemId=";{e0d9835f-9c16-4d27-a9ad-4df7568650f7},4096" ItemType="0" PsrId="240" Leaf="false">
         <Disp Icon="Menu" Expand="true" Disp="true" LocTbl="false" />
         <Item ItemId=";{e0d9835f-9c16-4d27-a9ad-4df7568650f7},4096" ItemType=";Menu" PsrId="240" Leaf="true">
@@ -161,12 +170,6 @@
   </Item>
   <Item ItemId=";Version" ItemType="0" PsrId="211" Leaf="false">
     <Disp Icon="Ver" Disp="true" LocTbl="false" Path=" \ ;Version \ 8 \ 0" />
-    <Item ItemId=";AssemblyVersion" ItemType="0" PsrId="211" Leaf="true">
-      <Str Cat="Text" DevLk="true">
-        <Val><![CDATA[0.10.1.1]]></Val>
-      </Str>
-      <Disp Icon="Str" />
-    </Item>
     <Item ItemId=";Comments" ItemType="0" PsrId="211" Leaf="true">
       <Str Cat="Text">
         <Val><![CDATA[Visual Studio options integration of the Test Adapter for Google Test.]]></Val>
@@ -191,12 +194,6 @@
         <Tgt Cat="Text" Stat="Loc" Orig="New">
           <Val><![CDATA[GoogleTestAdapter.VsPackage.TAfGT]]></Val>
         </Tgt>
-      </Str>
-      <Disp Icon="Str" />
-    </Item>
-    <Item ItemId=";FileVersion" ItemType="0" PsrId="211" Leaf="true">
-      <Str Cat="Text" DevLk="true">
-        <Val><![CDATA[0.10.1.1]]></Val>
       </Str>
       <Disp Icon="Str" />
     </Item>
@@ -227,12 +224,6 @@
         <Tgt Cat="Text" Stat="Loc" Orig="New">
           <Val><![CDATA[GoogleTestAdapter.VsPackage.TAfGT]]></Val>
         </Tgt>
-      </Str>
-      <Disp Icon="Str" />
-    </Item>
-    <Item ItemId=";ProductVersion" ItemType="0" PsrId="211" Leaf="true">
-      <Str Cat="Text" DevLk="true">
-        <Val><![CDATA[0.10.1.1]]></Val>
       </Str>
       <Disp Icon="Str" />
     </Item>
