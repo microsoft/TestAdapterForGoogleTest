@@ -122,7 +122,8 @@ function Invoke-BatchFile {
 function Add-Signing {
     param(
         [String]$Directory,
-        [String]$ProjectName
+        [String]$ProjectName,
+        [Boolean]$IsArm64 = $false
     )
 
     $xml = [xml](Get-Content "$Directory\$ProjectName.vcxproj")
@@ -140,7 +141,14 @@ function Add-Signing {
     $AdditionalOptions.set_InnerXML("/ZH:SHA_256 /guard:cf /Qspectre /Zi %(AdditionalOptions)");
     $ClCompile.AppendChild($AdditionalOptions) | Out-Null
     $AdditionalLinkOptions = $xml.CreateElement("AdditionalOptions", "http://schemas.microsoft.com/developer/msbuild/2003")
-    $AdditionalLinkOptions.set_InnerXML("/Profile /guard:cf /DYNAMICBASE /CETCOMPAT %(AdditionalOptions)");
+
+    # Only use /CETCOMPAT flag for non-arm64.
+    if ($IsArm64) {
+        $AdditionalLinkOptions.set_InnerXML("/Profile /guard:cf /DYNAMICBASE %(AdditionalOptions)");
+    } else {
+        $AdditionalLinkOptions.set_InnerXML("/Profile /guard:cf /DYNAMICBASE /CETCOMPAT %(AdditionalOptions)");
+    }
+
     $Link = $xml.CreateElement("Link", "http://schemas.microsoft.com/developer/msbuild/2003")
     $Link.AppendChild($AdditionalLinkOptions) | Out-Null
     $BuildGroup.AppendChild($ClCompile) | Out-Null
@@ -196,7 +204,8 @@ function Build-Binaries {
         [String]$BuildToolset,
         [String]$Platform,
         [Boolean]$DynamicLibraryLinkage,
-        [Boolean]$DynamicCRTLinkage
+        [Boolean]$DynamicCRTLinkage,
+        [Boolean]$IsArm64 = $false
     )
 
     $Dir = Create-WorkingDirectory -Prefix "build" -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform $Platform `
@@ -213,11 +222,12 @@ function Build-Binaries {
         $CMakeArgs += "-D", "BUILD_SHARED_LIBS=$(Convert-BooleanToOnOff $DynamicLibraryLinkage)"
         $CMakeArgs += "-D", "gtest_force_shared_crt=$(Convert-BooleanToOnOff $DynamicCRTLinkage)"
         $CMakeArgs += "-D", "CMAKE_CXX_FLAGS=/D_SILENCE_TR1_NAMESPACE_DEPRECATION_WARNING"
+        $CMakeArgs += "-D", "CMAKE_SYSTEM_VERSION='10.0.26100.0'"
         $CMakeArgs += $CMakeDir
         Invoke-Executable cmake $CMakeArgs
 
-        Add-Signing -Directory $Dir -ProjectName "gtest"
-        Add-Signing -Directory $Dir -ProjectName "gtest_main"
+        Add-Signing -Directory $Dir -ProjectName "gtest" -IsArm64 $IsArm64
+        Add-Signing -Directory $Dir -ProjectName "gtest_main" -IsArm64 $IsArm64
 
         Invoke-Executable msbuild @("gtest.vcxproj",      "/p:Configuration=Debug")
         Invoke-Executable msbuild @("gtest_main.vcxproj", "/p:Configuration=Debug")
@@ -311,14 +321,14 @@ function Build-NuGet {
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.dll" -Destination "..\a\drop\gtest_main.dll"
         } else {
             Copy-CreateItem -Path "$BuildPath\Debug\gtestd.lib"                    -Destination "$DestinationPath\Debug\gtestd.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest.dir\Debug\gtest.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"
+            Copy-CreateItem -Path "$BuildPath\Debug\gtestd.pdb"           -Destination "$DestinationPath\Debug\gtest.pdb"
             Copy-CreateItem -Path "$BuildPath\Debug\gtest_maind.lib"               -Destination "$DestinationPath\Debug\gtest_maind.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest_main.dir\Debug\gtest_main.pdb" -Destination "$DestinationPath\Debug\gtest_main.pdb"
+            Copy-CreateItem -Path "$BuildPath\Debug\gtest_maind.pdb" -Destination "$DestinationPath\Debug\gtest_main.pdb"
 
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.lib"                     -Destination "$DestinationPath\Release\gtest.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest.dir\RelWithDebInfo\gtest.pdb"           -Destination "$DestinationPath\Release\gtest.pdb"
+            Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest.pdb"           -Destination "$DestinationPath\Release\gtest.pdb"
             Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.lib"                -Destination "$DestinationPath\Release\gtest_main.lib"
-            Copy-CreateItem -Path "$BuildPath\gtest_main.dir\RelWithDebInfo\gtest_main.pdb" -Destination "$DestinationPath\Release\gtest_main.pdb"
+            Copy-CreateItem -Path "$BuildPath\RelWithDebInfo\gtest_main.pdb" -Destination "$DestinationPath\Release\gtest_main.pdb"
         }
     }
 
@@ -352,7 +362,7 @@ function Build-BinariesAndNuGet {
     $BuildDir64 = Build-Binaries -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform "x64"   -DynamicLibraryLinkage $DynamicLibraryLinkage `
         -DynamicCRTLinkage $DynamicCRTLinkage
     $BuildDirARM64 = Build-Binaries -ToolsetName $ToolsetName -BuildToolset $BuildToolset -Platform "arm64"   -DynamicLibraryLinkage $DynamicLibraryLinkage `
-        -DynamicCRTLinkage $DynamicCRTLinkage
+        -DynamicCRTLinkage $DynamicCRTLinkage -IsArm64 $true
     Build-NuGet -BuildDir32 $BuildDir32 -BuildDir64 $BuildDir64 -BuildDirARM64 $BuildDirARM64 -ToolsetName $ToolsetName `
         -BuildToolset $BuildToolset -DynamicLibraryLinkage $DynamicLibraryLinkage -DynamicCRTLinkage $DynamicCRTLinkage -OutputDir $OutputDir | Out-Null
 }
@@ -384,9 +394,9 @@ function Main {
 
     $OutputDir = "GoogleTestAdapter\Packages"
 
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v141" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
 
     "Success"
 }
