@@ -71,7 +71,7 @@ namespace GoogleTestAdapter.TestResults
             if (currentLineIndex >= _consoleOutput.Count)
             {
                 CrashedTestCase = testCase;
-                return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), CrashText, "");
+                return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), CrashText, "", "");
             }
 
             line = _consoleOutput[currentLineIndex];
@@ -80,9 +80,12 @@ namespace GoogleTestAdapter.TestResults
 
 
             string errorMsg = "";
+            string testOutput = "";
             while (!(IsFailedLine(line) || IsPassedLine(line)) && currentLineIndex <= _consoleOutput.Count)
             {
                 errorMsg += line + "\n";
+                // Capture all output as standard output (could be enhanced to separate stdout/stderr)
+                testOutput += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 SplitLineIfNecessary(ref line, currentLineIndex);
                 currentLineIndex++;
@@ -91,17 +94,17 @@ namespace GoogleTestAdapter.TestResults
             {
                 ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
                 parser.Parse();
-                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace);
+                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, testOutput.TrimEnd('\n'));
             }
             if (IsPassedLine(line))
             {
-                return CreatePassedTestResult(testCase, ParseDuration(line));
+                return CreatePassedTestResult(testCase, ParseDuration(line), testOutput.TrimEnd('\n'));
             }
 
             CrashedTestCase = testCase;
             string message = CrashText;
             message += errorMsg == "" ? "" : "\nTest output:\n\n" + errorMsg;
-            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "");
+            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", testOutput.TrimEnd('\n'));
         }
 
         private void SplitLineIfNecessary(ref string line, int currentLineIndex)
@@ -152,18 +155,19 @@ namespace GoogleTestAdapter.TestResults
                 : duration;
         }
 
-        public static TestResult CreatePassedTestResult(TestCase testCase, TimeSpan duration)
+        public static TestResult CreatePassedTestResult(TestCase testCase, TimeSpan duration, string standardOutput = "")
         {
             return new TestResult(testCase)
             {
                 ComputerName = Environment.MachineName,
                 DisplayName = testCase.DisplayName,
                 Outcome = TestOutcome.Passed,
-                Duration = duration
+                Duration = duration,
+                StandardOutput = standardOutput
             };
         }
 
-        public static TestResult CreateFailedTestResult(TestCase testCase, TimeSpan duration, string errorMessage, string errorStackTrace)
+        public static TestResult CreateFailedTestResult(TestCase testCase, TimeSpan duration, string errorMessage, string errorStackTrace, string standardOutput = "")
         {
             return new TestResult(testCase)
             {
@@ -172,7 +176,8 @@ namespace GoogleTestAdapter.TestResults
                 Outcome = TestOutcome.Failed,
                 ErrorMessage = errorMessage,
                 ErrorStackTrace = errorStackTrace,
-                Duration = duration
+                Duration = duration,
+                StandardOutput = standardOutput
             };
         }
 
