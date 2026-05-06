@@ -175,16 +175,15 @@ namespace GoogleTestAdapter.TestResults
 
             line = _consoleOutput[currentLineIndex++];
 
-            string errorMsg = "";
-            string testOutput = "";
+            // Capture all output and treat it as standard output for the test explorer. If we wanted to distinguish between stdout and stderr, we have
+            // to change the way we capture the output in ProcessLauncher and ProcessExecutor since they merge the two streams.
+            string consoleOutput = "";
             while (
                 !(StandardOutputTestResultParser.IsFailedLine(line)
                     || StandardOutputTestResultParser.IsPassedLine(line))
                 && currentLineIndex <= _consoleOutput.Count)
             {
-                errorMsg += line + "\n";
-                // Capture all output as standard output
-                testOutput += line + "\n";
+                consoleOutput += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 currentLineIndex++;
             }
@@ -215,7 +214,7 @@ namespace GoogleTestAdapter.TestResults
                 // If we did not find the error message or stack trace in the XML parser, then parse the error message from the console output.
                 if (testResultErrorMessage == String.Empty || testResultErrorStackTrace == String.Empty)
                 {
-                    ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
+                    ErrorMessageParser parser = new ErrorMessageParser(consoleOutput);
                     parser.Parse();
                     testResultErrorMessage = parser.ErrorMessage;
                     testResultErrorStackTrace = parser.ErrorStackTrace;
@@ -226,25 +225,25 @@ namespace GoogleTestAdapter.TestResults
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
                     testResultErrorMessage,
                     testResultErrorStackTrace,
-                    testOutput.TrimEnd('\n'));
+                    consoleOutput.TrimEnd('\n'));
             }
             if (StandardOutputTestResultParser.IsPassedLine(line))
             {
                 return StandardOutputTestResultParser.CreatePassedTestResult(
                     testCase,
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
-                    testOutput.TrimEnd('\n'));
+                    consoleOutput.TrimEnd('\n'));
             }
 
             CrashedTestCase = testCase;
             string message = StandardOutputTestResultParser.CrashText;
-            message += errorMsg == "" ? "" : ("\n" + Resources.TestOutput + $"\n\n{errorMsg}");
+            message += consoleOutput == "" ? "" : ("\n" + Resources.TestOutput + $"\n\n{consoleOutput}");
             TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(
                 testCase,
                 TimeSpan.FromMilliseconds(0),
                 message,
                 "",
-                testOutput.TrimEnd('\n'));
+                consoleOutput.TrimEnd('\n'));
             return result;
         }
 

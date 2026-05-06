@@ -78,33 +78,31 @@ namespace GoogleTestAdapter.TestResults
             SplitLineIfNecessary(ref line, currentLineIndex);
             currentLineIndex++;
 
-
-            string errorMsg = "";
-            string testOutput = "";
+            // Capture all output and treat it as standard output for the test explorer. If we wanted to distinguish between stdout and stderr, we have
+            // to change the way we capture the output in ProcessLauncher and ProcessExecutor since they merge the two streams.
+            string consoleOutput = "";
             while (!(IsFailedLine(line) || IsPassedLine(line)) && currentLineIndex <= _consoleOutput.Count)
             {
-                errorMsg += line + "\n";
-                // Capture all output as standard output (could be enhanced to separate stdout/stderr)
-                testOutput += line + "\n";
+                consoleOutput += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 SplitLineIfNecessary(ref line, currentLineIndex);
                 currentLineIndex++;
             }
             if (IsFailedLine(line))
             {
-                ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
+                ErrorMessageParser parser = new ErrorMessageParser(consoleOutput);
                 parser.Parse();
-                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, testOutput.TrimEnd('\n'));
+                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, consoleOutput.TrimEnd('\n'));
             }
             if (IsPassedLine(line))
             {
-                return CreatePassedTestResult(testCase, ParseDuration(line), testOutput.TrimEnd('\n'));
+                return CreatePassedTestResult(testCase, ParseDuration(line), consoleOutput.TrimEnd('\n'));
             }
 
             CrashedTestCase = testCase;
             string message = CrashText;
-            message += errorMsg == "" ? "" : "\nTest output:\n\n" + errorMsg;
-            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", testOutput.TrimEnd('\n'));
+            message += consoleOutput == "" ? "" : "\nTest output:\n\n" + consoleOutput;
+            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", consoleOutput.TrimEnd('\n'));
         }
 
         private void SplitLineIfNecessary(ref string line, int currentLineIndex)
