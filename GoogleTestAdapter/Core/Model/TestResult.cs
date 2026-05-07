@@ -17,7 +17,6 @@ namespace GoogleTestAdapter.Model
         public TimeSpan Duration { get; set; }
 
         public string StandardOutput { get; set; }
-        public string StandardError { get; set; }
 
         public TestResult(TestCase testCase)
         {

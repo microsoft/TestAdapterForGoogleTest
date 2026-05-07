@@ -99,14 +99,6 @@ namespace GoogleTestAdapter.TestAdapter
                     testResult.StandardOutput));
             }
 
-            // Add standard error messages
-            if (!string.IsNullOrEmpty(testResult.StandardError))
-            {
-                result.Messages.Add(new Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResultMessage(
-                    Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResultMessage.StandardErrorCategory,
-                    testResult.StandardError));
-            }
-
             return result;
         }
 

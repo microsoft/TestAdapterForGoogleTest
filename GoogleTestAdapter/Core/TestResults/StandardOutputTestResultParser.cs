@@ -92,17 +92,17 @@ namespace GoogleTestAdapter.TestResults
             {
                 ErrorMessageParser parser = new ErrorMessageParser(consoleOutput);
                 parser.Parse();
-                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, consoleOutput.TrimEnd('\n'));
+                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, consoleOutput);
             }
             if (IsPassedLine(line))
             {
-                return CreatePassedTestResult(testCase, ParseDuration(line), consoleOutput.TrimEnd('\n'));
+                return CreatePassedTestResult(testCase, ParseDuration(line), consoleOutput);
             }
 
             CrashedTestCase = testCase;
             string message = CrashText;
             message += consoleOutput == "" ? "" : "\nTest output:\n\n" + consoleOutput;
-            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", consoleOutput.TrimEnd('\n'));
+            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", consoleOutput);
         }
 
         private void SplitLineIfNecessary(ref string line, int currentLineIndex)
@@ -161,7 +161,7 @@ namespace GoogleTestAdapter.TestResults
                 DisplayName = testCase.DisplayName,
                 Outcome = TestOutcome.Passed,
                 Duration = duration,
-                StandardOutput = standardOutput
+                StandardOutput = standardOutput.TrimEnd('\n')
             };
         }
 
@@ -175,7 +175,7 @@ namespace GoogleTestAdapter.TestResults
                 ErrorMessage = errorMessage,
                 ErrorStackTrace = errorStackTrace,
                 Duration = duration,
-                StandardOutput = standardOutput
+                StandardOutput = standardOutput.TrimEnd('\n')
             };
         }
 

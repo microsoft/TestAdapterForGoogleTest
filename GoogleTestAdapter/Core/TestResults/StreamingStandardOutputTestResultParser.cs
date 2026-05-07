@@ -225,14 +225,14 @@ namespace GoogleTestAdapter.TestResults
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
                     testResultErrorMessage,
                     testResultErrorStackTrace,
-                    consoleOutput.TrimEnd('\n'));
+                    consoleOutput);
             }
             if (StandardOutputTestResultParser.IsPassedLine(line))
             {
                 return StandardOutputTestResultParser.CreatePassedTestResult(
                     testCase,
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
-                    consoleOutput.TrimEnd('\n'));
+                    consoleOutput);
             }
 
             CrashedTestCase = testCase;
@@ -243,7 +243,7 @@ namespace GoogleTestAdapter.TestResults
                 TimeSpan.FromMilliseconds(0),
                 message,
                 "",
-                consoleOutput.TrimEnd('\n'));
+                consoleOutput);
             return result;
         }
 
