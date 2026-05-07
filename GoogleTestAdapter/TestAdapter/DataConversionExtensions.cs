@@ -81,7 +81,7 @@ namespace GoogleTestAdapter.TestAdapter
 
         public static VsTestResult ToVsTestResult(this TestResult testResult)
         {
-            return new VsTestResult(ToVsTestCase(testResult.TestCase))
+            var result = new VsTestResult(ToVsTestCase(testResult.TestCase))
             {
                 Outcome = testResult.Outcome.ToVsTestOutcome(),
                 ComputerName = testResult.ComputerName,
@@ -90,6 +90,16 @@ namespace GoogleTestAdapter.TestAdapter
                 ErrorMessage = testResult.ErrorMessage,
                 ErrorStackTrace = testResult.ErrorStackTrace
             };
+
+            // Add standard output messages
+            if (!string.IsNullOrEmpty(testResult.StandardOutput))
+            {
+                result.Messages.Add(new Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResultMessage(
+                    Microsoft.VisualStudio.TestPlatform.ObjectModel.TestResultMessage.StandardOutCategory,
+                    testResult.StandardOutput));
+            }
+
+            return result;
         }
 
 

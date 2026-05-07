@@ -133,7 +133,7 @@ namespace GoogleTestAdapter.TestResults
                 TestCase testCase = StandardOutputTestResultParser.FindTestcase(qualifiedTestName, _testCasesRun);
                 if(testCase != null)
                 {
-                    TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0),"","");
+                    TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), "", "", "");
                     if (result != null)
                     {
                         _reporter.ReportTestResults(result.Yield());
@@ -169,18 +169,21 @@ namespace GoogleTestAdapter.TestResults
                     testCase,
                     TimeSpan.FromMilliseconds(0),
                     StandardOutputTestResultParser.CrashText,
+                    "",
                     "");
             }
 
             line = _consoleOutput[currentLineIndex++];
 
-            string errorMsg = "";
+            // Capture all output and treat it as standard output for the test explorer. If we wanted to distinguish between stdout and stderr, we have
+            // to change the way we capture the output in ProcessLauncher and ProcessExecutor since they merge the two streams.
+            string consoleOutput = "";
             while (
                 !(StandardOutputTestResultParser.IsFailedLine(line)
                     || StandardOutputTestResultParser.IsPassedLine(line))
                 && currentLineIndex <= _consoleOutput.Count)
             {
-                errorMsg += line + "\n";
+                consoleOutput += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 currentLineIndex++;
             }
@@ -211,7 +214,7 @@ namespace GoogleTestAdapter.TestResults
                 // If we did not find the error message or stack trace in the XML parser, then parse the error message from the console output.
                 if (testResultErrorMessage == String.Empty || testResultErrorStackTrace == String.Empty)
                 {
-                    ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
+                    ErrorMessageParser parser = new ErrorMessageParser(consoleOutput);
                     parser.Parse();
                     testResultErrorMessage = parser.ErrorMessage;
                     testResultErrorStackTrace = parser.ErrorStackTrace;
@@ -221,23 +224,26 @@ namespace GoogleTestAdapter.TestResults
                     testCase,
                     StandardOutputTestResultParser.ParseDuration(line, _logger),
                     testResultErrorMessage,
-                    testResultErrorStackTrace);
+                    testResultErrorStackTrace,
+                    consoleOutput);
             }
             if (StandardOutputTestResultParser.IsPassedLine(line))
             {
                 return StandardOutputTestResultParser.CreatePassedTestResult(
                     testCase,
-                    StandardOutputTestResultParser.ParseDuration(line, _logger));
+                    StandardOutputTestResultParser.ParseDuration(line, _logger),
+                    consoleOutput);
             }
 
             CrashedTestCase = testCase;
             string message = StandardOutputTestResultParser.CrashText;
-            message += errorMsg == "" ? "" : ("\n" + Resources.TestOutput + $"\n\n{errorMsg}");
+            message += consoleOutput == "" ? "" : ("\n" + Resources.TestOutput + $"\n\n{consoleOutput}");
             TestResult result = StandardOutputTestResultParser.CreateFailedTestResult(
                 testCase,
                 TimeSpan.FromMilliseconds(0),
                 message,
-                "");
+                "",
+                consoleOutput);
             return result;
         }
 

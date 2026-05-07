@@ -71,37 +71,38 @@ namespace GoogleTestAdapter.TestResults
             if (currentLineIndex >= _consoleOutput.Count)
             {
                 CrashedTestCase = testCase;
-                return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), CrashText, "");
+                return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), CrashText, "", "");
             }
 
             line = _consoleOutput[currentLineIndex];
             SplitLineIfNecessary(ref line, currentLineIndex);
             currentLineIndex++;
 
-
-            string errorMsg = "";
+            // Capture all output and treat it as standard output for the test explorer. If we wanted to distinguish between stdout and stderr, we have
+            // to change the way we capture the output in ProcessLauncher and ProcessExecutor since they merge the two streams.
+            string consoleOutput = "";
             while (!(IsFailedLine(line) || IsPassedLine(line)) && currentLineIndex <= _consoleOutput.Count)
             {
-                errorMsg += line + "\n";
+                consoleOutput += line + "\n";
                 line = currentLineIndex < _consoleOutput.Count ? _consoleOutput[currentLineIndex] : "";
                 SplitLineIfNecessary(ref line, currentLineIndex);
                 currentLineIndex++;
             }
             if (IsFailedLine(line))
             {
-                ErrorMessageParser parser = new ErrorMessageParser(errorMsg);
+                ErrorMessageParser parser = new ErrorMessageParser(consoleOutput);
                 parser.Parse();
-                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace);
+                return CreateFailedTestResult(testCase, ParseDuration(line), parser.ErrorMessage, parser.ErrorStackTrace, consoleOutput);
             }
             if (IsPassedLine(line))
             {
-                return CreatePassedTestResult(testCase, ParseDuration(line));
+                return CreatePassedTestResult(testCase, ParseDuration(line), consoleOutput);
             }
 
             CrashedTestCase = testCase;
             string message = CrashText;
-            message += errorMsg == "" ? "" : "\nTest output:\n\n" + errorMsg;
-            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "");
+            message += consoleOutput == "" ? "" : "\nTest output:\n\n" + consoleOutput;
+            return CreateFailedTestResult(testCase, TimeSpan.FromMilliseconds(0), message, "", consoleOutput);
         }
 
         private void SplitLineIfNecessary(ref string line, int currentLineIndex)
@@ -152,18 +153,19 @@ namespace GoogleTestAdapter.TestResults
                 : duration;
         }
 
-        public static TestResult CreatePassedTestResult(TestCase testCase, TimeSpan duration)
+        public static TestResult CreatePassedTestResult(TestCase testCase, TimeSpan duration, string standardOutput = "")
         {
             return new TestResult(testCase)
             {
                 ComputerName = Environment.MachineName,
                 DisplayName = testCase.DisplayName,
                 Outcome = TestOutcome.Passed,
-                Duration = duration
+                Duration = duration,
+                StandardOutput = standardOutput.TrimEnd('\n')
             };
         }
 
-        public static TestResult CreateFailedTestResult(TestCase testCase, TimeSpan duration, string errorMessage, string errorStackTrace)
+        public static TestResult CreateFailedTestResult(TestCase testCase, TimeSpan duration, string errorMessage, string errorStackTrace, string standardOutput = "")
         {
             return new TestResult(testCase)
             {
@@ -172,7 +174,8 @@ namespace GoogleTestAdapter.TestResults
                 Outcome = TestOutcome.Failed,
                 ErrorMessage = errorMessage,
                 ErrorStackTrace = errorStackTrace,
-                Duration = duration
+                Duration = duration,
+                StandardOutput = standardOutput.TrimEnd('\n')
             };
         }
 

@@ -16,6 +16,8 @@ namespace GoogleTestAdapter.Model
         public string ErrorStackTrace { get; set; }
         public TimeSpan Duration { get; set; }
 
+        public string StandardOutput { get; set; }
+
         public TestResult(TestCase testCase)
         {
             TestCase = testCase;
