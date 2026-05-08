@@ -3,6 +3,7 @@ pr:
   autoCancel: true
   branches:
     include:
+    - refs/heads/main
     - refs/heads/dev17
     - refs/heads/dev15
     - dev/*
