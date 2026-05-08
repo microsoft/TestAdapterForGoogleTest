@@ -166,15 +166,6 @@ jobs:
             $_
           }
         } | Set-Content $build_script
-  - task: PowerShell@2
-    displayName: Update token for template
-    inputs:
-      targetType: inline
-      script: |-
-        $project_template = 'GoogleTestAdapter\GoogleTestProjectTemplate\GoogleTest.vstemplate'
-        (Get-Content $project_template) | ForEach-Object {
-          $_ -Replace "1924acebdd4c8a75", "b03f5f7f11d50a3a"
-        } | Set-Content $project_template
   - task: CopyFiles@2
     displayName: 'Copy FinalPublicKey.snk to TestAdapterForGoogleTest'
     inputs:

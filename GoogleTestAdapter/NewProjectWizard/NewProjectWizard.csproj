@@ -134,4 +134,13 @@
       </FilesToSign>
     </ItemGroup>
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent Condition="'$(RealSign)' != 'True'">if exist "$(SolutionDir)Keys\Key_Release.snk" (
+    echo Using Release key for signing assembly
+    copy "$(SolutionDir)Keys\Key_Release.snk" "$(ProjectDir)Key.snk"
+) else (
+    echo Using Debug key for signing assembly
+    copy "$(SolutionDir)Keys\Key_Debug.snk" "$(ProjectDir)Key.snk"
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
