@@ -21,7 +21,7 @@
     </Project>
   </TemplateContent>
   <WizardExtension>
-    <Assembly>NewProjectWizard, Version=0.1.0.0, Culture=neutral, PublicKeyToken=1924acebdd4c8a75</Assembly>
+    <Assembly>NewProjectWizard, Version=0.1.0.0, Culture=neutral, PublicKeyToken=028d073f99e04687</Assembly>
     <FullClassName>Microsoft.NewProjectWizard.WizardImplementation</FullClassName>
   </WizardExtension>
   <WizardData>

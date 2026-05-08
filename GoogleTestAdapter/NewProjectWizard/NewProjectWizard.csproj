@@ -60,10 +60,10 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.0.0-preview-2-31221-277" />
-    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="16.9.0" />
+    <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.13.40008" />
+    <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.3" />
     <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="17.13.40008" />
-    <PackageReference Include="Microsoft.VisualStudio.TemplateWizardInterface" Version="17.0.0-preview-1-31216-036" />
+    <PackageReference Include="Microsoft.VisualStudio.TemplateWizardInterface" Version="17.6.36308" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
     <Reference Include="System" />
@@ -134,4 +134,13 @@
       </FilesToSign>
     </ItemGroup>
   </Target>
+  <PropertyGroup>
+    <PreBuildEvent Condition="'$(RealSign)' != 'True'">if exist "$(SolutionDir)Keys\Key_Release.snk" (
+    echo Using Release key for signing assembly
+    copy "$(SolutionDir)Keys\Key_Release.snk" "$(ProjectDir)Key.snk"
+) else (
+    echo Using Debug key for signing assembly
+    copy "$(SolutionDir)Keys\Key_Debug.snk" "$(ProjectDir)Key.snk"
+)</PreBuildEvent>
+  </PropertyGroup>
 </Project>
