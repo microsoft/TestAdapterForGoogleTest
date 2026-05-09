@@ -168,6 +168,7 @@ jobs:
         } | Set-Content $build_script
   - task: CopyFiles@2
     displayName: 'Copy FinalPublicKey.snk to TestAdapterForGoogleTest'
+    condition: eq('${{ parameters.IsProd }}', true)
     inputs:
       SourceFolder: '$(Build.SourcesDirectory)/VCLS-Extensions/InternalAPIs/DevDiv'
       Contents: 'FinalPublicKey.snk'
