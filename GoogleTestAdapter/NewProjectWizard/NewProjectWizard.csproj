@@ -62,7 +62,7 @@
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Interop" Version="17.13.40008" />
     <PackageReference Include="Microsoft.Build.Utilities.Core" Version="17.8.43" />
-    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="17.14.40264" />
+    <PackageReference Include="Microsoft.VisualStudio.Shell.15.0" Version="18.10.146" />
     <PackageReference Include="Microsoft.VisualStudio.TemplateWizardInterface" Version="17.6.36308" />
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
