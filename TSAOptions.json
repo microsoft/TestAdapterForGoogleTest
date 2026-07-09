@@ -5,16 +5,14 @@
     "tsaStamp": "DevDiv",
     "tsaEnvironment": "PROD",
     "notificationAliases": [
-       "cppintellisense@microsoft.com",
-       "bogdan.mihalcea@microsoft.com"
+       "cppintellisense@microsoft.com"
     ],
     "codebaseAdmins": [
-        "REDMOND\\bogdanm",
         "REDMOND\\cppintellisense"
     ],
     "instanceUrl": "https://devdiv.visualstudio.com",
     "projectName": "DevDiv",
-    "areaPath": "DevDiv\\Cpp Developer Experience\\IntelliSense\\Google Test and Boost Test integration",
+    "areaPath": "DevDiv\\Cpp Developer Experience\\DesignTime\\IntelliSense\\Google Test and Boost Test integration",
     "iterationPath": "DevDiv",
     "alltools": true,
     "repositoryName": "VCLS-Extensions"
