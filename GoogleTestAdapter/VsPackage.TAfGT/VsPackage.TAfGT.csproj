@@ -137,6 +137,12 @@
       <Authenticode>Microsoft400</Authenticode>
       <StrongName>StrongName</StrongName>
     </FilesToSign>
+    <FilesToSign Include="$(OutDir)\Nerdbank.MessagePack.dll" Condition="'$(RealSign)' == 'True'">
+      <Authenticode>3PartySHA2</Authenticode>
+    </FilesToSign>
+    <FilesToSign Include="$(OutDir)\PolyType.dll" Condition="'$(RealSign)' == 'True'">
+      <Authenticode>3PartySHA2</Authenticode>
+    </FilesToSign>
     <SignFilesDependsOn Include="GatherLocalizedOutputsForSigning">
       <!-- Do not have this show up in Solution Explorer in VS -->
       <InProject>false</InProject>
