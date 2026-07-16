@@ -23,6 +23,7 @@
     <IncludeDebugSymbolsInLocalVSIXDeployment>true</IncludeDebugSymbolsInLocalVSIXDeployment>
     <CopyBuildOutputToOutputDirectory>true</CopyBuildOutputToOutputDirectory>
     <CopyOutputSymbolsToOutputDirectory>true</CopyOutputSymbolsToOutputDirectory>
+    <IncludeAssemblyFromOutputFolderInVSIXContainer>true</IncludeAssemblyFromOutputFolderInVSIXContainer>
     <BypassVsixValidation>true</BypassVsixValidation>
     <DeployExtension>false</DeployExtension>
     <IsProductComponent Condition="'$(ProductComponent)' == 'true'">true</IsProductComponent>
