@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading;
+using System.Threading.Tasks;
 using FluentAssertions;
 using GoogleTestAdapter.DiaResolver;
 using GoogleTestAdapter.Model;
@@ -393,6 +394,73 @@ namespace GoogleTestAdapter.TestResults
             var expectedErrorMessage =
                 "before test\nExpected: 1\nTo be equal to: 2\nafter test";
             testResult.ErrorMessage.Should().Be(expectedErrorMessage);
+        }
+
+        [TestMethod]
+        [TestCategory(Unit)]
+        public void ReportLine_ConcurrentFlush_DoesNotOvertakeIncompleteStateTransition()
+        {
+            const int timeoutMilliseconds = 5000;
+            var cases = new List<TestCase>
+            {
+                TestDataCreator.ToTestCase("Test.First", TestDataCreator.DummyExecutable, ""),
+                TestDataCreator.ToTestCase("Test.Second", TestDataCreator.DummyExecutable, "")
+            };
+            var reportedResults = new List<TestResult>();
+
+            using (var reportLinePaused = new ManualResetEventSlim())
+            using (var releaseReportLine = new ManualResetEventSlim())
+            using (var flushStarted = new ManualResetEventSlim())
+            {
+                MockFrameworkReporter
+                    .Setup(r => r.ReportTestResults(It.IsAny<IEnumerable<TestResult>>()))
+                    .Callback<IEnumerable<TestResult>>(results => reportedResults.AddRange(results));
+                MockFrameworkReporter
+                    .Setup(r => r.ReportTestsStarted(
+                        It.Is<IEnumerable<TestCase>>(testCases =>
+                            testCases.Single().FullyQualifiedName == "Test.Second")))
+                    .Callback(() =>
+                    {
+                        reportLinePaused.Set();
+                        releaseReportLine.Wait(timeoutMilliseconds).Should().BeTrue();
+                    });
+
+                var parser = new StreamingStandardOutputTestResultParser(
+                    cases, MockLogger.Object, MockFrameworkReporter.Object, String.Empty);
+                parser.ReportLine("[ RUN      ] Test.First");
+                parser.ReportLine("[       OK ] Test.First (1 ms)");
+
+                Task reportLineTask = Task.Run(() =>
+                    parser.ReportLine("[ RUN      ] Test.Second[       OK ] Test.Second (2 ms)"));
+                reportLinePaused.Wait(timeoutMilliseconds).Should().BeTrue();
+
+                Task flushTask = Task.Run(() =>
+                {
+                    flushStarted.Set();
+                    parser.Flush();
+                });
+                flushStarted.Wait(timeoutMilliseconds).Should().BeTrue();
+
+                bool flushCompletedBeforeRelease;
+                try
+                {
+                    flushCompletedBeforeRelease = flushTask.Wait(500);
+                }
+                finally
+                {
+                    releaseReportLine.Set();
+                }
+
+                Task.WaitAll(new[] { reportLineTask, flushTask }, timeoutMilliseconds).Should().BeTrue();
+
+                flushCompletedBeforeRelease.Should().BeFalse();
+                reportedResults.Select(result => result.TestCase.FullyQualifiedName)
+                    .Should().Equal("Test.First", "Test.Second");
+                parser.TestResults.Select(result => result.TestCase.FullyQualifiedName)
+                    .Should().Equal("Test.First", "Test.Second");
+                reportedResults.Should().OnlyContain(result => result.ErrorMessage == null);
+                parser.CrashedTestCase.Should().BeNull();
+            }
         }
 
         private IList<TestResult> GetTestResultsFromCompleteOutputFile()
