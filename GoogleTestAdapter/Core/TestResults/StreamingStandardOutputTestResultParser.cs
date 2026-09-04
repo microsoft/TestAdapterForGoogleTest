@@ -27,6 +27,7 @@ namespace GoogleTestAdapter.TestResults
         private readonly ILogger _logger;
         private readonly ITestFrameworkReporter _reporter;
 
+        private readonly object _syncObject = new object();
         private readonly List<string> _consoleOutput = new List<string>();
         private readonly string _executable;
 
@@ -58,19 +59,22 @@ namespace GoogleTestAdapter.TestResults
 
         public void ReportLine(string line)
         {
-            Match testEndMatch = PrefixedLineRegex.Match(line);
-            if (testEndMatch.Success)
+            lock (_syncObject)
             {
-                string restOfErrorMessage = testEndMatch.Groups[1].Value;
-                if (!string.IsNullOrEmpty(restOfErrorMessage))
-                    DoReportLine(restOfErrorMessage);
+                Match testEndMatch = PrefixedLineRegex.Match(line);
+                if (testEndMatch.Success)
+                {
+                    string restOfErrorMessage = testEndMatch.Groups[1].Value;
+                    if (!string.IsNullOrEmpty(restOfErrorMessage))
+                        DoReportLine(restOfErrorMessage);
 
-                string testEndPart = testEndMatch.Groups[2].Value;
-                DoReportLine(testEndPart);
-            }
-            else
-            {
-                DoReportLine(line);
+                    string testEndPart = testEndMatch.Groups[2].Value;
+                    DoReportLine(testEndPart);
+                }
+                else
+                {
+                    DoReportLine(line);
+                }
             }
         }
 
@@ -95,10 +99,13 @@ namespace GoogleTestAdapter.TestResults
 
         public void Flush()
         {
-            if (_consoleOutput.Count > 0)
+            lock (_syncObject)
             {
-                ReportTestResult();
-                _consoleOutput.Clear();
+                if (_consoleOutput.Count > 0)
+                {
+                    ReportTestResult();
+                    _consoleOutput.Clear();
+                }
             }
         }
 
