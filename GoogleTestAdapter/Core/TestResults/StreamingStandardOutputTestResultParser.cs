@@ -99,6 +99,7 @@ namespace GoogleTestAdapter.TestResults
 
         public void Flush()
         {
+            // Serialize with ReportLine so Flush cannot observe an incomplete parser state.
             lock (_syncObject)
             {
                 if (_consoleOutput.Count > 0)
