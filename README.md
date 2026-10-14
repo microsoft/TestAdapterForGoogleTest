@@ -10,7 +10,7 @@ This README details the ‘Google Test Adapter’ [GTA](https://github.com/csolt
 
 Microsoft [collaborated with the creators of GTA](https://blogs.msdn.microsoft.com/vcblog/2017/05/10/unit-testing-and-the-future-announcing-the-test-adapter-for-google-test/) to fork their project and create ‘Test Adapter for Google Test’. These test adapters share many of the same features and any differences will be explicitly labeled with [TAfGT] or [GTA] in this document. GTA may contain more experimental features, whereas all updates to TAfGT must go through Microsoft’s software development cycle.
 
-![Screenshot of Test Explorer](https://raw.githubusercontent.com/csoltenborn/GoogleTestAdapter/master/GoogleTestAdapter/VsPackage/Resources/Screenshot.png "Screenshot of Test Explorer")
+![Screenshot of Test Explorer](https://raw.githubusercontent.com/microsoft/GoogleTestAdapter/master/GoogleTestAdapter/VsPackage.Shared/Resources/Screenshot.png "Screenshot of Test Explorer")
 
 #### Features
 
