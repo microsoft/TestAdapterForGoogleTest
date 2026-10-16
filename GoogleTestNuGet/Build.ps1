@@ -377,6 +377,11 @@ function Main {
         }
     }
 
+    # Prefer the bundled CMake, which supports the VS 2026 generator.
+    if ($VSPath) {
+        $env:Path = "$VSPath\Common7\IDE\CommonExtensions\Microsoft\CMake\CMake\bin;$env:Path"
+    }
+
     # Ensure CMake is available.
     if ((Get-Command "cmake" -ErrorAction SilentlyContinue) -eq $null) {
         $env:Path += ";$env:DevEnvDir\CommonExtensions\Microsoft\CMake\CMake\bin"
