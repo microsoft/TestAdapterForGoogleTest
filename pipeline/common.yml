@@ -188,7 +188,7 @@ jobs:
     inputs:
       targetType: filePath
       filePath: GoogleTestNuGet\Build.ps1
-      arguments: -Verbose -VSPath "C:\Program Files\Microsoft Visual Studio\2022\Enterprise\"
+      arguments: -Verbose -VSPath "C:\Program Files\Microsoft Visual Studio\18\Enterprise"
       failOnStandardError: false
   - task: MSBuild@1
     displayName: Sign NuGet packages
@@ -197,7 +197,7 @@ jobs:
   - task: BatchScript@1
     displayName: Set up developer command prompt environment
     inputs:
-      filename: C:\Program Files\Microsoft Visual Studio\2022\Enterprise\Common7\Tools\VsDevCmd.bat
+      filename: C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsDevCmd.bat
       modifyEnvironment: true
   - task: NuGetCommand@2
     displayName: NuGet install dia amd64
@@ -297,7 +297,7 @@ jobs:
       publishXML: true
       userProvideBuildInfo: auto
       rulesetName: Recommended
-      setupCommandlinePicker: 'vs2022'
+      setupCommandlines: '"C:\Program Files\Microsoft Visual Studio\18\Enterprise\Common7\Tools\VsMSBuildCmd.bat"'
   # This is a time-consuming compliance task, so if we want to run a quick build (off by default), then we skip this task.
   - task: PoliCheck@2
     displayName: 'PoliCheck on TestAdapterForGoogleTest repo'

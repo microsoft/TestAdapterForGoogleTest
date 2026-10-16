@@ -216,7 +216,7 @@ function Build-Binaries {
     Push-Location $Dir
     try {
         $CMakeArgs = @()
-        $CMakeArgs += "-G", "Visual Studio 17 2022"
+        $CMakeArgs += "-G", "Visual Studio 18 2026"
         $CMakeArgs += "-T", $BuildToolset
         $CMakeArgs += "-A", $Platform
         $CMakeArgs += "-D", "BUILD_SHARED_LIBS=$(Convert-BooleanToOnOff $DynamicLibraryLinkage)"
@@ -394,9 +394,9 @@ function Main {
 
     $OutputDir = "GoogleTestAdapter\Packages"
 
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
-    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v143" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v145" -DynamicLibraryLinkage $false -DynamicCRTLinkage $true  -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v145" -DynamicLibraryLinkage $false -DynamicCRTLinkage $false -OutputDir $OutputDir
+    Build-BinariesAndNuGet -ToolsetName "v140" -BuildToolset "v145" -DynamicLibraryLinkage $true  -DynamicCRTLinkage $true  -OutputDir $OutputDir
 
     "Success"
 }

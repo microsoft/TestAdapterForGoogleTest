@@ -26,7 +26,7 @@ extends:
   template: azure-pipelines/MicroBuild.1ES.Unofficial.yml@MicroBuildTemplate
   parameters:
     pool:
-      name: VSEngSS-MicroBuild2022-1ES
+      name: VSEng-MicroBuildVSStable
       demands:
       - vstest
       - msbuild
@@ -36,7 +36,7 @@ extends:
       - npm
     sdl:
       sourceAnalysisPool:
-        name: VSEngSS-MicroBuild2022-1ES
+        name: VSEng-MicroBuildVSStable
       sourceRepositoriesToScan:
         exclude:
         # No need to scan VCLS-Extensions source as we only use this repo to copy the public signing key.
